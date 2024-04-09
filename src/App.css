@@ -1,0 +1,88 @@
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+::-webkit-scrollbar {
+    width: 5px;
+    background: #223141;
+}
+::-webkit-scrollbar-track {
+    background-color: unset;
+    /*box-shadow: 0 0 5px #223141 inset;*/
+}
+::-webkit-scrollbar-thumb {
+    background: #6240f1;
+    border-radius: 50px;
+    border: none;
+    height: 20px;
+}
+.App {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    padding: 32px 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    background: #7CA391;
+}
+.logo {
+    width: 100%;
+    padding: 14px 0;
+    border-bottom: 1px solid #BABABA;
+    text-align: center;
+}
+.contacts {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.contacts_item {
+    color: #FFF;
+    text-align: center;
+    font-family: "Futura PT";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+.social-links {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+.social-links img {
+    cursor: pointer;
+}
+
+.main_button {
+    display: flex;
+    width: 180px;
+    height: 44px;
+    padding: 12px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    background: #E75F36;
+    color: #FFF;
+    font-family: "Futura PT";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
