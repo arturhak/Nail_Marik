@@ -4,7 +4,7 @@ import './App.css';
 function App() {
   return (
     <div className="nail-app">
-      "NAIL_APP"
+      "NAIL_APP" Develop
     </div>
   );
 }
