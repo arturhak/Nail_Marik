@@ -2,7 +2,7 @@ import React from "react";
 import Logo from "../assets/logo.svg";
 import logoInstagram from "../assets/instagram.svg";
 import logoFacebook from "../assets/facebook.svg";
-import MainButton from "../MainButton";
+import MainButton from "../buttons/MainButton";
 
 function Footer () {
     return (
