@@ -6,7 +6,7 @@ function WebHeader ({headerData}:any) {
     return (
         <div className="web_header">
             <div className="left_block">
-                {headerData.map((nav:any) => {return <div className="nav_item">{nav.title}</div>})}
+                {headerData.map((nav:any,index: any) => {return <div className="nav_item" key={index}>{nav.title}</div>})}
             </div>
             <div className="center_block">
                 <img src={headerLogo} alt="headerLogo"/>
