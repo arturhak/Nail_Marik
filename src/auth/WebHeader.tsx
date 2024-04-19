@@ -12,7 +12,9 @@ function WebHeader ({headerData}:any) {
                 <img src={headerLogo} alt="headerLogo"/>
             </div>
             <div className='right_block'>
-                <MainButton />
+                <MainButton
+                    text="Book Now"
+                />
                 <div className="translate_block">
                     <div className="language_item">EN</div>
                     <div className="line"></div>

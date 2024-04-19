@@ -25,7 +25,9 @@ function Footer () {
                 <img src={logoInstagram} alt="instagram" rel="nofollow"/>
                 <img src={logoFacebook} alt="facebook" rel="nofollow"/>
             </div>
-            <MainButton />
+            <MainButton
+                text="Bool Now"
+            />
         </div>
     )
 }

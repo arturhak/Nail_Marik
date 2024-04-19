@@ -1,9 +1,10 @@
 import React from "react";
+import arrowRight from "../assets/arrow-small-right.svg"
 
-function MainButton () {
+function MainButton (props:any) {
      return (
          <div className="main_button">
-             Book Now
+             {props.text} {props.suffix ? <span><img src={arrowRight} alt="right"/></span>: ""}
          </div>
      )
 }
