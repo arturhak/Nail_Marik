@@ -1,10 +1,20 @@
-import React from "react";
+import React, {createRef, RefObject} from "react";
 import serviceImage1 from "../assets/service_image_1.svg"
 import serviceImage2 from "../assets/service_image_2.svg"
 import MainButton from "../buttons/MainButton";
-import {Carousel} from "antd";
 import Slider from "./Slider";
+import prev from "../assets/prev.svg";
+import next from "../assets/next.svg";
+import {CarouselRef} from "antd/es/carousel";
 
+
+const carouselRef: RefObject<CarouselRef> = createRef<CarouselRef>();
+const onChangeNext = () => {
+    carouselRef.current?.next()
+};
+const onChangePrev = () => {
+    carouselRef.current?.prev()
+};
 function Home () {
 
     return (
@@ -44,7 +54,15 @@ function Home () {
             </div>
             <div className="slide">
                 <div className="slide-header">KIND WORDS FROM OUR CUSTOMERS</div>
-                <Slider />
+                <div className="slider-group">
+                    <Slider
+                        carouselRef={carouselRef}
+                    />
+                    <div className="next-item-dots">
+                        <img src={prev} alt="prev" onClick={onChangePrev}/>
+                        <img src={next} alt="next" onClick={onChangeNext}/>
+                    </div>
+                </div>
             </div>
         </div>
     )

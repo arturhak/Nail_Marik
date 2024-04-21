@@ -278,6 +278,12 @@
     letter-spacing: 0.24px;
     gap: 24px;
 }
+.slider-group {
+    display: flex;
+    max-width: 600px;
+    width: 100%;
+    align-items: flex-start;
+}
 .carousel {
     width: 100%;
 }
@@ -299,12 +305,6 @@
     align-items: center;
     text-align: center;
 }
-.header-dots {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%
-}
 
 :where(.css-dev-only-do-not-override-1kuana8).ant-carousel .slick-list .slick-slide.slick-active {
     display: flex!important;
@@ -314,7 +314,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 30px;
+    margin-left: -70px;
+    z-index: 999;
 }
 .next-item-dots img{
     cursor: pointer;
+}
+.slider-content {
+    width: 100%;
+    max-width: 600px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    gap: 32px;
 }
