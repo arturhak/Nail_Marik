@@ -10,6 +10,7 @@ function Footer () {
             <div className="logo">
                 <img src={Logo} alt="logo"/>
             </div>
+            <hr/>
             <div className="contacts">
                 <div className="contacts_item">
                     Step into a Realm of Beauty and Elegance, Where Your Nails Become a Canvas of Creativity.

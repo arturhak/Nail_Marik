@@ -36,7 +36,7 @@
 .footer {
     width: 100%;
     display: flex;
-    padding: 32px 120px;
+    padding: 32px 0px;
     flex-direction: column;
     align-items: center;
     gap: 24px;
@@ -45,7 +45,7 @@
 .logo {
     width: 100%;
     padding: 14px 0;
-    border-bottom: 1px solid #BABABA;
+    /*border-bottom: 1px solid #BABABA;*/
     text-align: center;
 }
 .contacts {
@@ -330,4 +330,7 @@
     justify-content: center;
     padding: 24px;
     gap: 32px;
+}
+hr {
+    width: 90%;
 }
