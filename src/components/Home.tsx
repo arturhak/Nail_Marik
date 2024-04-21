@@ -3,12 +3,9 @@ import serviceImage1 from "../assets/service_image_1.svg"
 import serviceImage2 from "../assets/service_image_2.svg"
 import MainButton from "../buttons/MainButton";
 import {Carousel} from "antd";
+import Slider from "./Slider";
 
 function Home () {
-
-    const onChange = (currentSlide: number) => {
-        console.log(currentSlide);
-    };
 
     return (
         <div className="layout">
@@ -47,19 +44,7 @@ function Home () {
             </div>
             <div className="slide">
                 <div className="slide-header">KIND WORDS FROM OUR CUSTOMERS</div>
-
-                dsfsd
-                <Carousel afterChange={onChange}>
-                    <div className="carousel-item">
-                        <div className="item_name">shfgkjf jhfklewfjewl</div>
-                        <div className="item_content">shfgkjf jhfklewfjewl</div>
-                    </div>
-                    <div className="carousel-item">
-                        <div className="item_name">ffffffff wfjewl</div>
-                        <div className="item_content">shfgkjf uuuuuuuuuuuuuuuuuuuuuuuuu</div>
-                    </div>
-                </Carousel>
-
+                <Slider />
             </div>
         </div>
     )
