@@ -2,7 +2,7 @@ import React from "react";
 import Logo from "../assets/logo.svg";
 import logoInstagram from "../assets/instagram.svg";
 import logoFacebook from "../assets/facebook.svg";
-import MainButton from "../MainButton";
+import MainButton from "../buttons/MainButton";
 
 function Footer () {
     return (
@@ -10,6 +10,7 @@ function Footer () {
             <div className="logo">
                 <img src={Logo} alt="logo"/>
             </div>
+            <hr/>
             <div className="contacts">
                 <div className="contacts_item">
                     Step into a Realm of Beauty and Elegance, Where Your Nails Become a Canvas of Creativity.
@@ -25,7 +26,9 @@ function Footer () {
                 <img src={logoInstagram} alt="instagram" rel="nofollow"/>
                 <img src={logoFacebook} alt="facebook" rel="nofollow"/>
             </div>
-            <MainButton />
+            <MainButton
+                text="Bool Now"
+            />
         </div>
     )
 }
