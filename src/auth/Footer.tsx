@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../assets/logo.svg";
+import Logo from "../assets/footer-logo-web.svg";
 import logoInstagram from "../assets/instagram.svg";
 import logoFacebook from "../assets/facebook.svg";
 import MainButton from "../buttons/MainButton";

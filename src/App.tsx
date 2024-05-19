@@ -1,9 +1,9 @@
 import React from 'react';
-import './App.css';
+import './Apps.scss';
 import Header from "./auth/Header";
 import Footer from "./auth/Footer";
-import Home from "./components/Home";
 import "./fonts/futura-pt/FuturaCyrillicDemi.ttf"
+import IndexRoute from "./routes/IndexRoute";
 
 function App() {
     return (
@@ -11,7 +11,7 @@ function App() {
            <div className="App">
                <div className="app-layout">
                    <Header/>
-                   <Home />
+                    <IndexRoute />
                    <Footer/>
                </div>
            </div>
