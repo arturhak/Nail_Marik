@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 // import {useNavigate} from "react-router";
 import {Drawer} from "antd";
+import headerLogoTablet from "../assets/header-logo-tablet.svg";
+import MainButton from "../buttons/MainButton";
 
 function MobileHeader({headerData}:any) {
     const [open, setOpen] = useState(false);
@@ -20,6 +22,12 @@ function MobileHeader({headerData}:any) {
                 <div className="burger-line"></div>
                 <div className="burger-line"></div>
             </div>
+            <div className="center_block">
+                <img src={headerLogoTablet} alt="headerLogo"/>
+            </div>
+            <MainButton
+                text="Book Now"
+            />
             <Drawer
                 placement="left"
                 onClose={onClose}
@@ -28,7 +36,7 @@ function MobileHeader({headerData}:any) {
             >
 
 
-
+dsgsdfgdfg
 
             </Drawer>
         </div>

@@ -1,11 +1,10 @@
 import React, {createRef, RefObject} from "react";
-import serviceImage1 from "../assets/service_image_1.svg"
-import serviceImage2 from "../assets/service_image_2.svg"
 import MainButton from "../buttons/MainButton";
 import Slider from "./Slider";
 import prev from "../assets/prev.svg";
 import next from "../assets/next.svg";
 import {CarouselRef} from "antd/es/carousel";
+import Text from "../assets/text.svg"
 
 
 const carouselRef: RefObject<CarouselRef> = createRef<CarouselRef>();
@@ -34,8 +33,12 @@ function Home () {
                 Our Services
             </div>
             <div className="service-items">
-                <img src={serviceImage1} alt="imge_1"/>
-                <img src={serviceImage2} alt="image_2"/>
+                <div className="service-item_1">
+                    <div className="service-text">Manicure<span>.</span></div>
+                </div>
+                <div className="service-item_2">
+                    <div className="service-text">Pedicure<span>.</span></div>
+                </div>
             </div>
             <div className="content-footer">
                 Get ready to witness perfection in action! Our awesome team is all about making your nails look and feel amazing. Whether you're after a fancy manicure or just chilling with a pedicure, we promise a super comfy vibe every step of the way.
@@ -45,9 +48,7 @@ function Home () {
                 suffix={true}
             />
             <div className="home_page_2">
-                <div className="home_page_2_content">
-                    Treat Yourself Better
-                </div>
+                <img src={Text} alt="text" className="home_page_2_content"/>
                 <MainButton
                     text="Book Now"
                 />
