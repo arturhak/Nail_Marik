@@ -5,7 +5,6 @@ import MainButton from "../buttons/MainButton";
 function WebHeader ({headerData,navigate}:any) {
 
     const handleNavigate = (index:number) => {
-        console.log("INDEXXXXX",index)
         switch (index) {
             case 0:
                 navigate("./about")
@@ -20,6 +19,10 @@ function WebHeader ({headerData,navigate}:any) {
             default:
                 navigate("./error")
         }
+    }
+
+    const bookNow = () => {
+        navigate("./book")
     }
 
     return (
@@ -41,6 +44,7 @@ function WebHeader ({headerData,navigate}:any) {
             <div className='right_block'>
                 <MainButton
                     text="Book Now"
+                    func={bookNow}
                 />
                 <div className="translate_block">
                     <div className="language_item">EN</div>
