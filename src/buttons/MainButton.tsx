@@ -3,7 +3,7 @@ import arrowRight from "../assets/arrow-small-right.svg"
 
 function MainButton (props:any) {
      return (
-         <div className="main_button">
+         <div className={!props.width? "main_button": "main_button width-68"} onClick={props.func}>
              {props.text} {props.suffix ? <span><img src={arrowRight} alt="right"/></span>: ""}
          </div>
      )

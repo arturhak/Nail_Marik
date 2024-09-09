@@ -27,7 +27,7 @@ function Footer () {
                 <img src={logoFacebook} alt="facebook" rel="nofollow"/>
             </div>
             <MainButton
-                text="Bool Now"
+                text="Book Now"
             />
         </div>
     )
