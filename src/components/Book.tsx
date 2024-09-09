@@ -9,6 +9,8 @@ function Book () {
     const [dateState, setDateState] = useState<any>();
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
     const [userName, setUserName] = useState<any>("");
+    const [phoneNumber, setPhoneNumber] = useState<any>("");
+    const [email, setEmail] = useState<any>("");
 
 
     const OPTIONS = [
@@ -28,13 +30,14 @@ function Book () {
 
 
     const handleBook = () => {
-        console.log("selectedItems",selectedItems);
-        console.log("date",dateState);
+        // console.log("selectedItems",selectedItems);
+        // console.log("date",dateState);
         let all = [
                 {name: userName,
                 date: dateState,
-                services: [...selectedItems]
-            }
+                services: [...selectedItems],
+                phoneNumber: phoneNumber,
+                email: email}
             ]
         console.log("all", all);
     };
@@ -71,13 +74,13 @@ function Book () {
                         </div>
                         <div className="input_item">
                             <div className="input_item-title">Email Address</div>
-                            <input type="email" className="input"/>
+                            <input type="email" className="input" onChange={(event)=>setEmail(event.target.value)}/>
                         </div>
                     </div>
                     <div className="input-group">
                         <div className="input_item">
                             <div className="input_item-title">Phone Number</div>
-                            <Input placeholder="92309128" prefix="+374" />
+                            <Input placeholder="92309128" prefix="+374" onChange={(event)=>setPhoneNumber(event.target.value)}/>
                         </div>
 
                         <div className="input_item">
