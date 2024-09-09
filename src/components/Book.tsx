@@ -6,20 +6,44 @@ import moment from 'moment';
 import MainButton from "../buttons/MainButton";
 
 function Book () {
-    const [dateState, setDateState] = useState(new Date())
+    const [dateState, setDateState] = useState<any>();
+    const [selectedItems, setSelectedItems] = useState<string[]>([]);
+    const [userName, setUserName] = useState<any>("");
 
-    const handleSelectChange = (value: string) => {
-        console.log(`selected ${value}`);
-    };
+
+    const OPTIONS = [
+        {
+        value: 'մատնահարդարում',
+        },
+        {
+        value: 'հին գել լաքի հեռացում',
+        },
+        {
+        value: 'Լաքապատում',
+        },
+
+    ];
+
+    const filteredOptions = OPTIONS.filter((o) => !selectedItems.includes(o.value));
+
 
     const handleBook = () => {
-        console.log("BOOK");
+        console.log("selectedItems",selectedItems);
+        console.log("date",dateState);
+        let all = [
+                {name: userName,
+                date: dateState,
+                services: [...selectedItems]
+            }
+            ]
+        console.log("all", all);
     };
 
     const changeDate = (e:any) => {
-        console.log("eeeeeeeeeeeeeee",e.toLocaleString())
-        console.log("eeeeeeeeeeeeeee",moment(e).format('MMMM Do YYYY'))
-        setDateState(e)
+        // console.log("eeeeeeeeeeeeeee",e.toLocaleString())
+        // console.log("eeeeeeeeeeeeeee555",moment(e).format('MMMM Do YYYY'))
+        let date = moment(e).format('MMMM Do YYYY')
+        setDateState(date)
     }
 
     return (
@@ -40,17 +64,17 @@ function Book () {
                     <div className="book-right-side-title">
                         Book an Arranegment
                     </div>
-                    <div className="input-grouo">
+                    <div className="input-group">
                         <div className="input_item">
                             <div className="input_item-title">Name Surname</div>
-                            <input type="text" className="input" />
+                            <input type="text" className="input" onChange={(event)=>setUserName(event.target.value)}/>
                         </div>
                         <div className="input_item">
                             <div className="input_item-title">Email Address</div>
                             <input type="email" className="input"/>
                         </div>
                     </div>
-                    <div className="input-grouo">
+                    <div className="input-group">
                         <div className="input_item">
                             <div className="input_item-title">Phone Number</div>
                             <Input placeholder="92309128" prefix="+374" />
@@ -58,15 +82,23 @@ function Book () {
 
                         <div className="input_item">
                             <div className="input_item-title">Select the Service Type</div>
+                            {/*<Select*/}
+                            {/*    defaultValue="Services"*/}
+                            {/*    style={{ width: 120 }}*/}
+                            {/*    onChange={handleSelectChange}*/}
+                            {/*    options={[*/}
+                            {/*        { value: 'Option1', label: 'Option555' },*/}
+                            {/*        { value: 'Option2', label: 'Option2' },*/}
+                            {/*        { value: 'Option3', label: 'Option3' },*/}
+                            {/*    ]}*/}
+                            {/*/>*/}
+
                             <Select
-                                defaultValue="Services"
-                                style={{ width: 120 }}
-                                onChange={handleSelectChange}
-                                options={[
-                                    { value: 'Option1', label: 'Option1' },
-                                    { value: 'Option2', label: 'Option2' },
-                                    { value: 'Option3', label: 'Option3' },
-                                ]}
+                                mode="multiple"
+                                placeholder="Services"
+                                value={selectedItems}
+                                onChange={setSelectedItems}
+                                options={filteredOptions}
                             />
                         </div>
                     </div>
@@ -85,7 +117,7 @@ function Book () {
                 </div>
                 <div className="book-footer">
                     <div className="book-price">
-                     The service will cost <span>4500 AMD</span>
+                        The service will cost <span>4500 AMD</span>
                     </div>
                     <MainButton
                         text="Book"
