@@ -11,10 +11,10 @@ function ServiceItem (props:any)  {
             <div className="service-component_content">
                 <div className="service-component_content_left">
                     <div className="service-component_content_left-top">
-                        {props.text}<span>.</span>
+                        {props.service}<span>.</span>
                     </div>
                     <div className="service-component_content_left-bottom">
-                        <div className="price">{props.price} AMD</div>
+                        {props.endPrice ? <div className="price">{props.startPrice} - {props.endPrice} AMD</div>: <div className="price">{props.startPrice} AMD</div>}
                         <div className="hour">
                             {props.hour? <span>{props.hour} hr</span>: ""}
                             {props.minute? <span> {props.minute} min</span>: ""}
@@ -24,6 +24,7 @@ function ServiceItem (props:any)  {
                 <MainButton
                     text="Book Now"
                     width={true}
+                    func={props.func}
                 />
 
             </div>
