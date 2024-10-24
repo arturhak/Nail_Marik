@@ -1,29 +1,35 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Input, Select} from 'antd';
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import MainButton from "../buttons/MainButton";
+import {getBookTime} from "../constants/bookTime";
 
-function Book () {
+function Book() {
     const [dateState, setDateState] = useState<any>();
+    const [timeState, setTimeState] = useState<any>();
+    const [allTimes, setAllTimes] = useState<any>([]);
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
     const [userName, setUserName] = useState<any>("");
     const [phoneNumber, setPhoneNumber] = useState<any>("");
     const [email, setEmail] = useState<any>("");
 
+    useEffect(() => {
+        setAllTimes(getBookTime())
+    }, [])
+
 
     const OPTIONS = [
         {
-        value: 'մատնահարդարում',
+            value: 'մատնահարդարում',
         },
         {
-        value: 'հին գել լաքի հեռացում',
+            value: 'հին գել լաքի հեռացում',
         },
         {
-        value: 'Լաքապատում',
+            value: 'Լաքապատում',
         },
-
     ];
 
     const filteredOptions = OPTIONS.filter((o) => !selectedItems.includes(o.value));
@@ -32,29 +38,33 @@ function Book () {
     const handleBook = () => {
         // console.log("selectedItems",selectedItems);
         // console.log("date",dateState);
-        let all = [
-                {name: userName,
+        let allBooks = [
+            {
+                name: userName,
                 date: dateState,
+                timeState: timeState,
                 services: [...selectedItems],
                 phoneNumber: phoneNumber,
-                email: email}
-            ]
-        console.log("all", all);
+                email: email
+            }
+        ]
+        console.log("Book = >", allBooks);
     };
 
-    const changeDate = (e:any) => {
+    const changeDate = (e: any) => {
         // console.log("eeeeeeeeeeeeeee",e.toLocaleString())
         // console.log("eeeeeeeeeeeeeee555",moment(e).format('MMMM Do YYYY'))
         let date = moment(e).format('MMMM Do YYYY')
         setDateState(date)
-    }
+    };
 
     return (
         <div className="book-layout">
             <div className="book-left-side">
                 <div className="book-left-side_content">
                     <div className="book-left-side_content_top">
-                        Simply fill in the necessary information to secure your appointment with us. From preferred service to date and time, your nail care needs are in good hands.
+                        Simply fill in the necessary information to secure your appointment with us. From preferred
+                        service to date and time, your nail care needs are in good hands.
                     </div>
                     <div className="book-left-side_content_botton">
                         Book Now
@@ -70,17 +80,18 @@ function Book () {
                     <div className="input-group">
                         <div className="input_item">
                             <div className="input_item-title">Name Surname</div>
-                            <input type="text" className="input" onChange={(event)=>setUserName(event.target.value)}/>
+                            <input type="text" className="input" onChange={(event) => setUserName(event.target.value)}/>
                         </div>
                         <div className="input_item">
                             <div className="input_item-title">Email Address</div>
-                            <input type="email" className="input" onChange={(event)=>setEmail(event.target.value)}/>
+                            <input type="email" className="input" onChange={(event) => setEmail(event.target.value)}/>
                         </div>
                     </div>
                     <div className="input-group">
                         <div className="input_item">
                             <div className="input_item-title">Phone Number</div>
-                            <Input placeholder="92309128" prefix="+374" onChange={(event)=>setPhoneNumber(event.target.value)}/>
+                            <Input placeholder="92309128" prefix="+374"
+                                   onChange={(event) => setPhoneNumber(event.target.value)}/>
                         </div>
 
                         <div className="input_item">
@@ -114,7 +125,16 @@ function Book () {
                     <div className="book-time">
                         <div className="book-time-title">Time</div>
                         <div className="time-group">
-                            {[1,2,3,4,5,8,7,9,4,1,2,5,5,8,7,8,7,7].map((time:any) => <div className="book-time-local">11:30</div>)}
+                            {allTimes.map((time: any) => {
+                                return (
+                                    <div
+                                        key={time}
+                                        className="book-time-local"
+                                        onClick={()=>setTimeState(time)}
+                                    >
+                                        {time}
+                                    </div>)
+                            })}
                         </div>
                     </div>
                 </div>
