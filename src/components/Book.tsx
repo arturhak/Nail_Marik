@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
-import {Input, Select} from 'antd';
+import React, { useEffect, useState } from "react";
+import { Input, Select } from 'antd';
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import MainButton from "../buttons/MainButton";
-import {getBookTime} from "../constants/bookTime";
-import {allServices} from "../constants/allServices";
-import {allMasters} from "../constants/allServices";
+import { getBookTime } from "../constants/bookTime";
+import { allServices } from "../constants/allServices";
+import { allMasters } from "../constants/allServices";
 
 function Book() {
     const [dateState, setDateState] = useState<any>();
@@ -25,9 +25,9 @@ function Book() {
     const [selectMaster, setSelectMaster] = useState<any>("");
 
     useEffect(() => {
-        const getSelectedItem:any = localStorage.getItem("selectedService")
-        console.log("hffffffffffffffffffffff",JSON.parse(getSelectedItem))
-        setSelectedItems([...selectedItems, JSON.parse(getSelectedItem).value])
+        const getSelectedItem: any = localStorage.getItem("selectedService")
+        console.log("hffffffffffffffffffffff", JSON.parse(getSelectedItem))
+        setSelectedItems([...selectedItems, JSON.parse(getSelectedItem)?.value])
     }, [])
 
     useEffect(() => {
@@ -73,7 +73,7 @@ function Book() {
     const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
 
     const handleBook = () => {
-        let allBooks = [
+        let allBooks: any = [
             {
                 master: selectMaster,
                 name: userName,
@@ -85,6 +85,43 @@ function Book() {
                 totalTime: totalTime
             }
         ]
+
+        // const data = { date: allBooks?.date };
+
+        fetch('http://chicchoc.top/public/public/service/data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              
+                master: allBooks[0]?.master,
+                name: allBooks[0]?.name,
+                date: allBooks[0]?.date,
+                timeState: allBooks[0]?.timeState,
+                services: allBooks[0]?.services,
+                phoneNumber: allBooks[0]?.phoneNumber,
+                totalPrice: allBooks[0]?.totalPrice,
+                totalTime: allBooks[0]?.totalTime
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data received:', data);
+            // Process data here
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
+        
+        console.log("Book = >", allBooks);
+        
+
         console.log("Book = >", allBooks);
     };
 
@@ -94,9 +131,34 @@ function Book() {
         let date = moment(e).format('MMMM Do YYYY')
         let cleanDateString = date.replace(/(\d+)(st|nd|rd|th)/, '$1');
         let replace = new Date(cleanDateString);
-        console.log("eeeeeeeeeeeeeeeeeeeeeeee",new Date(replace).getTime())
+        console.log("eeeeeeeeeeeeeeeeeeeeeeee", new Date(replace).getTime())
         setDateState(new Date(replace).getTime())
+        
+        fetch('http://chicchoc.top/public/public/service', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                date: dateState,
+                master: selectMaster
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data received:', data);
+            // Process data here
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
     };
+
     const handleSelectedServices = (e: any) => {
         setSelectedItems(e);
     };
@@ -105,11 +167,12 @@ function Book() {
         setTimeIndex(index)
     };
 
-    const handleInputPhoneNumber = (event:any) => {
-       setPhoneNumber('+374 ' + event.target.value)
+    const handleInputPhoneNumber = (event: any) => {
+        setPhoneNumber('+374 ' + event.target.value)
     }
 
-    const handleSelectedMaster = (master:any) => {
+    const handleSelectedMaster = (master: any) => {
+
         setSelectMaster(master)
     }
 
