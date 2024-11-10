@@ -79,7 +79,8 @@ function Book() {
                 services: [...selectedItems],
                 phoneNumber: phoneNumber,
                 email: email,
-                totalPrice: totalPrice
+                totalPrice: totalPrice,
+                totalTime: totalTime
             }
         ]
         console.log("Book = >", allBooks);
