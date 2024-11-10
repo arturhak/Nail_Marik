@@ -81,7 +81,6 @@ function Book() {
                 timeState: timeState,
                 services: [...selectedItems],
                 phoneNumber: phoneNumber,
-                email: email,
                 totalPrice: totalPrice,
                 totalTime: totalTime
             }
@@ -93,7 +92,10 @@ function Book() {
         // console.log("eeeeeeeeeeeeeee",e.toLocaleString())
         // console.log("eeeeeeeeeeeeeee555",moment(e).format('MMMM Do YYYY'))
         let date = moment(e).format('MMMM Do YYYY')
-        setDateState(date)
+        let cleanDateString = date.replace(/(\d+)(st|nd|rd|th)/, '$1');
+        let replace = new Date(cleanDateString);
+        console.log("eeeeeeeeeeeeeeeeeeeeeeee",new Date(replace).getTime())
+        setDateState(new Date(replace).getTime())
     };
     const handleSelectedServices = (e: any) => {
         setSelectedItems(e);
