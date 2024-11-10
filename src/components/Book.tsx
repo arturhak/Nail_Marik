@@ -17,33 +17,47 @@ function Book() {
     const [email, setEmail] = useState<any>("");
     const [selectedForBook, setSelectedForBook] = useState<any>([]);
     const [price, setPrice] = useState<any>([]);
-    const [totalSum, setTotalSum] = useState<any>();
+    const [totalPrice, setTotalPrice] = useState<any>();
     const [timeIndex, setTimeIndex] = useState<any>();
     const [lastTime, setLastTime] = useState<any>([]);
     const [totalTime, setTotalTime] = useState<any>();
 
-    console.log("totalTIME",totalTime)
+    useEffect(() => {
+        const getSelectedItem:any = localStorage.getItem("selectedService")
+        console.log("hffffffffffffffffffffff",JSON.parse(getSelectedItem))
+        setSelectedItems([...selectedItems, JSON.parse(getSelectedItem).value])
+    }, [])
 
     useEffect(() => {
         setAllTimes(getBookTime(10, 45))
-        selectedItems.forEach((el) => {
-            const filteredSelections = allServiceGroup.filter((o) => o.value === el);
-            // setPrice([...price,filteredSelections[0]?.startPrice]);
-            let sum = filteredSelections[0]?.startPrice;
-            setPrice([...price, sum]);
-            setSelectedForBook([...selectedForBook, filteredSelections[0]]);
+        console.log("selectedItems", selectedItems)
 
-            let time = filteredSelections[0]?.timeToMinute;
-            setLastTime([...lastTime, time])
-        });
+        if (selectedItems.length > 0) {
+            selectedItems.forEach((el) => {
+                const filteredSelections = allServiceGroup.filter((o) => selectedItems.includes(o.value));
+
+                console.log("filteredSelections", filteredSelections)
+
+                let selectedItemsPrice = filteredSelections.map((item: any) => item.startPrice)
+                setPrice(selectedItemsPrice)
+
+                let selectedItemsTime = filteredSelections.map((item: any) => item.timeToMinute);
+                setLastTime(selectedItemsTime)
+
+                setSelectedForBook(filteredSelections);
+            });
+        } else {
+            setPrice([])
+            console.log("EMPTY")
+        }
     }, [selectedItems]);
 
+
     useEffect(() => {
-        if (price.length > 0) {
-            let total = price.reduce((x: any, y: any) => x + y);
-            setTotalSum(total)
-        }
-    }, [price]);
+        let total = 0
+        price?.map((el: any) => total = total + el);
+        setTotalPrice(total)
+    }, [price, selectedItems]);
 
     useEffect(() => {
         if (lastTime.length > 0) {
@@ -51,9 +65,6 @@ function Book() {
             setTotalTime(total)
         }
     }, [lastTime]);
-
-
-
 
 
     const allServiceGroup = Object.values(allServices).flat();
@@ -68,7 +79,7 @@ function Book() {
                 services: [...selectedItems],
                 phoneNumber: phoneNumber,
                 email: email,
-                totalPrice: totalSum
+                totalPrice: totalPrice
             }
         ]
         console.log("Book = >", allBooks);
@@ -81,12 +92,14 @@ function Book() {
         setDateState(date)
     };
     const handleSelectedServices = (e: any) => {
+        console.log("wwwwwwwwwww", e)
         setSelectedItems(e);
     };
-    const handleSetTime = (time: any,index:number) => {
+    const handleSetTime = (time: any, index: number) => {
         setTimeState(time);
         setTimeIndex(index)
     };
+    console.log("PRICE", price)
 
     return (
         <div className="book-layout">
@@ -96,7 +109,7 @@ function Book() {
                         Simply fill in the necessary information to secure your appointment with us. From preferred
                         service to date and time, your nail care needs are in good hands.
                     </div>
-                    <div className="book-left-side_content_botton">
+                    <div className="book-left-side_content_bottom">
                         Book Now
                     </div>
                 </div>
@@ -105,7 +118,7 @@ function Book() {
             <div className="book-right-side">
                 <div className="form">
                     <div className="book-right-side-title">
-                        Book an Arranegment
+                        Book an Arrangement
                     </div>
                     <div className="input-group">
                         <div className="input_item">
@@ -161,12 +174,12 @@ function Book() {
                     <div className="book-time">
                         <div className="book-time-title">Time</div>
                         <div className="time-group">
-                            {allTimes.map((time: any,index:number) => {
+                            {allTimes.map((time: any, index: number) => {
                                 return (
                                     <div
                                         key={index}
                                         className={timeIndex !== index ? "book-time-local" : "book-time-local is-selected"}
-                                        onClick={() => handleSetTime(time,index)}
+                                        onClick={() => handleSetTime(time, index)}
                                     >
                                         {time}
                                     </div>)
@@ -176,7 +189,7 @@ function Book() {
                 </div>
                 <div className="book-footer">
                     <div className="book-price">
-                        The service will cost <span>{totalSum} AMD</span>
+                        The service will cost <span>{totalPrice} AMD</span>
                     </div>
                     <MainButton
                         text="Book"

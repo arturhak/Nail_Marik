@@ -5,6 +5,7 @@ import prev from "../assets/prev.svg";
 import next from "../assets/next.svg";
 import {CarouselRef} from "antd/es/carousel";
 import Text from "../assets/text.svg"
+import {useNavigate} from "react-router";
 
 
 const carouselRef: RefObject<CarouselRef> = createRef<CarouselRef>();
@@ -15,6 +16,7 @@ const onChangePrev = () => {
     carouselRef.current?.prev()
 };
 function Home () {
+    const navigate = useNavigate()
 
     return (
         <div className="layout">
@@ -46,6 +48,7 @@ function Home () {
             <MainButton
                 text="Go to Services"
                 suffix={true}
+                func={() => {navigate('./services')}}
             />
             <div className="home_page_2">
                 <img src={Text} alt="text" className="home_page_2_content"/>
