@@ -31,7 +31,7 @@ function Book() {
     }, [])
 
     useEffect(() => {
-        setAllTimes(getBookTime(10, 45))
+        setAllTimes(getBookTime(10, 30))
         console.log("selectedItems", selectedItems)
 
         if (selectedItems.length > 0) {
