@@ -6,6 +6,7 @@ import moment from 'moment';
 import MainButton from "../buttons/MainButton";
 import {getBookTime} from "../constants/bookTime";
 import {allServices} from "../constants/allServices";
+import {allMasters} from "../constants/allServices";
 
 function Book() {
     const [dateState, setDateState] = useState<any>();
@@ -21,6 +22,7 @@ function Book() {
     const [timeIndex, setTimeIndex] = useState<any>();
     const [lastTime, setLastTime] = useState<any>([]);
     const [totalTime, setTotalTime] = useState<any>();
+    const [selectMaster, setSelectMaster] = useState<any>("");
 
     useEffect(() => {
         const getSelectedItem:any = localStorage.getItem("selectedService")
@@ -73,6 +75,7 @@ function Book() {
     const handleBook = () => {
         let allBooks = [
             {
+                master: selectMaster,
                 name: userName,
                 date: dateState,
                 timeState: timeState,
@@ -93,14 +96,20 @@ function Book() {
         setDateState(date)
     };
     const handleSelectedServices = (e: any) => {
-        console.log("wwwwwwwwwww", e)
         setSelectedItems(e);
     };
     const handleSetTime = (time: any, index: number) => {
         setTimeState(time);
         setTimeIndex(index)
     };
-    console.log("PRICE", price)
+
+    const handleInputPhoneNumber = (event:any) => {
+       setPhoneNumber('+374 ' + event.target.value)
+    }
+
+    const handleSelectedMaster = (master:any) => {
+        setSelectMaster(master)
+    }
 
     return (
         <div className="book-layout">
@@ -131,9 +140,16 @@ function Book() {
                             />
                         </div>
                         <div className="input_item">
-                            <div className="input_item-title">Email Address</div>
-                            <input type="email" className="input" onChange={(event) => setEmail(event.target.value)}/>
+                            <div className="input_item-title">Choose Master</div>
+                            {/*<input type="email" className="input" onChange={(event) => setEmail(event.target.value)}/>*/}
+                            <Select
+                                placeholder="Choose Master"
+                                value={selectMaster}
+                                onChange={handleSelectedMaster}
+                                options={allMasters}
+                            />
                         </div>
+
                     </div>
                     <div className="input-group">
                         <div className="input_item">
@@ -141,7 +157,7 @@ function Book() {
                             <Input
                                 placeholder="92309128"
                                 prefix="+374"
-                                onChange={(event) => setPhoneNumber('+374 ' + event.target.value)}
+                                onChange={handleInputPhoneNumber}
                             />
                         </div>
 

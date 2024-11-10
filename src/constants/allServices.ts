@@ -138,3 +138,12 @@ export const allServices = {
         },
     ]
 }
+
+export const  allMasters = [
+    {
+        value: "Irina Kostanyan"
+    },
+    {
+        value: "Ani Martoyan"
+    }
+];
