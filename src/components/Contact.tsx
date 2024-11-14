@@ -4,7 +4,6 @@ import Clock from "../assets/clock.svg";
 import Phone from "../assets/phone.svg";
 import Email from "../assets/email.svg";
 import Map from "../assets/map.png";
-import {Link} from "react-router-dom";
 
 function Contact () {
     return (
@@ -22,7 +21,7 @@ function Contact () {
                 <div className="map-navigation_item">
                     <img src={Address} alt="address"/>
                     <div className="address_content">
-                        <a href="https://www.google.com/maps/place/6+Vardanants+St,+Yerevan+0010/@40.1747507,44.521163,17z/data=!3m1!4b1!4m6!3m5!1s0x406abcf15f84eed9:0x2d04aa9d967577c1!8m2!3d40.1747507!4d44.521163!16s%2Fg%2F11bw40ssvx?entry=ttu" target="_blank">
+                        <a href="https://www.google.com/maps/place/6+Vardanants+St,+Yerevan+0010/@40.1747507,44.521163,17z/data=!3m1!4b1!4m6!3m5!1s0x406abcf15f84eed9:0x2d04aa9d967577c1!8m2!3d40.1747507!4d44.521163!16s%2Fg%2F11bw40ssvx?entry=ttu" target="_blank" rel="noreferrer">
                             Vardananc 16, Yerevan, Armenia
                         </a>
                     </div>
