@@ -16,7 +16,6 @@ function Book() {
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
     const [userName, setUserName] = useState<any>("");
     const [phoneNumber, setPhoneNumber] = useState<any>("");
-    const [email, setEmail] = useState<any>("");
     const [selectedForBook, setSelectedForBook] = useState<any>([]);
     const [price, setPrice] = useState<any>([]);
     const [totalPrice, setTotalPrice] = useState<any>();
@@ -26,11 +25,12 @@ function Book() {
     const [selectMaster, setSelectMaster] = useState<any>("");
     const navigate = useNavigate()
 
-
     useEffect(() => {
         const getSelectedItem:any = localStorage.getItem("selectedService")
         console.log("hffffffffffffffffffffff",JSON.parse(getSelectedItem))
-        setSelectedItems([...selectedItems, JSON.parse(getSelectedItem).value])
+        if (JSON.parse(getSelectedItem).value) {
+            setSelectedItems([...selectedItems, JSON.parse(getSelectedItem).value])
+        }else setSelectedItems([...selectedItems])
     }, [])
 
     useEffect(() => {
@@ -53,7 +53,6 @@ function Book() {
             });
         } else {
             setPrice([])
-            console.log("EMPTY")
         }
     }, [selectedItems]);
 
