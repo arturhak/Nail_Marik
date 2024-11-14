@@ -16,6 +16,7 @@ interface RouteProps {
 
 const publicRoutes: Array<RouteProps> = [
   { path: "/", component: Home },
+  { path: "/public", component: Home },
   { path: "/about", component: About },
   { path: "/contact", component: Contact },
   { path: "/services", component: Services },

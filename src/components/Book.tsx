@@ -76,7 +76,7 @@ function Book() {
     const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
 
     const handleBook = () => {
-        let allBooks = [
+        let allBooks: any = [
             {
                 master: selectMaster,
                 name: userName,
@@ -88,8 +88,42 @@ function Book() {
                 totalTime: totalTime
             }
         ]
-        navigate("/")
+
+
+        // const data = { date: allBooks?.date };
+
+        fetch('http://chicchoc.top/public/public/service/data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+
+                master: allBooks[0]?.master,
+                name: allBooks[0]?.name,
+                date: allBooks[0]?.date,
+                timeState: allBooks[0]?.timeState,
+                services: allBooks[0]?.services,
+                phoneNumber: allBooks[0]?.phoneNumber,
+                totalPrice: allBooks[0]?.totalPrice,
+                totalTime: allBooks[0]?.totalTime
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data received:', data);
+            // Process data here
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
         console.log("Book = >", allBooks);
+        navigate("/")
     };
 
     const changeDate = (e: any) => {
@@ -100,6 +134,30 @@ function Book() {
         let replace = new Date(cleanDateString);
         console.log("eeeeeeeeeeeeeeeeeeeeeeee",new Date(replace).getTime())
         setDateState(new Date(replace).getTime())
+
+        fetch('http://chicchoc.top/public/public/service', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                date: dateState,
+                master: selectMaster
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data received:', data);
+            // Process data here
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+        });
     };
     const handleSelectedServices = (e: any) => {
         setSelectedItems(e);
