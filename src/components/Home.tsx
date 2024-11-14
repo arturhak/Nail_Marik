@@ -54,6 +54,7 @@ function Home () {
                 <img src={Text} alt="text" className="home_page_2_content"/>
                 <MainButton
                     text="Book Now"
+                    func={()=>navigate("/book")}
                 />
             </div>
             <div className="slide">

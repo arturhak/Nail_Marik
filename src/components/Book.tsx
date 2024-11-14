@@ -7,6 +7,7 @@ import MainButton from "../buttons/MainButton";
 import {getBookTime} from "../constants/bookTime";
 import {allServices} from "../constants/allServices";
 import {allMasters} from "../constants/allServices";
+import {useNavigate} from "react-router";
 
 function Book() {
     const [dateState, setDateState] = useState<any>();
@@ -23,6 +24,8 @@ function Book() {
     const [lastTime, setLastTime] = useState<any>([]);
     const [totalTime, setTotalTime] = useState<any>();
     const [selectMaster, setSelectMaster] = useState<any>("");
+    const navigate = useNavigate()
+
 
     useEffect(() => {
         const getSelectedItem:any = localStorage.getItem("selectedService")
@@ -85,6 +88,7 @@ function Book() {
                 totalTime: totalTime
             }
         ]
+        navigate("/")
         console.log("Book = >", allBooks);
     };
 
@@ -127,7 +131,7 @@ function Book() {
                 </div>
             </div>
 
-            <div className="book-right-side">
+            <div className="book-right-side book-right-side-margin">
                 <div className="form">
                     <div className="book-right-side-title">
                         Book an Arrangement

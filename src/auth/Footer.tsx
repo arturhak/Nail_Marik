@@ -3,8 +3,10 @@ import Logo from "../assets/footer-logo-web.svg";
 import logoInstagram from "../assets/instagram.svg";
 import logoFacebook from "../assets/facebook.svg";
 import MainButton from "../buttons/MainButton";
+import {useNavigate} from "react-router";
 
 function Footer () {
+    const navigate = useNavigate()
     return (
         <div className="footer" >
             <div className="logo">
@@ -26,9 +28,12 @@ function Footer () {
                 <img src={logoInstagram} alt="instagram" rel="nofollow"/>
                 <img src={logoFacebook} alt="facebook" rel="nofollow"/>
             </div>
-            <MainButton
-                text="Book Now"
-            />
+            <div className="footer-main-button">
+                <MainButton
+                    text="Book Now"
+                    func={()=>navigate("/book")}
+                />
+            </div>
         </div>
     )
 }

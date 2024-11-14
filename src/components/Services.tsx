@@ -38,7 +38,7 @@ function Services () {
                         return (
                             <ServiceItem
                                 key={index}
-                                background_1={serviceItem.bg}
+                                bgImage={serviceItem.bg}
                                 service={serviceItem.value}
                                 startPrice={serviceItem.startPrice}
                                 endPrice={serviceItem.endPrice}
@@ -59,7 +59,7 @@ function Services () {
                         return (
                             <ServiceItem
                                 key={index}
-                                background_1={serviceItem.bg}
+                                bgImage={serviceItem.bg}
                                 service={serviceItem.value}
                                 startPrice={serviceItem.startPrice}
                                 endPrice={serviceItem.endPrice}
@@ -80,7 +80,7 @@ function Services () {
                         return (
                             <ServiceItem
                                 key={index}
-                                background_1={serviceItem.bg}
+                                bgImage={serviceItem.bg}
                                 service={serviceItem.value}
                                 startPrice={serviceItem.startPrice}
                                 endPrice={serviceItem.endPrice}

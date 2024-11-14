@@ -1,7 +1,9 @@
 import React from "react";
 import MainButton from "../buttons/MainButton";
+import {useNavigate} from "react-router";
 
 function About () {
+    const navigate = useNavigate()
     return (
         <div className="layout">
             <div className="about_page_1">
@@ -28,6 +30,7 @@ function About () {
                 </div>
                 <MainButton
                     text="Book Now"
+                    func={()=>navigate("/book")}
                 />
             </div>
 

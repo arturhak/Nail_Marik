@@ -6,6 +6,7 @@ import "./fonts/futura-pt/FuturaCyrillicDemi.ttf"
 import IndexRoute from "./routes/IndexRoute";
 
 function App() {
+
     return (
         <>
            <div className="App">
