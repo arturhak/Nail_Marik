@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-// import {useNavigate} from "react-router";
 import {Drawer} from "antd";
 import headerLogoTablet from "../assets/header-logo-tablet.svg";
 import MainButton from "../buttons/MainButton";
@@ -40,10 +39,6 @@ function MobileHeader({headerData, navigate}: any) {
 
     return (
         <div className="mobile-header">
-            {/*<MainButton*/}
-            {/*    text="Book Now"*/}
-            {/*    func={bookNow}*/}
-            {/*/>*/}
             <div className="center_block">
                 <img src={headerLogoTablet} alt="headerLogo" onClick={() => navigate("/")}/>
             </div>
