@@ -20,17 +20,18 @@ function Book() {
     const [price, setPrice] = useState<any>([]);
     const [totalPrice, setTotalPrice] = useState<any>();
     const [timeIndex, setTimeIndex] = useState<any>();
-    const [lastTime, setLastTime] = useState<any>([]);
+    const [lastTimes, setLastTimes] = useState<any>([]);
     const [totalTime, setTotalTime] = useState<any>();
     const [selectMaster, setSelectMaster] = useState<any>("");
     const navigate = useNavigate()
 
     useEffect(() => {
         const getSelectedItem:any = localStorage.getItem("selectedService")
-        console.log("hffffffffffffffffffffff",JSON.parse(getSelectedItem))
-        if (JSON.parse(getSelectedItem).value) {
+        console.log("selected item from services=>",JSON.parse(getSelectedItem))
+        if (JSON.parse(getSelectedItem)?.value) {
             setSelectedItems([...selectedItems, JSON.parse(getSelectedItem).value])
-        }else setSelectedItems([...selectedItems])
+            localStorage.removeItem("selectedService")
+        }
     }, [])
 
     useEffect(() => {
@@ -38,16 +39,18 @@ function Book() {
         console.log("selectedItems", selectedItems)
 
         if (selectedItems.length > 0) {
-            selectedItems.forEach((el) => {
+            selectedItems.forEach(() => {
                 const filteredSelections = allServiceGroup.filter((o) => selectedItems.includes(o.value));
 
                 console.log("filteredSelections", filteredSelections)
 
                 let selectedItemsPrice = filteredSelections.map((item: any) => item.startPrice)
                 setPrice(selectedItemsPrice)
+                console.log("selected price",selectedItemsPrice)
 
                 let selectedItemsTime = filteredSelections.map((item: any) => item.timeToMinute);
-                setLastTime(selectedItemsTime)
+                setLastTimes(selectedItemsTime)
+                console.log('selected time',selectedItemsTime)
 
                 setSelectedForBook(filteredSelections);
             });
@@ -64,12 +67,15 @@ function Book() {
     }, [price, selectedItems]);
 
     useEffect(() => {
-        if (lastTime.length > 0) {
-            let total = lastTime.reduce((x: any, y: any) => x + y);
+        if (lastTimes.length > 0) {
+            let total = lastTimes.reduce((x: any, y: any) => x + y);
             setTotalTime(total)
         }
-    }, [lastTime]);
+    }, [lastTimes]);
 
+    console.log("total Time", totalTime)
+    console.log("total Price", totalPrice)
+    console.log("selected for Book", selectedForBook)
 
     const allServiceGroup = Object.values(allServices).flat();
     const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
