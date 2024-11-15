@@ -1,8 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import headerLogo from "../assets/header_logo-web.svg"
 import MainButton from "../buttons/MainButton";
+import {useTranslation} from "react-i18next";
+import i18n from "../translate/i18n";
 
 function WebHeader ({headerData,navigate}:any) {
+    const [language, setLanguage] = useState<any>(localStorage.getItem("selectedLanguage"))
+    const {t} = useTranslation();
+
+    const handleChangeLanguage = (lang:any) => {
+        i18n.changeLanguage(lang);
+        localStorage.setItem("selectedLanguage", lang)
+        let selectedLanguage:any = localStorage.getItem("selectedLanguage")
+        setLanguage(selectedLanguage)
+    }
+
+    console.log("jkfdsgjf",language)
 
     const handleNavigate = (index:number) => {
         switch (index) {
@@ -34,7 +47,7 @@ function WebHeader ({headerData,navigate}:any) {
                         key={index}
                         onClick={()=>handleNavigate(index)}
                     >
-                        {nav.title}
+                        {t(nav.title)}
                     </div>
                 })}
             </div>
@@ -47,9 +60,9 @@ function WebHeader ({headerData,navigate}:any) {
                     func={bookNow}
                 />
                 <div className="translate_block">
-                    <div className="language_item">EN</div>
+                    <div className={language === "EN" ? "language_item is-lang-selected" : "language_item"} onClick={() => handleChangeLanguage('EN')}>EN</div>
                     <div className="line"></div>
-                    <div className="language_item">ՀԱՅ</div>
+                    <div className={language === "AM" ? "language_item is-lang-selected" : "language_item"} onClick={() => handleChangeLanguage('AM')}>ՀԱՅ</div>
                 </div>
             </div>
 

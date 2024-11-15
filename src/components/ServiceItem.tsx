@@ -1,22 +1,24 @@
 import React from "react";
 import MainButton from "../buttons/MainButton";
+import {useTranslation} from "react-i18next";
 
 
 function ServiceItem(props: any) {
-    return (
+    const {t} = useTranslation()
 
+    return (
         <div className="service-component" style={{backgroundImage: `url(${props.bgImage})`}}>
             <div className="service-component_content">
                 <div className="service-component_content_left">
                     <div className="service-component_content_left-top">
-                        {props.service}<span>.</span>
+                        {t(props.service)}<span>.</span>
                     </div>
                     <div className="service-component_content_left-bottom">
-                        {props.endPrice ? <div className="price">{props.startPrice} - {props.endPrice} AMD</div> :
-                            <div className="price">{props.startPrice} AMD</div>}
+                        {props.endPrice ? <div className="price">{props.startPrice} - {props.endPrice} {t('AMD')}</div> :
+                            <div className="price">{props.startPrice} {t('AMD')}</div>}
                         <div className="hour">
-                            {props.hour ? <span>{props.hour} hr</span> : ""}
-                            {props.minute ? <span> {props.minute} min</span> : ""}
+                            {props.hour ? <span>{props.hour} {t('hr')}</span> : ""}
+                            {props.minute ? <span> {props.minute} {t('min')}</span> : ""}
                         </div>
                     </div>
                 </div>

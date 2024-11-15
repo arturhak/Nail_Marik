@@ -632,8 +632,8 @@ a:-webkit-any-link {
 .service-component {
     position: relative;
     //width: 30%;
-    width: 358px;
-    height: 260px;
+    //width: 358px;
+    //height: 260px;
     //background-image: url("./assets/service-bg/bg_1.svg");
     background-repeat: no-repeat;
     background-size: cover;
@@ -645,10 +645,12 @@ a:-webkit-any-link {
     }
 }
 .service-component_content {
+    //position: absolute;
+    //bottom: 25px;
     display: flex;
     align-items: flex-end;
+    justify-content: space-between;
     gap: 14px;
-    width: 100%;
 }
 .service-component_content_left {
     display: flex;
@@ -662,6 +664,7 @@ a:-webkit-any-link {
     font-style: normal;
     font-weight: 450;
     line-height: normal;
+    white-space: break-spaces;
     span {
         color: #E75F36;
         font-family: "Futura PT";
@@ -675,6 +678,7 @@ a:-webkit-any-link {
     display: flex;
     gap: 8px;
     align-items: baseline;
+    flex-direction: column;
     .price {
         color: #FFF;
         font-family: "Futura PT";
@@ -970,6 +974,9 @@ button {
 .is-selected {
     //border: 1px solid #E75F36;
     background: #bfc2ce;
+}
+.is-lang-selected {
+    color: #E75F36;
 }
 .time-group {
     display: flex;

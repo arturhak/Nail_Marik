@@ -139,11 +139,11 @@ export const allServices = {
     ]
 }
 
-export const  allMasters = [
+export const allMasters = [
     {
-        value: "Irina Kostanyan"
+        value: "Irina Kostanyan",
     },
     {
-        value: "Ani Martoyan"
-    }
-];
+        value: "Ani Martoyan",
+    },
+]

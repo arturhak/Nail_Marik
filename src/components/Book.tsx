@@ -8,6 +8,7 @@ import {getBookTime} from "../constants/bookTime";
 import {allServices} from "../constants/allServices";
 import {allMasters} from "../constants/allServices";
 import {useNavigate} from "react-router";
+import {useTranslation} from "react-i18next";
 
 function Book() {
     const [dateState, setDateState] = useState<any>();
@@ -23,7 +24,8 @@ function Book() {
     const [lastTimes, setLastTimes] = useState<any>([]);
     const [totalTime, setTotalTime] = useState<any>();
     const [selectMaster, setSelectMaster] = useState<any>("");
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const {t} = useTranslation()
 
     useEffect(() => {
         const getSelectedItem:any = localStorage.getItem("selectedService")
@@ -80,6 +82,7 @@ function Book() {
     const allServiceGroup = Object.values(allServices).flat();
     const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
 
+
     const handleBook = () => {
         let allBooks: any = [
             {
@@ -93,9 +96,6 @@ function Book() {
                 totalTime: totalTime
             }
         ]
-
-
-        // const data = { date: allBooks?.date };
 
         fetch('http://chicchoc.top/public/public/service/data', {
             method: 'POST',
@@ -180,16 +180,25 @@ function Book() {
         setSelectMaster(master)
     }
 
+    const translatedMasters = allMasters.map((master) => ({
+        value: master.value,
+        label: t(`${master.value}`)
+    }));
+
+    const translatedServices = allServiceGroup.map((service) => ({
+        value: service.value,
+        label: t(`${service.value}`)
+    }));
+
     return (
         <div className="book-layout">
             <div className="book-left-side">
                 <div className="book-left-side_content">
                     <div className="book-left-side_content_top">
-                        Simply fill in the necessary information to secure your appointment with us. From preferred
-                        service to date and time, your nail care needs are in good hands.
+                        {t('Simply fill in the necessary information to secure your appointment with us. From preferred service to date and time, your nail care needs are in good hands.')}
                     </div>
                     <div className="book-left-side_content_bottom">
-                        Book Now
+                        {t('Book Now')}
                     </div>
                 </div>
             </div>
@@ -197,32 +206,33 @@ function Book() {
             <div className="book-right-side book-right-side-margin">
                 <div className="form">
                     <div className="book-right-side-title">
-                        Book an Arrangement
+                        {t('Book an Arrangement')}
                     </div>
                     <div className="input-group">
                         <div className="input_item">
-                            <div className="input_item-title">Name Surname</div>
+                            <div className="input_item-title">{t('Name Surname')}</div>
                             <input
                                 type="text"
                                 className="input"
+                                placeholder={t("Name Surname")}
                                 onChange={(event) => setUserName(event.target.value)}
                             />
                         </div>
                         <div className="input_item">
-                            <div className="input_item-title">Choose Master</div>
+                            <div className="input_item-title">{t('Choose Master')}</div>
                             {/*<input type="email" className="input" onChange={(event) => setEmail(event.target.value)}/>*/}
                             <Select
-                                placeholder="Choose Master"
+                                placeholder={t("Choose Master")}
                                 value={selectMaster}
                                 onChange={handleSelectedMaster}
-                                options={allMasters}
+                                options={translatedMasters}
                             />
                         </div>
 
                     </div>
                     <div className="input-group">
                         <div className="input_item">
-                            <div className="input_item-title">Phone Number</div>
+                            <div className="input_item-title">{t('Phone Number')}</div>
                             <Input
                                 placeholder="92309128"
                                 prefix="+374"
@@ -231,7 +241,7 @@ function Book() {
                         </div>
 
                         <div className="input_item">
-                            <div className="input_item-title">Select the Service Type</div>
+                            <div className="input_item-title">{t('Select the Service Type')}</div>
                             {/*<Select*/}
                             {/*    defaultValue="Services"*/}
                             {/*    style={{ width: 120 }}*/}
@@ -244,10 +254,10 @@ function Book() {
                             {/*/>*/}
                             <Select
                                 mode="multiple"
-                                placeholder="Services"
+                                placeholder={t("Services")}
                                 value={selectedItems}
                                 onChange={handleSelectedServices}
-                                options={filteredOptions}
+                                options={translatedServices}
                             />
                         </div>
                     </div>
@@ -258,7 +268,7 @@ function Book() {
                         onChange={changeDate}
                     />
                     <div className="book-time">
-                        <div className="book-time-title">Time</div>
+                        <div className="book-time-title">{t('Time')}</div>
                         <div className="time-group">
                             {allTimes.map((time: any, index: number) => {
                                 return (
@@ -275,7 +285,7 @@ function Book() {
                 </div>
                 <div className="book-footer">
                     <div className="book-price">
-                        The service will cost <span>{totalPrice} AMD</span>
+                        {t('The service will cost')} <span>{totalPrice} {t('AMD')}</span>
                     </div>
                     <MainButton
                         text="Book"

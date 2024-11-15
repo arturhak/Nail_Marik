@@ -2,9 +2,21 @@ import React, {useState} from "react";
 import {Drawer} from "antd";
 import headerLogoTablet from "../assets/header-logo-tablet.svg";
 import MainButton from "../buttons/MainButton";
+import {useTranslation} from "react-i18next";
+import i18n from "../translate/i18n";
 
 function MobileHeader({headerData, navigate}: any) {
     const [open, setOpen] = useState(false);
+    const [language, setLanguage] = useState<any>(localStorage.getItem("selectedLanguage"))
+    const {t} = useTranslation();
+
+    const handleChangeLanguage = (lang:any) => {
+        i18n.changeLanguage(lang);
+        localStorage.setItem("selectedLanguage", lang)
+        let selectedLanguage:any = localStorage.getItem("selectedLanguage")
+        setLanguage(selectedLanguage);
+        setOpen(false);
+    }
 
     const showDrawer = () => {
         setOpen(true);
@@ -61,20 +73,20 @@ function MobileHeader({headerData, navigate}: any) {
                                 key={index}
                                 onClick={()=>handleNavigate(index)}
                             >
-                                {nav.title}
+                                {t(nav.title)}
                             </div>
                         })}
                     </div>
                     <div className="mob-nav-group_burger-footer">
                         <div className="mob-nav-group_burger-footer__lang">
                             <div className="translate_block">
-                                <div className="language_item">EN</div>
+                                <div className={language === "EN" ? "language_item is-lang-selected" : "language_item"} onClick={() => handleChangeLanguage('EN')}>EN</div>
                                 <div className="line"></div>
-                                <div className="language_item">ՀԱՅ</div>
+                                <div className={language === "AM" ? "language_item is-lang-selected" : "language_item"} onClick={() => handleChangeLanguage('AM')}>ՀԱՅ</div>
                             </div>
                         </div>
                         <div className="mob-nav-group_burger-footer__content">
-                            {('"Discover the ultimate in nail care luxury at CHIC ∙ CHOC Nail Salon. Treat yourself to expert manicures and pedicures in our serene and welcoming atmosphere. Book your appointment today for a rejuvenating experience you won\'t forget!"')}
+                            {t("Discover the ultimate in nail care luxury at CHIC ∙ CHOC Nail Salon. Treat yourself to expert manicures and pedicures in our serene and welcoming atmosphere. Book your appointment today for a rejuvenating experience you won't forget!")}
 
                         </div>
                         <MainButton
