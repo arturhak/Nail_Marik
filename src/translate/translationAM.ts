@@ -53,4 +53,6 @@ export const translationAM = {
     "Book": "Ամրագրել",
     "The service will cost": "Ծառայությունը կարժենա",
     "Time": "Ժամ",
+    "OOOPS! PAGE NOT FOUND": "ԷՋԸ ՉԻ ԳՏՆՎԵԼ",
+    "Return Homepage": "Վերադառնալ Գլխավոր էջ"
 }

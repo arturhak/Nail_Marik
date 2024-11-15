@@ -50,4 +50,6 @@ export const translationEN = {
     "Book": "Book",
     "The service will cost": "The service will cost",
     "Time": "Time",
+    "OOOPS! PAGE NOT FOUND": "OOOPS! PAGE NOT FOUND",
+    "Return Homepage": "Return Homepage"
 }
