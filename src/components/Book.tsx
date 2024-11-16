@@ -24,17 +24,20 @@ function Book() {
     const [lastTimes, setLastTimes] = useState<any>([]);
     const [totalTime, setTotalTime] = useState<any>();
     const [selectMaster, setSelectMaster] = useState<any>("");
+    const [bookHours,setBookHours]= useState<any>()
     const navigate = useNavigate();
     const {t} = useTranslation()
+console.log("Book Data",bookHours);
 
     useEffect(() => {
+        getData()
         const getSelectedItem:any = localStorage.getItem("selectedService")
         console.log("selected item from services=>",JSON.parse(getSelectedItem))
         if (JSON.parse(getSelectedItem)?.value) {
             setSelectedItems([...selectedItems, JSON.parse(getSelectedItem).value])
             localStorage.removeItem("selectedService")
         }
-    }, [])
+    }, [dateState])
 
     useEffect(() => {
         setAllTimes(getBookTime(10, 30))
@@ -81,6 +84,43 @@ function Book() {
 
     const allServiceGroup = Object.values(allServices).flat();
     const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
+
+const getData =() => {
+    let allBooks: any = [
+        {
+            master: selectMaster,
+            date: dateState,
+        }
+    ]
+
+    fetch('http://chicchoc.top/public/public/service', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+
+            master: allBooks[0]?.master,
+            date: allBooks[0]?.date,
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        setBookHours(data)
+        console.log('Book received:', bookHours);
+        // Process data here
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
+    });
+    console.log("Book = >", allBooks);
+    // navigate("/")
+}
 
 
     const handleBook = () => {
