@@ -7,7 +7,7 @@ export const translationAM = {
     "Step into a Realm of Beauty and Elegance, Where Your Nails Become a Canvas of Creativity.": "Քայլ դեպի գեղեցկություն և էլեգանտություն, որտեղ քո եղունգները վերածվում են յուրահատուկ ստեղծագործության:",
     "Vardananc 16, Yerevan, Armenia": "Վարդանանց 16, Երևան, Հայաստան",
     "Our goal is to provide a luxurious and relaxing experience with excellent nail care and artistry, exceeding client expectations with a range of services including manicures, pedicures and creative nail designs.": "Մեր նպատակն է գերազանցել հաճախորդի սպասելիքները շքեղ և միևնույն պահին հանգիստ միջավայրում։ Մենք կփորձենք անել ամեն բան, քեզ գոհացնելու համար, արի՛ մեր մոտ և ամբողջացրու քո ոճը մեր պրոֆեսիոնալ մասնագետների օգնությամբ։",
-    "Dare to dream differently with us!": "Ընդգծի՛ ր քո ոճը, տարբերվի՛ ր բոլորից",
+    "Dare to dream differently with us!": "Ընդգծի՛ր քո ոճը, տարբերվի՛ր բոլորից",
     "Got a quirky wish? We've got you covered! Let us sprinkle some magic and make it real, reflecting your awesome personality. And hey, while we're at it, let's pamper those nails with some luxe treatment too!": "Ցանկացած քմահաճ ցանկություն քո կողմից՝ մենք սիրով կդարձնենք իրական, որպեսզի արտացոլվի քո յուրահատուկ անհատականությունը։ Ընդունի՛ ր շքեղությունը և մենք կապահովենք քո եղունգների խնամքն ու գեղեցկությունը։",
     "Manicure": "Մատնահարդարում",
     "Pedicure": "Պեդիկյուր",
@@ -54,5 +54,6 @@ export const translationAM = {
     "The service will cost": "Ծառայությունը կարժենա",
     "Time": "Ժամ",
     "OOOPS! PAGE NOT FOUND": "ԷՋԸ ՉԻ ԳՏՆՎԵԼ",
-    "Return Homepage": "Վերադառնալ Գլխավոր էջ"
+    "Return Homepage": "Վերադառնալ Գլխավոր էջ",
+    "Awesome atmosphere, cool service, best personal!Thank you for being so Chic!": "Հիանալի մթնոլորտ, հիանալի սպասարկում, լավագույն անձնակազմ: Շնորհակալություն այսքան շքեղ լինելու համար:"
 }

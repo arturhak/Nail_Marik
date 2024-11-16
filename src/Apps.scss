@@ -85,7 +85,7 @@
 
 .main_button {
     display: flex;
-    width: 180px;
+    width: auto;
     height: 44px;
     padding: 12px;
     justify-content: center;
@@ -280,7 +280,7 @@
 }
 
 .service-item_1 {
-    background-image: url("./assets/service_image_1.svg");
+    background-image: url("./assets/service_image_1.png");
     background-repeat: no-repeat;
     background-size: cover;
     /*display: flex;*/
@@ -292,7 +292,7 @@
 
 }
 .service-item_2 {
-    background-image: url("./assets/service_image_2.svg");
+    background-image: url("./assets/service_image_2.png");
     background-repeat: no-repeat;
     background-size: cover;
     width: 560px;

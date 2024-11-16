@@ -1,20 +1,39 @@
 import React from "react";
-import { Carousel } from "antd";
+import { Carousel, message } from "antd";
 
-const Slider = ({carouselRef}:any) => (
-  <div  className="carousel">
+const data: any = [
+
+  {
+    author: "V.Mughdusyan",
+    message: "Chic-Choc Nail Salon exceeded all my expectations! The staff was welcoming, the atmosphere was relaxing, and my nails turned out absolutely stunning. Their attention to detail and professionalism are unmatched. Highly recommend for anyone seeking flawless nail art!"
+  },
+
+  {
+    author: "A.Vardanyan",
+    message: 'Awesome atmosphere, cool service, best personal! Thank you for being so Chic!'
+  },
+
+  {
+    author: "Մ. Սարգսյան",
+    message: "Chic-Choc եղունգների սրահը իսկական գոհար է Հայաստանում: Անձնակազմը չափազանց պրոֆեսիոնալ է, իսկ սրահը՝ հարմարավետ և ժամանակակից: Իմ եղունգները ստացվեցին անթերի՝ մանրակրկիտ ուշադրությամբ և հիանալի դիզայնով: Անձնակազմի ջերմ ընդունելությունը հաճելի դարձրեց իմ փորձը: Խորհուրդ եմ տալիս բոլորին, ովքեր փնտրում են որակյալ ծառայություններ Հայաստանում! 🌟"
+  }
+]
+
+
+const Slider = ({ carouselRef }: any) => (
+
+  <div className="carousel">
     <Carousel
-        dots={false}
-        ref={carouselRef}
+      dots={false}
+      ref={carouselRef}
     >
       {/*[1,2,3,4] => data from backend */}
-      {[1,2,3,4].map((data,index)=> { return (
-            <div className="slider-content"  key={index}>
-              <div className="author">A. Grirgoryan</div>
-              <div className="author-content">“The staff greeted me with genuine smiles and took the time to understand exactly what I wanted. Their attention to detail and commitment to customer satisfaction were evident from the get-go. Throughout my visit, the nail technician displayed unparalleled skill and precision, transforming my nails into a work of art.”</div>
-            </div>
-      )
-      })}
+      {data.map((item: any, index: any) => (
+        <div className="slider-content" key={index}>
+          <div className="author">{item.author}</div>
+          <div className="author-content">{`“${item.message}”`}</div>
+        </div>
+      ))}
     </Carousel>
   </div>
 );

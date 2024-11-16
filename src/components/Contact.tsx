@@ -34,8 +34,8 @@ function Contact () {
                 </div>
                 <div className="map-navigation_item">
                     <img src={Phone} alt="address"/>
-                    <div className="clock_content" onClick={()=>{window.open('+374 98 889878')}} style={{cursor:"pointer"}}>
-                        +374 98 889878
+                    <div className="clock_content" onClick={()=>{window.open('+374 55 338007')}} style={{cursor:"pointer"}}>
+                        +374 55 338007
                     </div>
                 </div>
                 <div className="map-navigation_item">
