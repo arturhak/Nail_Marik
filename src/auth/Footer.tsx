@@ -1,5 +1,6 @@
 import React from "react";
 import Logo from "../assets/footer-logo-web.svg";
+import logoTelegram from "../assets/tg.svg"
 import logoInstagram from "../assets/instagram.svg";
 import logoFacebook from "../assets/facebook.svg";
 import MainButton from "../buttons/MainButton";
@@ -27,8 +28,16 @@ function Footer() {
                 </div>
             </div>
             <div className="social-links">
-                <img src={logoInstagram} alt="instagram" rel="nofollow" />
-                <img src={logoFacebook} alt="facebook" rel="nofollow" />
+                <a href="
+https://www.instagram.com/chic.choc.nails/profilecard/?igsh=b3ZzY3g4bmhpMnRu" target="_blank" rel="noopener noreferrer">
+                    <img src={logoInstagram} alt="instagram" />
+                </a>
+                <a href="https://www.facebook.com/share/18C3QR2JEp/?mibextid=LQQJ4d" target="_blank" rel="noopener noreferrer">
+                    <img src={logoFacebook} alt="instagram" />
+                </a>
+                <a href="https://t.me/chicchocnails" target="_blank" rel="noopener noreferrer">
+                    <img src={logoTelegram} alt="instagram" />
+                </a>
             </div>
             <div className="footer-main-button">
                 <MainButton
