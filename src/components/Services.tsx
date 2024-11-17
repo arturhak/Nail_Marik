@@ -76,9 +76,30 @@ function Services () {
             </div>
 
             <div className="services margin-bottom">
-                <div className="services-title">{t('face skin care')}<span>.</span></div>
+                <div className="services-title">{t("Men's Manicure/Pedicure")}<span>.</span></div>
                 <div className="service-content">
                     {allServices.faceSkinCare.map((serviceItem:any, index   ) => {
+                        return (
+                            <ServiceItem
+                                key={index}
+                                bgImage={serviceItem.bg}
+                                service={serviceItem.value}
+                                startPrice={serviceItem.startPrice}
+                                endPrice={serviceItem.endPrice}
+                                hour={serviceItem.hour}
+                                minute={serviceItem.minute}
+                                timeToMinute={serviceItem.timeToMinute}
+                                func={()=>handleSelectService(serviceItem)}
+                            />
+                        )
+                    })}
+                </div>
+            </div>
+
+            <div className="services margin-bottom">
+                <div className="services-title">{t("Design")}<span>.</span></div>
+                <div className="service-content">
+                    {allServices.design.map((serviceItem:any, index   ) => {
                         return (
                             <ServiceItem
                                 key={index}

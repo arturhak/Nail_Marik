@@ -26,17 +26,26 @@ export const allServices = {
         },
         {
             bg: BG_2,
-            value: 'Gel Nail Polish',
-            startPrice: 9000,
+            value: 'Manicure + Simple Nail Polish',
+            startPrice: 5000,
             endPrice: null,
             hour: 1,
             minute: 10,
             timeToMinute: 70
         },
         {
-            bg: BG_3,
-            value: 'Japan Style',
-            startPrice: 12000,
+            bg: BG_2,
+            value: 'Gel Lac + Manicure',
+            startPrice: 8000,
+            endPrice: null,
+            hour: 1,
+            minute: 10,
+            timeToMinute: 70
+        },
+        {
+            bg: BG_6,
+            value: 'GEL REMOVAL',
+            startPrice: 1000,
             endPrice: null,
             hour: null,
             minute: 45,
@@ -52,10 +61,18 @@ export const allServices = {
             timeToMinute: 45
         },
         {
+            bg: BG_3,
+            value: 'Japan Style',
+            startPrice: 7000,
+            endPrice: null,
+            hour: null,
+            minute: 45,
+            timeToMinute: 45
+        },
+        {
             bg: BG_5,
             value: 'Nail Refill',
-            startPrice: 15000,
-            endPrice: 20000,
+            startPrice: 18000,
             hour: null,
             minute: 45,
             timeToMinute: 45
@@ -63,17 +80,73 @@ export const allServices = {
         {
             bg: BG_6,
             value: 'Refill Correction',
-            startPrice: 18000,
+            startPrice: 15000,
             endPrice: null,
             hour: null,
             minute: 45,
             timeToMinute: 45
         },
+        {
+            bg: BG_6,
+            value: 'Repair Of One Nail',
+            startPrice: 500,
+            endPrice: null,
+            hour: null,
+            minute: 45,
+            timeToMinute: 45
+        },
+        {
+            bg: BG_6,
+            value: 'Padding For One Nail',
+            startPrice: 1000,
+            endPrice: null,
+            hour: null,
+            minute: 45,
+            timeToMinute: 45
+        },
+        {
+            bg: BG_6,
+            value: 'Removing The Charge',
+            startPrice: 2000,
+            endPrice: null,
+            hour: null,
+            minute: 45,
+            timeToMinute: 45
+        },
+
+        {
+            bg: BG_6,
+            value: 'Hand Acupressure (Scrub Cream)',
+            startPrice: 3000,
+            endPrice: null,
+            hour: null,
+            minute: 45,
+            timeToMinute: 45
+        },
+        {
+            bg: BG_6,
+            value: 'Paraffin Therapy For Hands',
+            startPrice: 3500,
+            endPrice: null,
+            hour: null,
+            minute: 45,
+            timeToMinute: 45
+        },
+
     ],
     pedicure: [
         {
             bg: BG_7,
             value: 'Classic Pedicure',
+            startPrice: 7000,
+            endPrice: null,
+            hour: 1,
+            minute: 30,
+            timeToMinute: 90
+        },
+        {
+            bg: BG_7,
+            value: 'Pedicure + Simple Nail Polish',
             startPrice: 9000,
             endPrice: null,
             hour: 1,
@@ -81,29 +154,46 @@ export const allServices = {
             timeToMinute: 90
         },
         {
-            bg: BG_8,
-            value: 'Gel Pedicure',
-            startPrice: 12000,
+            bg: BG_7,
+            value: 'Pedicure + Gel Polish',
+            startPrice: 10000,
             endPrice: null,
             hour: 1,
-            minute: 10,
-            timeToMinute: 70
+            minute: 30,
+            timeToMinute: 90
+        },
+        {
+            bg: BG_7,
+            value: 'Paraffin Therapy For Feet',
+            startPrice: 5000,
+            endPrice: null,
+            hour: 1,
+            minute: 30,
+            timeToMinute: 90
+        },
+        {
+            bg: BG_7,
+            value: 'Heel Treatment',
+            startPrice: 2000,
+            endPrice: null,
+            hour: 1,
+            minute: 30,
+            timeToMinute: 90
         },
     ],
     faceSkinCare: [
         {
             bg: BG_9,
-            value: 'Daily Make-Up',
-            startPrice: 10000,
-            endPrice: 15000,
+            value: "Men's Manicure",
+            startPrice: 5000,
             hour: 1,
             minute: 30,
             timeToMinute: 90
         },
         {
             bg: BG_10,
-            value: 'Wedding Make-Up',
-            startPrice: 20000,
+            value: "Men's Pedicure",
+            startPrice: 11000,
             endPrice: null,
             hour: 1,
             minute: 10,
@@ -111,8 +201,8 @@ export const allServices = {
         },
         {
             bg: BG_11,
-            value: 'Eyebrow Shaping',
-            startPrice: 2000,
+            value: "Men's Pedicure (Without Heel Treatment)",
+            startPrice: 9000,
             endPrice: null,
             hour: 1,
             minute: 10,
@@ -120,8 +210,8 @@ export const allServices = {
         },
         {
             bg: BG_12,
-            value: 'Lamination',
-            startPrice: 12000,
+            value: "Men's Paraffin Therapy For Hands",
+            startPrice: 6000,
             endPrice: null,
             hour: 1,
             minute: 10,
@@ -129,12 +219,60 @@ export const allServices = {
         },
         {
             bg: BG_13,
-            value: 'Waxing',
-            startPrice: 3000,
-            endPrice: 5000,
+            value: "Men's Paraffin Therapy For Feet",
+            startPrice: 8000,
+            endPrice: null,
             hour: 1,
             minute: 10,
             timeToMinute: 70
+        },
+    ],
+    design: [
+        {
+            bg: BG_9,
+            value: "Design Of Medium Complexity",
+            startPrice: 5000,
+            endPrice: 3000,
+            hour: 1,
+            minute: 30,
+            timeToMinute: 90
+        },
+
+        {
+            bg: BG_9,
+            value: "Stemping",
+            startPrice: 3000,
+            endPrice: null,
+            hour: 1,
+            minute: 30,
+            timeToMinute: 90
+        },
+        {
+            bg: BG_9,
+            value: "French",
+            startPrice: 3000,
+            endPrice: null,
+            hour: 1,
+            minute: 30,
+            timeToMinute: 90
+        },
+        {
+            bg: BG_9,
+            value: "Ombre",
+            startPrice: 3000,
+            endPrice: null,
+            hour: 1,
+            minute: 30,
+            timeToMinute: 90
+        },
+        {
+            bg: BG_9,
+            value: "The Rub",
+            startPrice: 3000,
+            endPrice: null,
+            hour: 1,
+            minute: 30,
+            timeToMinute: 90
         },
     ]
 }
