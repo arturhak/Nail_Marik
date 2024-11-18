@@ -2,14 +2,14 @@ import BG_1 from "../assets/service-bg/bg_1.png";
 import BG_2 from "../assets/service-bg/bg_2.png";
 import BG_3 from "../assets/service-bg/bg_3.png";
 import BG_4 from "../assets/service-bg/bg_4.png";
-import BG_5 from "../assets/service-bg/bg_5.svg";
-import BG_6 from "../assets/service-bg/bg_6.svg";
-import BG_7 from "../assets/service-bg/bg_7.svg";
-import BG_8 from "../assets/service-bg/bg_8.svg";
-import BG_9 from "../assets/service-bg/bg_9.svg";
-import BG_10 from "../assets/service-bg/bg_10.svg";
-import BG_11 from "../assets/service-bg/bg_11.svg";
-import BG_12 from "../assets/service-bg/bg_12.svg";
+import BG_5 from "../assets/service-bg/bg_5.png";
+import BG_6 from "../assets/service-bg/bg_6.png";
+import BG_7 from "../assets/service-bg/bg_7.png";
+import BG_8 from "../assets/service-bg/bg_8.png";
+import BG_9 from "../assets/service-bg/bg_9.png";
+import BG_10 from "../assets/service-bg/bg_10.png";
+import BG_11 from "../assets/service-bg/bg_11.png";
+import BG_12 from "../assets/service-bg/bg_12.png";
 import BG_13 from "../assets/service-bg/bg_13.svg";
 
 export const allServices = {
@@ -26,7 +26,7 @@ export const allServices = {
         },
         {
             bg: BG_2,
-            value: 'Manicure + Simple Nail Polish',
+            value: 'Manicure + Simple Lac',
             startPrice: 5000,
             endPrice: null,
             hour: 1,
@@ -52,7 +52,7 @@ export const allServices = {
             timeToMinute: 45
         },
         {
-            bg: BG_4,
+            bg: BG_5,
             value: 'Nail Fixing',
             startPrice: 3000,
             endPrice: null,
@@ -61,7 +61,7 @@ export const allServices = {
             timeToMinute: 45
         },
         {
-            bg: BG_3,
+            bg: BG_6,
             value: 'Japan Style',
             startPrice: 7000,
             endPrice: null,
@@ -70,7 +70,7 @@ export const allServices = {
             timeToMinute: 45
         },
         {
-            bg: BG_5,
+            bg: BG_7,
             value: 'Nail Refill',
             startPrice: 18000,
             hour: null,
@@ -78,7 +78,7 @@ export const allServices = {
             timeToMinute: 45
         },
         {
-            bg: BG_6,
+            bg: BG_8,
             value: 'Refill Correction',
             startPrice: 15000,
             endPrice: null,
@@ -87,7 +87,7 @@ export const allServices = {
             timeToMinute: 45
         },
         {
-            bg: BG_6,
+            bg: BG_9,
             value: 'Repair Of One Nail',
             startPrice: 500,
             endPrice: null,
@@ -96,7 +96,7 @@ export const allServices = {
             timeToMinute: 45
         },
         {
-            bg: BG_6,
+            bg: BG_10,
             value: 'Padding For One Nail',
             startPrice: 1000,
             endPrice: null,
@@ -105,7 +105,7 @@ export const allServices = {
             timeToMinute: 45
         },
         {
-            bg: BG_6,
+            bg: BG_11,
             value: 'Removing The Charge',
             startPrice: 2000,
             endPrice: null,
@@ -115,7 +115,7 @@ export const allServices = {
         },
 
         {
-            bg: BG_6,
+            bg: BG_12,
             value: 'Hand Acupressure',
             startPrice: 3000,
             endPrice: null,

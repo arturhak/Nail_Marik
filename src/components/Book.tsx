@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from "react";
-import {Input, Select} from 'antd';
+import React, { useEffect, useState } from "react";
+import { Input, Select } from 'antd';
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
 import MainButton from "../buttons/MainButton";
-import {getBookTime} from "../constants/bookTime";
-import {allServices} from "../constants/allServices";
-import {allMasters} from "../constants/allServices";
-import {useNavigate} from "react-router";
-import {useTranslation} from "react-i18next";
+import { getBookTime } from "../constants/bookTime";
+import { allServices } from "../constants/allServices";
+import { allMasters } from "../constants/allServices";
+import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 
 function Book() {
     const [dateState, setDateState] = useState<any>();
@@ -24,15 +24,15 @@ function Book() {
     const [lastTimes, setLastTimes] = useState<any>([]);
     const [totalTime, setTotalTime] = useState<any>();
     const [selectMaster, setSelectMaster] = useState<any>("");
-    const [bookHours,setBookHours]= useState<any>()
+    const [bookHours, setBookHours] = useState<any>()
     const navigate = useNavigate();
-    const {t} = useTranslation()
-// console.log("Book Data",bookHours);
+    const { t } = useTranslation()
+    // console.log("Book Data",bookHours);
 
     useEffect(() => {
         getData()
-        const getSelectedItem:any = localStorage.getItem("selectedService")
-        console.log("selected item from services=>",JSON.parse(getSelectedItem))
+        const getSelectedItem: any = localStorage.getItem("selectedService")
+        console.log("selected item from services=>", JSON.parse(getSelectedItem))
         if (JSON.parse(getSelectedItem)?.value) {
             setSelectedItems([...selectedItems, JSON.parse(getSelectedItem).value])
             localStorage.removeItem("selectedService")
@@ -51,11 +51,11 @@ function Book() {
 
                 let selectedItemsPrice = filteredSelections.map((item: any) => item.startPrice)
                 setPrice(selectedItemsPrice)
-                console.log("selected price",selectedItemsPrice)
+                console.log("selected price", selectedItemsPrice)
 
                 let selectedItemsTime = filteredSelections.map((item: any) => item.timeToMinute);
                 setLastTimes(selectedItemsTime)
-                console.log('selected time',selectedItemsTime)
+                console.log('selected time', selectedItemsTime)
 
                 setSelectedForBook(filteredSelections);
             });
@@ -85,42 +85,42 @@ function Book() {
     const allServiceGroup = Object.values(allServices).flat();
     const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
 
-const getData =() => {
-    let allBooks: any = [
-        {
-            master: selectMaster,
-            date: dateState,
-        }
-    ]
+    const getData = () => {
+        let allBooks: any = [
+            {
+                master: selectMaster,
+                date: dateState,
+            }
+        ]
 
-    fetch('http://chicchoc.top/public/public/service', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
+        fetch('http://chicchoc.top/public/public/service', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
 
-            master: allBooks[0]?.master,
-            date: allBooks[0]?.date,
+                master: allBooks[0]?.master,
+                date: allBooks[0]?.date,
+            })
         })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        setBookHours(data)
-        console.log('Book received:', bookHours);
-        // Process data here
-    })
-    .catch(error => {
-        console.error('Fetch error:', error);
-    });
-    console.log("Book = >", allBooks);
-    // navigate("/")
-}
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                setBookHours(data)
+                console.log('Book received:', bookHours);
+                // Process data here
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
+        console.log("Book = >", allBooks);
+        // navigate("/")
+    }
 
 
     const handleBook = () => {
@@ -154,19 +154,19 @@ const getData =() => {
                 totalTime: allBooks[0]?.totalTime
             })
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Data received:', data);
-            // Process data here
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Data received:', data);
+                // Process data here
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
         console.log("Book = >", allBooks);
         navigate("/")
     };
@@ -177,7 +177,7 @@ const getData =() => {
         let date = moment(e).format('MMMM Do YYYY')
         let cleanDateString = date.replace(/(\d+)(st|nd|rd|th)/, '$1');
         let replace = new Date(cleanDateString);
-        console.log("eeeeeeeeeeeeeeeeeeeeeeee",new Date(replace).getTime())
+        console.log("eeeeeeeeeeeeeeeeeeeeeeee", new Date(replace).getTime())
         setDateState(new Date(replace).getTime())
 
         fetch('http://chicchoc.top/public/public/service', {
@@ -190,19 +190,19 @@ const getData =() => {
                 master: selectMaster
             })
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Data received:', data);
-            // Process data here
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Data received:', data);
+                // Process data here
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
     };
     const handleSelectedServices = (e: any) => {
         setSelectedItems(e);
@@ -212,11 +212,11 @@ const getData =() => {
         setTimeIndex(index)
     };
 
-    const handleInputPhoneNumber = (event:any) => {
-       setPhoneNumber('+374 ' + event.target.value)
+    const handleInputPhoneNumber = (event: any) => {
+        setPhoneNumber('+374 ' + event.target.value)
     }
 
-    const handleSelectedMaster = (master:any) => {
+    const handleSelectedMaster = (master: any) => {
         setSelectMaster(master)
     }
 
@@ -263,7 +263,7 @@ const getData =() => {
                             {/*<input type="email" className="input" onChange={(event) => setEmail(event.target.value)}/>*/}
                             <Select
                                 placeholder={t("Choose Master")}
-                                value={selectMaster}
+                                value={selectMaster || undefined}
                                 onChange={handleSelectedMaster}
                                 options={translatedMasters}
                             />

@@ -629,7 +629,7 @@ a:-webkit-any-link {
 .service-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: wrap;
     //background: red;
     width: 90%;
@@ -643,6 +643,7 @@ a:-webkit-any-link {
     //background-image: url("./assets/service-bg/bg_1.svg");
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
     //background: grey;
     padding: 178px 14px 24px 14px;
     white-space: nowrap;
@@ -666,7 +667,7 @@ a:-webkit-any-link {
 .service-component_content_left-top {
     color: #FFF;
     font-family: "Futura PT";
-    font-size: 20px;
+    font-size: 18px;
     font-style: normal;
     font-weight: 450;
     line-height: normal;
@@ -1302,7 +1303,7 @@ button {
     }
     .service-component {
         width: 350px;
-        height: 260px;
+        height: 300px;
     }
     .service-component_content {
         margin-top: -60px;
