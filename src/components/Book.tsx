@@ -27,7 +27,7 @@ function Book() {
     const [bookHours,setBookHours]= useState<any>()
     const navigate = useNavigate();
     const {t} = useTranslation()
-console.log("Book Data",bookHours);
+// console.log("Book Data",bookHours);
 
     useEffect(() => {
         getData()

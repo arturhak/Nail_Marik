@@ -436,7 +436,8 @@ hr {
     width: 100%;
     background-image: url("./assets/about_page_1.png");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: cover; 
+    background-position: center;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -476,8 +477,9 @@ hr {
 .about_page_2 {
     display: flex;
     width: 100%;
-    background-image: url("./assets/about_page_1.png");
+    background-image: url("./assets/about_page_2.png");
     background-repeat: no-repeat;
+    background-position: center;
     background-size: cover;
     flex-direction: column;
     justify-content: center;
@@ -486,7 +488,7 @@ hr {
     padding: 88px 293px;
 }
 .about_page_2_title {
-    color: var(--Primary-Primary-Brown, #AA763C);
+    color: var(--Primary-Primary-Brown, #ffffff);
     text-align: center;
     font-family: "Futura PT";
     font-size: 24px;
@@ -576,8 +578,9 @@ a:-webkit-any-link {
 
 .service_page_1 {
     width: 100%;
-    background-image: url("./assets/service_page_1.svg");
+    background-image: url("./assets/service_page_1.png");
     background-repeat: no-repeat;
+    background-position: center;
     background-size: cover;
     display: flex;
     flex-direction: column;
@@ -626,7 +629,7 @@ a:-webkit-any-link {
 .service-content {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     flex-wrap: wrap;
     //background: red;
     width: 90%;
@@ -634,7 +637,7 @@ a:-webkit-any-link {
 }
 .service-component {
     position: relative;
-    //width: 30%;
+    width: 30%;
     //width: 358px;
     //height: 260px;
     //background-image: url("./assets/service-bg/bg_1.svg");
@@ -1284,6 +1287,7 @@ button {
     .about_page_1 {
         padding: 24px 16px;
         height: 360px;
+        background-position: center;
     }
     .about_our_story_content {
         width: 100%;
@@ -1294,6 +1298,7 @@ button {
     }
     .service_page_1 {
         height: 360px;
+        background-position: center;
     }
     .service-component {
         width: 350px;

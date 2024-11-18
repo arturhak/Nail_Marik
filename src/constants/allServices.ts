@@ -1,7 +1,7 @@
-import BG_1 from "../assets/service-bg/bg_1.svg";
-import BG_2 from "../assets/service-bg/bg_2.svg";
-import BG_3 from "../assets/service-bg/bg_3.svg";
-import BG_4 from "../assets/service-bg/bg_4.svg";
+import BG_1 from "../assets/service-bg/bg_1.png";
+import BG_2 from "../assets/service-bg/bg_2.png";
+import BG_3 from "../assets/service-bg/bg_3.png";
+import BG_4 from "../assets/service-bg/bg_4.png";
 import BG_5 from "../assets/service-bg/bg_5.svg";
 import BG_6 from "../assets/service-bg/bg_6.svg";
 import BG_7 from "../assets/service-bg/bg_7.svg";
@@ -34,7 +34,7 @@ export const allServices = {
             timeToMinute: 70
         },
         {
-            bg: BG_2,
+            bg: BG_3,
             value: 'Gel Lac + Manicure',
             startPrice: 8000,
             endPrice: null,
@@ -43,8 +43,8 @@ export const allServices = {
             timeToMinute: 70
         },
         {
-            bg: BG_6,
-            value: 'GEL REMOVAL',
+            bg: BG_4,
+            value: 'Gel Removal',
             startPrice: 1000,
             endPrice: null,
             hour: null,
@@ -116,7 +116,7 @@ export const allServices = {
 
         {
             bg: BG_6,
-            value: 'Hand Acupressure (Scrub Cream)',
+            value: 'Hand Acupressure',
             startPrice: 3000,
             endPrice: null,
             hour: null,
@@ -155,7 +155,7 @@ export const allServices = {
         },
         {
             bg: BG_7,
-            value: 'Pedicure + Gel Polish',
+            value: 'Pedicure + Gel Lac',
             startPrice: 10000,
             endPrice: null,
             hour: 1,
