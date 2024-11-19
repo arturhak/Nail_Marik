@@ -24,20 +24,27 @@ function Book() {
     const [lastTimes, setLastTimes] = useState<any>([]);
     const [totalTime, setTotalTime] = useState<any>();
     const [selectMaster, setSelectMaster] = useState<any>("");
-    const [bookHours, setBookHours] = useState<any>()
+    const [receiveData, setReceiveData] = useState<any>([]);
+    const [busyTimes, setBusyTimes] = useState<any>();
+
     const navigate = useNavigate();
     const { t } = useTranslation()
     // console.log("Book Data",bookHours);
 
     useEffect(() => {
         getData()
+    }, [dateState, selectMaster]);
+
+    console.log("BUSY TIMES", busyTimes)
+
+    useEffect(()=> {
         const getSelectedItem: any = localStorage.getItem("selectedService")
         console.log("selected item from services=>", JSON.parse(getSelectedItem))
         if (JSON.parse(getSelectedItem)?.value) {
             setSelectedItems([...selectedItems, JSON.parse(getSelectedItem).value])
             localStorage.removeItem("selectedService")
         }
-    }, [dateState])
+    },[])
 
     useEffect(() => {
         setAllTimes(getBookTime(10, 30))
@@ -86,12 +93,6 @@ function Book() {
     const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
 
     const getData = () => {
-        let allBooks: any = [
-            {
-                master: selectMaster,
-                date: dateState,
-            }
-        ]
 
         fetch('http://chicchoc.top/public/public/service', {
             method: 'POST',
@@ -99,9 +100,8 @@ function Book() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-
-                master: allBooks[0]?.master,
-                date: allBooks[0]?.date,
+                master: selectMaster,
+                date: dateState,
             })
         })
             .then(response => {
@@ -111,17 +111,19 @@ function Book() {
                 return response.json();
             })
             .then(data => {
-                setBookHours(data)
-                console.log('Book received:', bookHours);
+                const filteredTimes = data.map((el:any) => {return el.booked_hours})
+                setReceiveData(data)
+                setBusyTimes(filteredTimes.flat())
+                console.log('On Receive Data:', receiveData);
                 // Process data here
             })
             .catch(error => {
                 console.error('Fetch error:', error);
             });
-        console.log("Book = >", allBooks);
         // navigate("/")
-    }
 
+    }
+    console.log("out Receive Data =>",receiveData)
 
     const handleBook = () => {
         let allBooks: any = [
@@ -177,39 +179,45 @@ function Book() {
         let date = moment(e).format('MMMM Do YYYY')
         let cleanDateString = date.replace(/(\d+)(st|nd|rd|th)/, '$1');
         let replace = new Date(cleanDateString);
-        console.log("eeeeeeeeeeeeeeeeeeeeeeee", new Date(replace).getTime())
-        setDateState(new Date(replace).getTime())
+        console.log("timestamp"  , new Date(replace).getTime())
+        setDateState(new Date(replace).getTime());
+        getData()
 
-        fetch('http://chicchoc.top/public/public/service', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                date: dateState,
-                master: selectMaster
-            })
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Data received:', data);
-                // Process data here
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-            });
+        // fetch('http://chicchoc.top/public/public/service', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         date: dateState,
+        //         master: selectMaster
+        //     })
+        // })
+        //     .then(response => {
+        //         if (!response.ok) {
+        //             throw new Error(`HTTP error! Status: ${response.status}`);
+        //         }
+        //         return response.json();
+        //     })
+        //     .then(data => {
+        //         console.log('Data received:', data);
+        //         // Process data here
+        //     })
+        //     .catch(error => {
+        //         console.error('Fetch error:', error);
+        //     });
     };
+
     const handleSelectedServices = (e: any) => {
         setSelectedItems(e);
     };
     const handleSetTime = (time: any, index: number) => {
-        setTimeState(time);
-        setTimeIndex(index)
+        if (!busyTimes?.includes(time)){
+            console.log("TTTTTTTTTTTTTTTTTTTT",time)
+            setTimeState(time);
+            setTimeIndex(index)
+        }
+
     };
 
     const handleInputPhoneNumber = (event: any) => {
@@ -314,7 +322,7 @@ function Book() {
                                 return (
                                     <div
                                         key={index}
-                                        className={timeIndex !== index ? "book-time-local" : "book-time-local is-selected"}
+                                        className={!busyTimes?.includes(time) ? (timeIndex !== index ? "book-time-local" : "book-time-local is-selected"): "is-time-busy"}
                                         onClick={() => handleSetTime(time, index)}
                                     >
                                         {time}

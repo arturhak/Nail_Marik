@@ -985,6 +985,20 @@ button {
 .is-lang-selected {
     color: #FD2C03;
 }
+.is-time-busy {
+    border: 1px solid #F6F1EB;
+    color: #707070;
+    text-decoration: line-through;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    font-family: "Futura PT";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    background: #e8efef;
+}
 .time-group {
     display: flex;
     align-items: center;
