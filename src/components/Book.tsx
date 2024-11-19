@@ -238,9 +238,9 @@ function Book() {
 
     const translatedServices = allServiceGroup.map((service) => ({
         value: service.value,
-        label: t(`${service.value}`)
+        label: t(`${service.value}`) +' - '+ `${service.startPrice}` +' ' + `${t('AMD')}`
     }));
-
+    console.log("allServiceGroup------------------------",allServiceGroup)
     return (
         <div className="book-layout">
             <div className="book-left-side">
