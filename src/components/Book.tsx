@@ -213,7 +213,6 @@ function Book() {
     };
     const handleSetTime = (time: any, index: number) => {
         if (!busyTimes?.includes(time)){
-            console.log("TTTTTTTTTTTTTTTTTTTT",time)
             setTimeState(time);
             setTimeIndex(index)
         }

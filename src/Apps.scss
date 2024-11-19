@@ -185,7 +185,7 @@
 .burger-line {
     width: 26px;
     height: 2px;
-    background: #040404;
+    background: #FD2C03;
 }
 
 .layout {
@@ -423,10 +423,12 @@ hr {
 
 .mobile-header {
     display: flex;
+    position: fixed;
     width: 100%;
     padding: 28px 88px 20px 88px;
     justify-content: space-between;
     align-items: center;
+    background: #ffffff;
 }
 
 
@@ -1153,7 +1155,14 @@ button {
 
 @media screen and (max-width: 1023px) {
     .layout {
-        gap: 24px
+        gap: 24px;
+        margin-top: 85px;
+    }
+    .book-layout {
+        margin-top: 85px;
+    }
+    .admin {
+        margin-top: 85px!important;
     }
     .home_page_1 {
         gap: 24px;
@@ -1409,6 +1418,9 @@ button {
     .error .error-text {
         font-size: 20px;
     }
+    .admin {
+        overflow: auto;
+    }
 
 }
 
@@ -1429,3 +1441,49 @@ button {
     }
 }
 
+.admin {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+    margin-bottom: 48px;
+    padding: 0 24px;
+}
+
+//Table
+
+#customers {
+    font-family:Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #FD2C03;
+    color: white;
+}
+.table-remove-btn {
+    padding: 4px 8px;
+    border-radius: 8px;
+    background: #FD2C03;
+    color: #FFF;
+    font-family: "Futura PT";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    cursor: pointer;
+}
+//End Table

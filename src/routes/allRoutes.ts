@@ -7,6 +7,7 @@ import Error from "../components/Error";
 import Contact from "../components/Contact";
 import Services from "../components/Services";
 import Book from "../components/Book";
+import Admin from "../auth/Admin";
 
 interface RouteProps {
   path: string;
@@ -21,6 +22,7 @@ const publicRoutes: Array<RouteProps> = [
   { path: "/contact", component: Contact },
   { path: "/services", component: Services },
   { path: "/book", component: Book },
+  { path: "/admin", component: Admin },
   { path: "*", component: Error },
 
 ];
