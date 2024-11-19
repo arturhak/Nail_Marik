@@ -348,11 +348,9 @@ function Book() {
                 footer={null}
                 onCancel={() => setModalOpen(false)}
                 className="share-modal"
-                title={t(confirmStatus)}
+                title={"CHIC - CHOC"}
             >
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
+                <p>Գրանցումը Հաջողությամբ կատարված է</p>
             </Modal>
 
 

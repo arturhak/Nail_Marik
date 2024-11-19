@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
-import {Input, Modal} from "antd";
+import { Input, Modal } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import {adminPassword} from "../constants/headerData";
+import { adminPassword } from "../constants/headerData";
 
 function Admin() {
-    const [allData, setAllData] = useState([]);
+    const [allData, setAllData] = useState<any>([]);
     const [deletedData, setDeletedData] = useState();
     const [modalOpen, setModalOpen] = useState(true);
     const [password, setPassword] = useState("");
@@ -63,10 +63,10 @@ function Admin() {
             });
     }
 
-    const handleInputPassword = (event:any) => {
-      setPassword(event.target.value)
+    const handleInputPassword = (event: any) => {
+        setPassword(event.target.value)
     };
-    console.log("password",password)
+    console.log("password", password)
 
     const handleLogin = () => {
         if (password && password === adminPassword) {
@@ -74,36 +74,64 @@ function Admin() {
         }
 
     }
+
+    const handleReload = () => {
+
+        fetch('https://chicchoc.top/public/public/all/data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                setAllData(data.sort((a: any, b: any) => a.date - b.date))
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
+    }
     console.log("allData", allData)
 
     return (
         <div className="admin">
             <table id="customers">
                 <thead>
-                <tr>
-                    <th>Master</th>
-                    <th>User</th>
-                    <th>Service</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Action</th>
-                </tr>
+                    <tr>
+                        <th>Master</th>
+                        <th>User</th>
+                        <th>Phone</th>
+                        <th>Service</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Price</th>
+                        <th>Action</th>
+
+                    </tr>
                 </thead>
                 {allData.map((user: any) => {
                     return (
                         <tbody key={user.id}>
-                        <tr>
-                            <td>{user.master}</td>
-                            <td>{user.name}</td>
-                            <td>{user.services}</td>
-                            <td>{moment(user.date).format('MMMM Do YYYY')}</td>
-                            <td>{user.booked_hours}</td>
-                            <td>
-                                <button className="table-remove-btn" onClick={() => handleCancelBook(user)}>
-                                    Remove
-                                </button>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>{user.master}</td>
+                                <td>{user.name}</td>
+                                <td>{user.phone_number}</td>
+                                <td>{user.services}</td>
+                                <td>{moment(user.date).format('DD.MM.YYYY')}</td>
+                                <td>{user.booked_hours[0]}</td>
+                                <td>{user.total_price} AMD</td>
+                                
+                                <td>
+                                    <button className="table-remove-btn" onClick={() => handleCancelBook(user)}>
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
                         </tbody>
                     )
                 })}
@@ -121,11 +149,14 @@ function Admin() {
                         placeholder="input password"
                         iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                         onInput={handleInputPassword}
-                        style={{width: '100%'}}
+                        style={{ width: '100%' }}
                     />
                     <button className="login-btn" onClick={handleLogin}>Login</button>
                 </div>
             </Modal>
+            <button className="table-remove-btn" onClick={handleReload}>
+                Reload
+            </button>
 
         </div>
     )
