@@ -10,7 +10,13 @@ import BG_9 from "../assets/service-bg/bg_9.png";
 import BG_10 from "../assets/service-bg/bg_10.png";
 import BG_11 from "../assets/service-bg/bg_11.png";
 import BG_12 from "../assets/service-bg/bg_12.png";
-import BG_13 from "../assets/service-bg/bg_13.svg";
+import BG_13 from "../assets/service-bg/bg_13.png";
+import BG_14 from "../assets/service-bg/bg_14.png";
+import BG_15 from "../assets/service-bg/bg_15.png";
+import BG_16 from "../assets/service-bg/bg_16.png";
+import BG_17 from "../assets/service-bg/bg_17.png";
+import BG_18 from "../assets/service-bg/bg_18.png";
+import BG_19 from "../assets/service-bg/bg_19.png";
 
 export const allServices = {
 
@@ -124,7 +130,7 @@ export const allServices = {
             timeToMinute: 45
         },
         {
-            bg: BG_6,
+            bg: BG_13,
             value: 'Paraffin Therapy For Hands',
             startPrice: 3500,
             endPrice: null,
@@ -136,7 +142,7 @@ export const allServices = {
     ],
     pedicure: [
         {
-            bg: BG_7,
+            bg: BG_14,
             value: 'Classic Pedicure',
             startPrice: 7000,
             endPrice: null,
@@ -145,7 +151,7 @@ export const allServices = {
             timeToMinute: 90
         },
         {
-            bg: BG_7,
+            bg: BG_15,
             value: 'Pedicure + Simple Nail Polish',
             startPrice: 9000,
             endPrice: null,
@@ -154,7 +160,7 @@ export const allServices = {
             timeToMinute: 90
         },
         {
-            bg: BG_7,
+            bg: BG_16,
             value: 'Pedicure + Gel Lac',
             startPrice: 10000,
             endPrice: null,
@@ -163,7 +169,7 @@ export const allServices = {
             timeToMinute: 90
         },
         {
-            bg: BG_7,
+            bg: BG_17,
             value: 'Paraffin Therapy For Feet',
             startPrice: 5000,
             endPrice: null,
@@ -172,12 +178,21 @@ export const allServices = {
             timeToMinute: 90
         },
         {
-            bg: BG_7,
+            bg: BG_18,
             value: 'Heel Treatment',
             startPrice: 2000,
             endPrice: null,
             hour: 1,
             minute: 30,
+            timeToMinute: 90
+        },
+        {
+            bg: BG_19,
+            value: 'Acupressure Of The Feet',
+            startPrice: 5000,
+            endPrice: null,
+            hour: 1,
+            minute: 15,
             timeToMinute: 90
         },
     ],

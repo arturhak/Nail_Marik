@@ -640,10 +640,10 @@ a:-webkit-any-link {
     width: 30%;
     //width: 358px;
     //height: 260px;
-    //background-image: url("./assets/service-bg/bg_1.svg");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     background-position: center;
+
     //background: grey;
     padding: 178px 14px 24px 14px;
     white-space: nowrap;

@@ -76,6 +76,7 @@ export const translationEN = {
     "French": "French",
     "Ombre": "Ombre",
     "The Rub" : "The Rub",
+    "Acupressure Of The Feet": "Acupressure Of The Feet"
     
 
 }

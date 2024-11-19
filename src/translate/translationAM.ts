@@ -61,6 +61,7 @@ export const translationAM = {
     "Daily Make-Up": "Ամենօրյա Դիմահարդարում",
     "Wedding Make-Up": "Հարսանեկան Դիմահարդարում",
     "Removing The Charge": "Լիցքի Հեռացում",
+    "Acupressure Of The Feet": "Կետային Մերսում",
     "Eyebrow Shaping": "Հոնքերի շտկում",
     "Lamination": "Հոնքերի Լամինացիա",
     "Waxing": "Ոսկային Մազահեռացում",
