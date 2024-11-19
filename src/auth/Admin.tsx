@@ -19,7 +19,7 @@ function Admin() {
                 return response.json();
             })
             .then(data => {
-                setAllData(data)
+                setAllData(data.sort((a:any, b:any) => a.date - b.date))
             })
             .catch(error => {
                 console.error('Fetch error:', error);
@@ -57,6 +57,7 @@ function Admin() {
                 console.error('Fetch error:', error);
             });
     }
+
 
     console.log("allData", allData)
 

@@ -1487,3 +1487,18 @@ button {
     cursor: pointer;
 }
 //End Table
+
+.ant-modal .ant-modal-title {
+    text-align: center;
+    font-family: "Futura PT";
+    color: #FD2C03;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+.ant-modal .ant-modal-body {
+    text-align: center;
+}

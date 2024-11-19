@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Input, Select } from 'antd';
+import {Input, Modal, Select} from 'antd';
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
@@ -26,6 +26,8 @@ function Book() {
     const [selectMaster, setSelectMaster] = useState<any>("");
     const [receiveData, setReceiveData] = useState<any>([]);
     const [busyTimes, setBusyTimes] = useState<any>();
+    const [modalOpen, setModalOpen] = useState(false)
+    const [confirmStatus, setConfirmStatus] = useState("")
 
     const navigate = useNavigate();
     const { t } = useTranslation()
@@ -164,13 +166,15 @@ function Book() {
             })
             .then(data => {
                 console.log('Data received:', data);
-                // Process data here
+                setModalOpen(true);
+                setConfirmStatus("Confirm")
             })
             .catch(error => {
                 console.error('Fetch error:', error);
+                setModalOpen(true);
+                setConfirmStatus("Error")
             });
         console.log("Book = >", allBooks);
-        navigate("/")
     };
 
     const changeDate = (e: any) => {
@@ -340,6 +344,17 @@ function Book() {
                     />
                 </div>
             </div>
+            <Modal
+                open={modalOpen}
+                footer={null}
+                onCancel={() => setModalOpen(false)}
+                className="share-modal"
+                title={t(confirmStatus)}
+            >
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+            </Modal>
 
 
         </div>
