@@ -121,6 +121,7 @@ function Admin() {
                         placeholder="input password"
                         iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                         onInput={handleInputPassword}
+                        style={{width: '100%'}}
                     />
                     <button className="login-btn" onClick={handleLogin}>Login</button>
                 </div>
