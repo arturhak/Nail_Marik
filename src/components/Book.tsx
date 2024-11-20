@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Input, Modal, Select} from 'antd';
+import { Input, Modal, Select } from 'antd';
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
@@ -39,14 +39,14 @@ function Book() {
 
     console.log("BUSY TIMES", busyTimes)
 
-    useEffect(()=> {
+    useEffect(() => {
         const getSelectedItem: any = localStorage.getItem("selectedService")
         console.log("selected item from services=>", JSON.parse(getSelectedItem))
         if (JSON.parse(getSelectedItem)?.value) {
             setSelectedItems([...selectedItems, JSON.parse(getSelectedItem).value])
             localStorage.removeItem("selectedService")
         }
-    },[])
+    }, [])
 
     useEffect(() => {
         setAllTimes(getBookTime(10, 30))
@@ -94,6 +94,33 @@ function Book() {
     const allServiceGroup = Object.values(allServices).flat();
     const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
 
+    async function tgFormWeb(_date: any, _time: any, _name: any, _phone: any, _master: any, _service: any, _price: any) {
+        const date = new Date(_date); // Assuming _date is a valid date string or object
+        const formattedDate = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
+        let message = ` Կատարվել է Գրանցում \n\n`;
+        message += `Ամսաթիվ:\n ${formattedDate} \n\n`;
+        message += `Ժամ:\n${_time} \n\n`;
+        message += `Հեռախոս:\n${_phone} \n\n`;
+        message += `Մասնագետ:\n${_master} \n\n`;
+        message += `Ծառայություն:\n${_service} \n\n`;
+        message += `Ծառայություն:\n${_price} AMD\n\n`;
+
+        const token = "7919607900:AAESSDQomcRQ2gBFpJ5NEXVZijW8FdA4kiY"
+        const chat_id = "-4552058619";
+        const URI_API = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`;
+
+        try {
+            let response = await fetch(URI_API, { method: 'GET' });
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            // You can handle the response if needed
+            console.log('Message sent successfully');
+        } catch (error) {
+            console.error('Error sending message:', error);
+        }
+    }
+
     const getData = () => {
 
         fetch('http://chicchoc.top/public/public/service', {
@@ -113,7 +140,7 @@ function Book() {
                 return response.json();
             })
             .then(data => {
-                const filteredTimes = data.map((el:any) => {return el.booked_hours})
+                const filteredTimes = data.map((el: any) => { return el.booked_hours })
                 setReceiveData(data)
                 setBusyTimes(filteredTimes.flat())
                 console.log('On Receive Data:', receiveData);
@@ -125,7 +152,7 @@ function Book() {
         // navigate("/")
 
     }
-    console.log("out Receive Data =>",receiveData)
+    console.log("out Receive Data =>", receiveData)
 
     const handleBook = () => {
         let allBooks: any = [
@@ -166,6 +193,7 @@ function Book() {
             })
             .then(data => {
                 console.log('Data received:', data);
+                tgFormWeb(allBooks[0]?.date, allBooks[0]?.timeState, allBooks[0]?.name, allBooks[0]?.phoneNumber, allBooks[0]?.master, allBooks[0]?.services, allBooks[0]?.totalPrice);
                 setModalOpen(true);
                 setConfirmStatus("Confirm")
             })
@@ -183,7 +211,7 @@ function Book() {
         let date = moment(e).format('MMMM Do YYYY')
         let cleanDateString = date.replace(/(\d+)(st|nd|rd|th)/, '$1');
         let replace = new Date(cleanDateString);
-        console.log("timestamp"  , new Date(replace).getTime())
+        console.log("timestamp", new Date(replace).getTime())
         setDateState(new Date(replace).getTime());
         getData()
 
@@ -216,7 +244,7 @@ function Book() {
         setSelectedItems(e);
     };
     const handleSetTime = (time: any, index: number) => {
-        if (!busyTimes?.includes(time)){
+        if (!busyTimes?.includes(time)) {
             setTimeState(time);
             setTimeIndex(index)
         }
@@ -238,7 +266,7 @@ function Book() {
 
     const translatedServices = allServiceGroup.map((service) => ({
         value: service.value,
-        label: t(`${service.value}`) +' - '+ `${service.startPrice}` +' ' + `${t('AMD')}`
+        label: t(`${service.value}`) + ' - ' + `${service.startPrice}` + ' ' + `${t('AMD')}`
     }));
     return (
         <div className="book-layout">
@@ -324,7 +352,7 @@ function Book() {
                                 return (
                                     <div
                                         key={index}
-                                        className={!busyTimes?.includes(time) ? (timeIndex !== index ? "book-time-local" : "book-time-local is-selected"): "is-time-busy"}
+                                        className={!busyTimes?.includes(time) ? (timeIndex !== index ? "book-time-local" : "book-time-local is-selected") : "is-time-busy"}
                                         onClick={() => handleSetTime(time, index)}
                                     >
                                         {time}
