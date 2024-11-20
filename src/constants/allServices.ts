@@ -17,6 +17,16 @@ import BG_16 from "../assets/service-bg/bg_16.png";
 import BG_17 from "../assets/service-bg/bg_17.png";
 import BG_18 from "../assets/service-bg/bg_18.png";
 import BG_19 from "../assets/service-bg/bg_19.png";
+import BG_20 from "../assets/service-bg/bg_20.png";
+import BG_21 from "../assets/service-bg/bg_21.png";
+import BG_22 from "../assets/service-bg/bg_22.png";
+import BG_23 from "../assets/service-bg/bg_23.png";
+import BG_24 from "../assets/service-bg/bg_24.png";
+import BG_25 from "../assets/service-bg/bg_25.png";
+import BG_26 from "../assets/service-bg/bg_26.png";
+import BG_27 from "../assets/service-bg/bg_27.png";
+import BG_28 from "../assets/service-bg/bg_28.png";
+import BG_29 from "../assets/service-bg/bg_29.png";
 
 export const allServices = {
 
@@ -152,7 +162,7 @@ export const allServices = {
         },
         {
             bg: BG_15,
-            value: 'Pedicure + Simple Nail Polish',
+            value: 'Pedicure + Simple Lac',
             startPrice: 9000,
             endPrice: null,
             hour: 1,
@@ -198,16 +208,16 @@ export const allServices = {
     ],
     faceSkinCare: [
         {
-            bg: BG_9,
-            value: "Men's Manicure",
+            bg: BG_20,
+            value: "Manicure",
             startPrice: 5000,
             hour: 1,
             minute: 30,
             timeToMinute: 90
         },
         {
-            bg: BG_10,
-            value: "Men's Pedicure",
+            bg: BG_21,
+            value: "Pedicure",
             startPrice: 11000,
             endPrice: null,
             hour: 1,
@@ -215,8 +225,8 @@ export const allServices = {
             timeToMinute: 70
         },
         {
-            bg: BG_11,
-            value: "Men's Pedicure (Without Heel Treatment)",
+            bg: BG_22,
+            value: "Pedicure (Without Heel Treatment)",
             startPrice: 9000,
             endPrice: null,
             hour: 1,
@@ -224,8 +234,8 @@ export const allServices = {
             timeToMinute: 70
         },
         {
-            bg: BG_12,
-            value: "Men's Paraffin Therapy For Hands",
+            bg: BG_23,
+            value: "Paraffin Therapy For Hands",
             startPrice: 6000,
             endPrice: null,
             hour: 1,
@@ -233,8 +243,8 @@ export const allServices = {
             timeToMinute: 70
         },
         {
-            bg: BG_13,
-            value: "Men's Paraffin Therapy For Feet",
+            bg: BG_24,
+            value: "Paraffin Therapy For Feet",
             startPrice: 8000,
             endPrice: null,
             hour: 1,
@@ -244,17 +254,17 @@ export const allServices = {
     ],
     design: [
         {
-            bg: BG_9,
+            bg: BG_25,
             value: "Design Of Medium Complexity",
             startPrice: 5000,
-            endPrice: 3000,
+            endPrice: null,
             hour: 1,
             minute: 30,
             timeToMinute: 90
         },
 
         {
-            bg: BG_9,
+            bg: BG_26,
             value: "Stemping",
             startPrice: 3000,
             endPrice: null,
@@ -263,7 +273,7 @@ export const allServices = {
             timeToMinute: 90
         },
         {
-            bg: BG_9,
+            bg: BG_27,
             value: "French",
             startPrice: 3000,
             endPrice: null,
@@ -272,7 +282,7 @@ export const allServices = {
             timeToMinute: 90
         },
         {
-            bg: BG_9,
+            bg: BG_28,
             value: "Ombre",
             startPrice: 3000,
             endPrice: null,
@@ -281,7 +291,7 @@ export const allServices = {
             timeToMinute: 90
         },
         {
-            bg: BG_9,
+            bg: BG_29,
             value: "The Rub",
             startPrice: 3000,
             endPrice: null,

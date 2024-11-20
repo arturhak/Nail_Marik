@@ -424,11 +424,13 @@ hr {
 .mobile-header {
     display: flex;
     position: fixed;
+    background-color: #fff;
     width: 100%;
     padding: 28px 88px 20px 88px;
     justify-content: space-between;
     align-items: center;
     background: #ffffff;
+    z-index: 1;
 }
 
 
@@ -643,7 +645,7 @@ a:-webkit-any-link {
     //width: 358px;
     //height: 260px;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     background-position: center;
 
     //background: grey;
@@ -659,7 +661,7 @@ a:-webkit-any-link {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 14px;
+    gap: 2%
 }
 .service-component_content_left {
     display: flex;
@@ -723,7 +725,7 @@ a:-webkit-any-link {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url("./assets/book_bg.svg");
+    background-image: url("./assets/book_bg.png");
     background-repeat: no-repeat;
     background-size: cover;
     padding-top: 200px;
@@ -1096,13 +1098,16 @@ button {
         padding: 24px;
     }
     &.ant-drawer .ant-drawer-body {
-        background-image: url("./assets/images/img.png");
+        // background-image: url("./assets/images/img.png");
         background-position: center;
         background-size: cover;
     }
     &.ant-drawer .ant-drawer-close{
         color: #E75F36
     }
+}
+.ant-drawer-content-wrapper{
+    width: 255px !important;
 }
 
 .mob-nav-group {
@@ -1326,7 +1331,7 @@ button {
     }
     .service-component {
         width: 350px;
-        height: 300px;
+        height: 260px;
     }
     .service-component_content {
         margin-top: -60px;
