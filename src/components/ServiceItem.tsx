@@ -11,7 +11,7 @@ function ServiceItem(props: any) {
             <div className="service-component_content">
                 <div className="service-component_content_left">
                     <div className="service-component_content_left-top">
-                        {t(props.service)}<span>.</span>
+                        {t(props.service)}
                     </div>
                     <div className="service-component_content_left-bottom">
                         {props.endPrice ? <div className="price">{props.startPrice} - {props.endPrice} {t('AMD')}</div> :

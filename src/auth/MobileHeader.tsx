@@ -85,10 +85,6 @@ function MobileHeader({headerData, navigate}: any) {
                                 <div className={language === "AM" ? "language_item is-lang-selected" : "language_item"} onClick={() => handleChangeLanguage('AM')}>ՀԱՅ</div>
                             </div>
                         </div>
-                        <div className="mob-nav-group_burger-footer__content">
-                            {t("Discover the ultimate in nail care luxury at CHIC ∙ CHOC Nail Salon. Treat yourself to expert manicures and pedicures in our serene and welcoming atmosphere. Book your appointment today for a rejuvenating experience you won't forget!")}
-
-                        </div>
                         <MainButton
                             text="Book Now"
                             func={bookNow}
