@@ -29,7 +29,7 @@ export const translationAM = {
     "Men's Manicure": "Տղամարդկանց Մատնահարդարում",
     "Men's Pedicure": "Տղամարդկանց Ոտնահարդարում",
     "Pedicure (Without Heel Treatment)": "Ոտնահարդարում (Առանց Կրունկի)",
-    "Men's Paraffin Therapy For Hands": "Ձեռքերի Պարաֆինային Թերապիա",
+    "Men's Paraffin Therapy For Hands": "Ձեռքերի Պարաֆինային Թերապի",
     "Men's Paraffin Therapy For Feet" : "Ոտքերի Պարաֆինային Թերապիա",
     "Design": "Դիզայն",
     "Design Of Medium Complexity": "Միջին Բարդության Դիզայն",
