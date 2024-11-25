@@ -76,7 +76,9 @@ export const translationEN = {
     "French": "French",
     "Ombre": "Ombre",
     "The Rub" : "The Rub",
-    "Acupressure Of The Feet": "Acupressure Of The Feet"
+    "Acupressure Of The Feet": "Acupressure Of The Feet",
+    "Registration Successfully Completed": "Registration Successfully Completed",
+    "Fill in all fields": "Fill in all fields"
     
 
 }

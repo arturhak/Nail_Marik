@@ -78,5 +78,7 @@ export const translationAM = {
     "Time": "Ժամ",
     "OOOPS! PAGE NOT FOUND": "ԷՋԸ ՉԻ ԳՏՆՎԵԼ",
     "Return Homepage": "Վերադառնալ Գլխավոր էջ",
-    "Awesome atmosphere, cool service, best personal!Thank you for being so Chic!": "Հիանալի մթնոլորտ, հիանալի սպասարկում, լավագույն անձնակազմ: Շնորհակալություն այսքան շքեղ լինելու համար:"
+    "Awesome atmosphere, cool service, best personal!Thank you for being so Chic!": "Հիանալի մթնոլորտ, հիանալի սպասարկում, լավագույն անձնակազմ: Շնորհակալություն այսքան շքեղ լինելու համար:",
+    "Registration Successfully Completed": "Գրանցումը Հաջողությամբ կատարված է",
+    "Fill in all fields": "Լրացրեք բոլոր դածշտերը"
 }

@@ -29,7 +29,6 @@ function Book() {
     const [modalOpen, setModalOpen] = useState(false)
     const [confirmStatus, setConfirmStatus] = useState("")
 
-    const navigate = useNavigate();
     const { t } = useTranslation()
     // console.log("Book Data",bookHours);
 
@@ -37,34 +36,33 @@ function Book() {
         getData()
     }, [dateState, selectMaster]);
 
-    console.log("BUSY TIMES", busyTimes)
 
     useEffect(() => {
+        let defaultDate = new Date().toLocaleString();
+        let date = new Date(defaultDate);
+        let milliseconds = date.getTime();
+        setDateState(milliseconds);
+
         const getSelectedItem: any = localStorage.getItem("selectedService")
         console.log("selected item from services=>", JSON.parse(getSelectedItem))
         if (JSON.parse(getSelectedItem)?.value) {
             setSelectedItems([...selectedItems, JSON.parse(getSelectedItem).value])
             localStorage.removeItem("selectedService")
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
         setAllTimes(getBookTime(10, 30))
-        console.log("selectedItems", selectedItems)
 
         if (selectedItems.length > 0) {
             selectedItems.forEach(() => {
                 const filteredSelections = allServiceGroup.filter((o) => selectedItems.includes(o.value));
 
-                console.log("filteredSelections", filteredSelections)
-
                 let selectedItemsPrice = filteredSelections.map((item: any) => item.startPrice)
                 setPrice(selectedItemsPrice)
-                console.log("selected price", selectedItemsPrice)
 
                 let selectedItemsTime = filteredSelections.map((item: any) => item.timeToMinute);
                 setLastTimes(selectedItemsTime)
-                console.log('selected time', selectedItemsTime)
 
                 setSelectedForBook(filteredSelections);
             });
@@ -87,12 +85,12 @@ function Book() {
         }
     }, [lastTimes]);
 
-    console.log("total Time", totalTime)
-    console.log("total Price", totalPrice)
-    console.log("selected for Book", selectedForBook)
+    // console.log("total Time", totalTime)
+    // console.log("total Price", totalPrice)
+    // console.log("selected for Book", selectedForBook)
 
     const allServiceGroup = Object.values(allServices).flat();
-    const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
+    // const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
 
     async function tgFormWeb(_date: any, _time: any, _name: any, _phone: any, _master: any, _service: any, _price: any) {
         const date = new Date(_date); // Assuming _date is a valid date string or object
@@ -196,19 +194,17 @@ function Book() {
                 console.log('Data received:', data);
                 tgFormWeb(allBooks[0]?.date, allBooks[0]?.timeState, allBooks[0]?.name, allBooks[0]?.phoneNumber, allBooks[0]?.master, allBooks[0]?.services, allBooks[0]?.totalPrice);
                 setModalOpen(true);
-                setConfirmStatus("Confirm")
+                setConfirmStatus('Registration Successfully Completed')
             })
             .catch(error => {
                 console.error('Fetch error:', error);
                 setModalOpen(true);
-                setConfirmStatus("Error")
+                setConfirmStatus("Fill in all fields")
             });
         console.log("Book = >", allBooks);
     };
 
     const changeDate = (e: any) => {
-        // console.log("eeeeeeeeeeeeeee",e.toLocaleString())
-        // console.log("eeeeeeeeeeeeeee555",moment(e).format('MMMM Do YYYY'))
         let date = moment(e).format('MMMM Do YYYY')
         let cleanDateString = date.replace(/(\d+)(st|nd|rd|th)/, '$1');
         let replace = new Date(cleanDateString);
@@ -299,7 +295,6 @@ function Book() {
                         </div>
                         <div className="input_item">
                             <div className="input_item-title">{t('Choose Master')}</div>
-                            {/*<input type="email" className="input" onChange={(event) => setEmail(event.target.value)}/>*/}
                             <Select
                                 placeholder={t("Choose Master")}
                                 value={selectMaster || undefined}
@@ -321,16 +316,6 @@ function Book() {
 
                         <div className="input_item">
                             <div className="input_item-title">{t('Select the Service Type')}</div>
-                            {/*<Select*/}
-                            {/*    defaultValue="Services"*/}
-                            {/*    style={{ width: 120 }}*/}
-                            {/*    onChange={handleSelectChange}*/}
-                            {/*    options={[*/}
-                            {/*        { value: 'Option1', label: 'Option555' },*/}
-                            {/*        { value: 'Option2', label: 'Option2' },*/}
-                            {/*        { value: 'Option3', label: 'Option3' },*/}
-                            {/*    ]}*/}
-                            {/*/>*/}
                             <Select
                                 mode="multiple"
                                 placeholder={t("Services")}
@@ -379,10 +364,8 @@ function Book() {
                 className="share-modal"
                 title={"CHIC - CHOC"}
             >
-                <p>Գրանցումը Հաջողությամբ կատարված է</p>
+                <p>{t(confirmStatus)}</p>
             </Modal>
-
-
         </div>
     )
 }
