@@ -153,55 +153,63 @@ function Book() {
     console.log("out Receive Data =>", receiveData)
 
     const handleBook = () => {
-        let allBooks: any = [
-            {
-                master: selectMaster,
-                name: userName,
-                date: dateState,
-                timeState: timeState,
-                services: [...selectedItems],
-                phoneNumber: phoneNumber,
-                totalPrice: totalPrice,
-                totalTime: totalTime
-            }
-        ]
-
-        fetch('https://chicchoc.top/public/public/service/data', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-
-                master: allBooks[0]?.master,
-                name: allBooks[0]?.name,
-                date: allBooks[0]?.date,
-                timeState: allBooks[0]?.timeState,
-                services: allBooks[0]?.services,
-                phoneNumber: allBooks[0]?.phoneNumber,
-                totalPrice: allBooks[0]?.totalPrice,
-                totalTime: allBooks[0]?.totalTime
-            })
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                    setConfirmStatus(response.status.toString())
+        if (userName !== "" && phoneNumber !== "" && selectMaster !== "" ) {
+            let allBooks: any = [
+                {
+                    master: selectMaster,
+                    name: userName,
+                    date: dateState,
+                    timeState: timeState,
+                    services: [...selectedItems],
+                    phoneNumber: phoneNumber,
+                    totalPrice: totalPrice,
+                    totalTime: totalTime
                 }
-                return setModalOpen(true);
+            ]
+    
+            fetch('https://chicchoc.top/public/public/service/data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+    
+                    master: allBooks[0]?.master,
+                    name: allBooks[0]?.name,
+                    date: allBooks[0]?.date,
+                    timeState: allBooks[0]?.timeState,
+                    services: allBooks[0]?.services,
+                    phoneNumber: allBooks[0]?.phoneNumber,
+                    totalPrice: allBooks[0]?.totalPrice,
+                    totalTime: allBooks[0]?.totalTime
+                })
             })
-            .then(data => {
-                console.log('Data received:', data);
-                tgFormWeb(allBooks[0]?.date, allBooks[0]?.timeState, allBooks[0]?.name, allBooks[0]?.phoneNumber, allBooks[0]?.master, allBooks[0]?.services, allBooks[0]?.totalPrice);
-                setModalOpen(true);
-                setConfirmStatus('Registration Successfully Completed')
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-                setModalOpen(true);
-                setConfirmStatus("Fill in all fields")
-            });
-        console.log("Book = >", allBooks);
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                        console.log("ConfStatus",confirmStatus);
+                        
+                        setConfirmStatus(response.status.toString())
+                    }
+                    return setModalOpen(true);
+                })
+                .then(data => {
+                    console.log('Data received:', data);
+                    tgFormWeb(allBooks[0]?.date, allBooks[0]?.timeState, allBooks[0]?.name, allBooks[0]?.phoneNumber, allBooks[0]?.master, allBooks[0]?.services, allBooks[0]?.totalPrice);
+                    setConfirmStatus('Registration Successfully Completed')
+                    setModalOpen(true);
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    setModalOpen(true);
+                    setConfirmStatus("Fill in all fields")
+                });
+                console.log("Book = >", allBooks);
+        }else{
+            setConfirmStatus(t("Fill in all the fields for registration"))
+            setModalOpen(true)            
+        }
+      
     };
 
     const changeDate = (e: any) => {
@@ -211,30 +219,6 @@ function Book() {
         console.log("timestamp", new Date(replace).getTime())
         setDateState(new Date(replace).getTime());
         getData()
-
-        // fetch('http://chicchoc.top/public/public/service', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         date: dateState,
-        //         master: selectMaster
-        //     })
-        // })
-        //     .then(response => {
-        //         if (!response.ok) {
-        //             throw new Error(`HTTP error! Status: ${response.status}`);
-        //         }
-        //         return response.json();
-        //     })
-        //     .then(data => {
-        //         console.log('Data received:', data);
-        //         // Process data here
-        //     })
-        //     .catch(error => {
-        //         console.error('Fetch error:', error);
-        //     });
     };
 
     const handleSelectedServices = (e: any) => {

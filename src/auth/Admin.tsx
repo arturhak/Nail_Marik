@@ -155,7 +155,7 @@ function Admin() {
                 </div>
             </Modal>
             <button className="table-remove-btn" onClick={handleReload}>
-                Reload
+                Update
             </button>
 
         </div>

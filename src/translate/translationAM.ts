@@ -5,7 +5,7 @@ export const translationAM = {
     "Book Now": "Ամրագրել հիմա",
     "Discover the ultimate in nail care luxury at CHIC ∙ CHOC Nail Salon. Treat yourself to expert manicures and pedicures in our serene and welcoming atmosphere. Book your appointment today for a rejuvenating experience you won't forget!": "Բացահայտեք եղունգների խնամքի լավագույն շքեղությունը ՇԻԿ ∙ ՇՈԿ եղունգների սրահում: Հաճելի մատնահարդարումներ և պեդիկյուրներ արեք մեր հանգիստ և հյուրընկալ մթնոլորտում: Ամրագրեք ձեր հանդիպումը այսօր երիտասարդացնող փորձի համար, որը չեք մոռանա",
     "Step into a Realm of Beauty and Elegance, Where Your Nails Become a Canvas of Creativity.": "Քայլ դեպի գեղեցկություն և էլեգանտություն, որտեղ քո եղունգները վերածվում են յուրահատուկ ստեղծագործության:",
-    "Vardananc 16, Yerevan, Armenia": "Վարդանանց 16, Երևան, Հայաստան",
+    "Vardananc Մեկ6, Yerevan, Armenia": "Վարդանանց Մեկ6, Երևան, Հայաստան",
     "Our goal is to provide a luxurious and relaxing experience with excellent nail care and artistry, exceeding client expectations with a range of services including manicures, pedicures and creative nail designs.": "Մեր նպատակն է գերազանցել հաճախորդի սպասելիքները շքեղ և միևնույն պահին հանգիստ միջավայրում։ Մենք կփորձենք անել ամեն բան, քեզ գոհացնելու համար, արի՛ մեր մոտ և ամբողջացրու քո ոճը մեր պրոֆեսիոնալ մասնագետների օգնությամբ։",
     "Dare to dream differently with us!": "Ընդգծի՛ր քո ոճը, տարբերվի՛ր բոլորից",
     "Got a quirky wish? We've got you covered! Let us sprinkle some magic and make it real, reflecting your awesome personality. And hey, while we're at it, let's pamper those nails with some luxe treatment too!": "Ցանկացած քմահաճ ցանկություն քո կողմից՝ մենք սիրով կդարձնենք իրական, որպեսզի արտացոլվի քո յուրահատուկ անհատականությունը։ Ընդունի՛ ր շքեղությունը և մենք կապահովենք քո եղունգների խնամքն ու գեղեցկությունը։",
@@ -37,7 +37,7 @@ export const translationAM = {
     "French": "ֆրենչ",
     "Ombre": "Օմբրե",
     "The Rub" : "Վտիրկա",
-    "AMD": "ԴՐԱՄ",
+    "AMD": "֏",
     "hr": "ժ",
     "min": "ր",
     "Classic Manicure": "Դասական Մատնահարդարում",
@@ -46,8 +46,8 @@ export const translationAM = {
     "Nail Fixing": "Եղունգների Ամրեցում",
     "Nail Refill": "Եղունգների Լիցք",
     "Refill Correction": "Լիցքի Կորրեկցիա",
-    "Repair Of One Nail": "1 Եղունգի նորոգում",
-    "Padding For One Nail": "1 Եղունգի Լիցք ",
+    "Repair Of One Nail": "Եղունգի նորոգում",
+    "Padding For One Nail": "Եղունգի Լիցք ",
     "Gel Removal": "Գելլաքի Հեռացում",
     "Hand Acupressure": "Կետային Մերսում",
     "Manicure + Simple Lac": "Մատնահարդարում + Լաք",
@@ -83,5 +83,6 @@ export const translationAM = {
     "Fill in all fields": "Լրացրեք բոլոր դաշտերը",
     "Feel free to reach out to us using any of the methods below. Our dedicated team is ready to assist you and ensure that your experience with us is nothing short of exceptional.": "Կապ հաստատե՛ք մեզ հետ՝ օգտագործելով ստորև նշված տարբերակներից որևէ մեկը: Մեր անձնվեր թիմը պատրաստ է օգնել ձեզ և համոզվել, որ մեզ հետ ունեցած ձեր փորձը կլինի բացառիկ:",
     "Monday - Sunday": "Երկուշաբթիից Կիրակ",
-    "Contact  Us": "Կապ մեզ հետ"
+    "Contact  Us": "Կապ մեզ հետ",
+    "Fill in all the fields for registration": "Լրացրեք բոլոր դաշտերը գրանցվելու համար"
 }

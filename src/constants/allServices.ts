@@ -37,8 +37,8 @@ export const allServices = {
             startPrice: 3000,
             endPrice: null,
             hour: null,
-            minute: 40,
-            timeToMinute: 40
+            minute: 30,
+            timeToMinute: 30
         },
         {
             bg: BG_2,

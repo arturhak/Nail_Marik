@@ -23,7 +23,7 @@ export const translationEN = {
     "Visit our calm retreat and leave behind the busy pace of daily life. Our skilled technicians will provide you with exceptional nail care, creating the perfect experience for you.": "Visit our calm retreat and leave behind the busy pace of daily life. Our skilled technicians will provide you with exceptional nail care, creating the perfect experience for you.",
     "Services": "Services",
     "face skin care": "face skin care",
-    "AMD": "AMD",
+    "AMD": "֏",
     "hr": "hr",
     "min": "min",
     "Classic Manicure": "Classic Manicure",
@@ -81,6 +81,7 @@ export const translationEN = {
     "Fill in all fields": "Fill in all fields",
     "Feel free to reach out to us using any of the methods below. Our dedicated team is ready to assist you and ensure that your experience with us is nothing short of exceptional.": "Feel free to reach out to us using any of the methods below. Our dedicated team is ready to assist you and ensure that your experience with us is nothing short of exceptional.",
     "Monday - Sunday": "Monday - Sunday",
-    "Contact  Us": "Contact Us"
+    "Contact  Us": "Contact Us",
+    "Fill in all the fields for registration": "Fill in all the fields for registration"
 
 }
