@@ -80,5 +80,5 @@ export const translationAM = {
     "Return Homepage": "Վերադառնալ Գլխավոր էջ",
     "Awesome atmosphere, cool service, best personal!Thank you for being so Chic!": "Հիանալի մթնոլորտ, հիանալի սպասարկում, լավագույն անձնակազմ: Շնորհակալություն այսքան շքեղ լինելու համար:",
     "Registration Successfully Completed": "Գրանցումը Հաջողությամբ կատարված է",
-    "Fill in all fields": "Լրացրեք բոլոր դածշտերը"
+    "Fill in all fields": "Լրացրեք բոլոր դաշտերը",
 }

@@ -7,8 +7,8 @@ import MainButton from "../buttons/MainButton";
 import { getBookTime } from "../constants/bookTime";
 import { allServices } from "../constants/allServices";
 import { allMasters } from "../constants/allServices";
-import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
+import i18n from "../translate/i18n";
 
 function Book() {
     const [dateState, setDateState] = useState<any>();
@@ -28,12 +28,11 @@ function Book() {
     const [busyTimes, setBusyTimes] = useState<any>();
     const [modalOpen, setModalOpen] = useState(false)
     const [confirmStatus, setConfirmStatus] = useState("")
-
     const { t } = useTranslation()
-    // console.log("Book Data",bookHours);
+
 
     useEffect(() => {
-        getData()
+        getData();
     }, [dateState, selectMaster]);
 
 
@@ -187,8 +186,9 @@ function Book() {
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
+                    setConfirmStatus(response.status.toString())
                 }
-                return response.json();
+                return setModalOpen(true);
             })
             .then(data => {
                 console.log('Data received:', data);
