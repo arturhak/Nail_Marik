@@ -1,14 +1,15 @@
 @font-face {
-    font-family: "Futura PT";
-    src: url("./fonts/futura-pt/FuturaCyrillicDemi.ttf"), local("Futura PT");
+    font-family: "NotoSans REG";
+    src: url("./fonts/NotoSans/NotoSansArmenian-Regular.ttf"), local("NotoSans REG");
+}
+
+@font-face {
+    font-family: "NotoSans Light";
+    src: url("./fonts/NotoSans/NotoSansArmenian-Light.ttf"), local("NotoSans Light");
 }
 @font-face {
-    font-family: "Futura PT Medium";
-    src: url("./fonts/futura-pt/FuturaCyrillicMedium.ttf"), local("Futura PT Medium");
-}
-@font-face {
-    font-family: "Futura PT Light";
-    src: url("./fonts/futura-pt/FuturaCyrillicLight.ttf"), local("Futura PT Light");
+    font-family: "NotoSans Medium";
+    src: url("./fonts/NotoSans/NotoSansArmenian-Medium.ttf"), local("NotoSans Medium");
 }
 
 *,
@@ -67,7 +68,7 @@
 .contacts_item {
     color: #FFF;
     text-align: center;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -94,7 +95,7 @@
     border-radius: 8px;
     background: #FD2C03;
     color: #FFF;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -147,7 +148,7 @@
 }
 .language_item {
     color: #3c3c3c;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -161,7 +162,7 @@
 }
 .nav_item {
     color: #3c3c3c;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -212,7 +213,7 @@
 .home_page_1_title {
     color: #FFF;
     text-align: center;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 16px;
     font-style: normal;
     font-weight: 300;
@@ -223,7 +224,7 @@
 .home_page_1_content {
     color: #FFF;
     text-align: center;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 96px;
     font-style: normal;
     font-weight: 450;
@@ -233,7 +234,7 @@
 .content-footer {
     color: #18201D;
     text-align: center;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 16px;
     font-style: normal;
     font-weight: 300;
@@ -245,7 +246,7 @@
 .our-service {
     color: #FD2C03;
     text-align: center;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 96px;
     font-style: normal;
     font-weight: 450;
@@ -304,7 +305,7 @@
 }
 .service-text {
     color: #FFF;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 48px;
     font-style: normal;
     font-weight: 450;
@@ -316,7 +317,7 @@
 }
 .service-text span {
     color:#E75F36;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 48px;
     font-style: normal;
     font-weight: 450;
@@ -353,7 +354,7 @@
 .slide-header {
     color:  #FD2C03;
     text-align: center;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -374,7 +375,7 @@
     color: #000000;
     height: 60px;
     text-align: center;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -388,6 +389,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    
 }
 
 .ant-carousel .slick-list .slick-slide.slick-active {
@@ -458,7 +460,7 @@ hr {
 .about_our_story_title {
     color: #000;
     text-align: center;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 24px;
     font-style: normal;
     font-weight: 400;
@@ -470,7 +472,7 @@ hr {
     width: 614px;
     color: #18201D;
     text-align: center;
-    font-family: "Futura PT Light";
+    font-family: "NotoSans Light";
     font-size: 14px;
     font-style: normal;
     font-weight: 300;
@@ -494,7 +496,7 @@ hr {
 .about_page_2_title {
     color: var(--Primary-Primary-Brown, #ffffff);
     text-align: center;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 24px;
     font-style: normal;
     font-weight: 450;
@@ -542,7 +544,7 @@ hr {
 }
 .address_content {
     color: #18201D;
-    font-family: "Futura PT Light";
+    font-family: "NotoSans Light";
     font-size: 16px;
     font-style: normal;
     font-weight: 300;
@@ -553,7 +555,7 @@ hr {
 }
 .clock_content {
     color: #18201D;
-    font-family: "Futura PT Light";
+    font-family: "NotoSans Light";
     font-size: 16px;
     font-style: normal;
     font-weight: 300;
@@ -612,7 +614,7 @@ a:-webkit-any-link {
     padding-bottom: 16px;
     color: #000;
     text-align: center;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 24px;
     font-style: normal;
     font-weight: 450;
@@ -622,7 +624,7 @@ a:-webkit-any-link {
 }
 .services-title span {
     color: #E75F36;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 24px;
     font-style: normal;
     font-weight: 450;
@@ -670,7 +672,7 @@ a:-webkit-any-link {
 }
 .service-component_content_left-top {
     color: #FFF;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 18px;
     font-style: normal;
     font-weight: 450;
@@ -678,7 +680,7 @@ a:-webkit-any-link {
     white-space: break-spaces;
     span {
         color: #E75F36;
-        font-family: "Futura PT";
+        font-family: "NotoSans REG";
         font-size: 26px;
         font-style: normal;
         font-weight: 450;
@@ -692,7 +694,7 @@ a:-webkit-any-link {
     flex-direction: column;
     .price {
         color: #FFF;
-        font-family: "Futura PT";
+        font-family: "NotoSans REG";
         font-size: 18px;
         font-style: normal;
         font-weight: 400;
@@ -700,7 +702,7 @@ a:-webkit-any-link {
     }
     .hour {
         color: #BABABA;
-        font-family: "Futura PT";
+        font-family: "NotoSans REG";
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -742,7 +744,7 @@ a:-webkit-any-link {
 .book-left-side_content_top {
     color: #FFF;
     text-align: center;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 16px;
     font-style: normal;
     font-weight: 300;
@@ -752,7 +754,7 @@ a:-webkit-any-link {
 .book-left-side_content_bottom {
     color: #FFF;
     text-align: center;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 96px;
     font-style: normal;
     font-weight: 450;
@@ -775,7 +777,7 @@ a:-webkit-any-link {
 
 .book-right-side-title {
     color: #000;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 20px;
     font-style: normal;
     font-weight: 450;
@@ -794,7 +796,7 @@ a:-webkit-any-link {
 }
 .input_item-title {
     color: #0C100E;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 14px;
     font-style: normal;
     font-weight: 450;
@@ -811,7 +813,7 @@ a:-webkit-any-link {
     background: #FFF;
     width: 365px;
     color: #848484;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -831,7 +833,7 @@ a:-webkit-any-link {
     background: #FFF;
     width: 365px;
     color: #848484;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -852,7 +854,7 @@ a:-webkit-any-link {
     background: #FFF;
     width: 365px;
     color: #848484;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -878,7 +880,7 @@ a:-webkit-any-link {
 .ant-select-single {
     height: 100%;
     color: #848484!important;
-    font-family: "Futura PT"!important;
+    font-family: "NotoSans REG"!important;
     font-size: 14px!important;
     font-style: normal!important;
     font-weight: 400!important;
@@ -892,7 +894,7 @@ a:-webkit-any-link {
     width: 480px !important;
     border: 1px solid #AA763C!important;
     color: #000 !important;
-    font-family: "Futura PT"!important;
+    font-family: "NotoSans REG"!important;
     font-size: 14px!important;
     font-style: normal!important;
     font-weight: 400!important;
@@ -902,7 +904,7 @@ a:-webkit-any-link {
 .react-calendar__tile {
     padding: 20px!important;
     border: 1px solid #F6F1EB !important;
-    font-family: "Futura PT"!important;
+    font-family: "NotoSans REG"!important;
     font-size: 14px!important;
     font-style: normal!important;
     font-weight: 400!important;
@@ -911,7 +913,7 @@ a:-webkit-any-link {
 .react-calendar__month-view__weekdays__weekday {
     padding: 20px!important;
     color: #000!important;
-    font-family: "Futura PT"!important;
+    font-family: "NotoSans REG"!important;
     font-size: 14px!important;
     font-style: normal!important;
     font-weight: 450!important;
@@ -922,7 +924,7 @@ abbr[title] {
 }
 button {
     color:#000;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
@@ -945,7 +947,7 @@ button {
 }
 .book-time-title {
     color: #000;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
@@ -972,7 +974,7 @@ button {
     border: 1px solid #F6F1EB;
     color: #000;
     text-align: center;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -996,7 +998,7 @@ button {
     padding: 10px;
     justify-content: center;
     align-items: center;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -1021,14 +1023,14 @@ button {
 }
 .book-price {
     color: #885E30;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
     span {
         color: #885E30;
-        font-family: "Futura PT";
+        font-family: "NotoSans REG";
         font-size: 16px;
         font-style: normal;
         font-weight: 450;
@@ -1061,7 +1063,7 @@ button {
     .error-404 {
         color: #AA763C;
         text-align: center;
-        font-family: "Futura PT";
+        font-family: "NotoSans REG";
         font-size: 200px;
         font-style: normal;
         font-weight: 500;
@@ -1069,7 +1071,7 @@ button {
     }
     .error-text {
         color: #0C100E;
-        font-family: "Futura PT";
+        font-family: "NotoSans REG";
         font-size: 36px;
         font-style: normal;
         font-weight: 450;
@@ -1083,7 +1085,7 @@ button {
     border: 1px solid #AA763C !important;
     background: #FFF !important;
     color: #848484 !important;
-    font-family: "Futura PT" !important;
+    font-family: "NotoSans REG" !important;
     font-size: 14px !important;
     font-style: normal !important;
     font-weight: 400 !important;
@@ -1123,7 +1125,7 @@ button {
     }
     &_item {
         color: #E75F36;
-        font-family: "Futura PT";
+        font-family: "NotoSans REG";
         font-size: 16px;
         font-style: normal;
         font-weight: 400;
@@ -1148,7 +1150,7 @@ button {
         &__content {
             color: #18201D;
             text-shadow: 0px 4px 8px rgba(0, 0, 0, 0.20);
-            font-family: "Futura PT Light";
+            font-family: "NotoSans Light";
             font-size: 14px;
             font-style: normal;
             font-weight: 300;
@@ -1484,7 +1486,7 @@ button {
     border-radius: 8px;
     background: #FD2C03;
     color: #FFF;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -1495,7 +1497,7 @@ button {
 
 .ant-modal .ant-modal-title {
     text-align: center;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     color: #FD2C03;
     font-size: 24px;
     font-style: normal;
@@ -1520,7 +1522,7 @@ button {
     border-radius: 8px;
     background: #FD2C03;
     color: #FFF;
-    font-family: "Futura PT";
+    font-family: "NotoSans REG";
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
