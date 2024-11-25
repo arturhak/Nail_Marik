@@ -12,10 +12,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-      <BrowserRouter>
+      <HashRouter>
           <ScrollToTop />
           <App />
-      </BrowserRouter>
+      </HashRouter>
   </React.StrictMode>
 );
 

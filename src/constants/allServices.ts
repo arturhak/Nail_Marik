@@ -36,9 +36,9 @@ export const allServices = {
             value: 'Classic Manicure',
             startPrice: 3000,
             endPrice: null,
-            hour: 1,
-            minute: 10,
-            timeToMinute: 70
+            hour: null,
+            minute: 40,
+            timeToMinute: 40
         },
         {
             bg: BG_2,
@@ -46,8 +46,8 @@ export const allServices = {
             startPrice: 5000,
             endPrice: null,
             hour: 1,
-            minute: 10,
-            timeToMinute: 70
+            minute: null,
+            timeToMinute: 60
         },
         {
             bg: BG_3,
@@ -55,8 +55,8 @@ export const allServices = {
             startPrice: 8000,
             endPrice: null,
             hour: 1,
-            minute: 10,
-            timeToMinute: 70
+            minute: 30,
+            timeToMinute: 90
         },
         {
             bg: BG_4,
@@ -64,8 +64,8 @@ export const allServices = {
             startPrice: 1000,
             endPrice: null,
             hour: null,
-            minute: 45,
-            timeToMinute: 45
+            minute: 15,
+            timeToMinute: 15
         },
         {
             bg: BG_5,
@@ -73,8 +73,8 @@ export const allServices = {
             startPrice: 3000,
             endPrice: null,
             hour: null,
-            minute: 45,
-            timeToMinute: 45
+            minute: 20,
+            timeToMinute: 20
         },
         {
             bg: BG_6,
@@ -82,25 +82,25 @@ export const allServices = {
             startPrice: 7000,
             endPrice: null,
             hour: null,
-            minute: 45,
-            timeToMinute: 45
+            minute: 40,
+            timeToMinute: 40
         },
         {
             bg: BG_7,
             value: 'Nail Refill',
             startPrice: 18000,
-            hour: null,
-            minute: 45,
-            timeToMinute: 45
+            hour: 2,
+            minute: null,
+            timeToMinute: 120
         },
         {
             bg: BG_8,
             value: 'Refill Correction',
             startPrice: 15000,
             endPrice: null,
-            hour: null,
-            minute: 45,
-            timeToMinute: 45
+            hour: 1,
+            minute: 40,
+            timeToMinute: 100
         },
         {
             bg: BG_9,
@@ -108,8 +108,8 @@ export const allServices = {
             startPrice: 500,
             endPrice: null,
             hour: null,
-            minute: 45,
-            timeToMinute: 45
+            minute: 15,
+            timeToMinute: 15
         },
         {
             bg: BG_10,
@@ -117,8 +117,8 @@ export const allServices = {
             startPrice: 1000,
             endPrice: null,
             hour: null,
-            minute: 45,
-            timeToMinute: 45
+            minute: 15,
+            timeToMinute: 15
         },
         {
             bg: BG_11,
@@ -126,8 +126,8 @@ export const allServices = {
             startPrice: 2000,
             endPrice: null,
             hour: null,
-            minute: 45,
-            timeToMinute: 45
+            minute: 25,
+            timeToMinute: 25
         },
 
         {
@@ -136,8 +136,8 @@ export const allServices = {
             startPrice: 3000,
             endPrice: null,
             hour: null,
-            minute: 45,
-            timeToMinute: 45
+            minute: 15,
+            timeToMinute: 15
         },
         {
             bg: BG_13,
@@ -145,8 +145,8 @@ export const allServices = {
             startPrice: 3500,
             endPrice: null,
             hour: null,
-            minute: 45,
-            timeToMinute: 45
+            minute: 30,
+            timeToMinute: 30
         },
 
     ],
@@ -156,9 +156,9 @@ export const allServices = {
             value: 'Classic Pedicure',
             startPrice: 7000,
             endPrice: null,
-            hour: 1,
-            minute: 30,
-            timeToMinute: 90
+            hour: null,
+            minute: 40,
+            timeToMinute: 40
         },
         {
             bg: BG_15,
@@ -166,8 +166,8 @@ export const allServices = {
             startPrice: 9000,
             endPrice: null,
             hour: 1,
-            minute: 30,
-            timeToMinute: 90
+            minute: 10,
+            timeToMinute: 70
         },
         {
             bg: BG_16,
@@ -175,35 +175,35 @@ export const allServices = {
             startPrice: 10000,
             endPrice: null,
             hour: 1,
-            minute: 30,
-            timeToMinute: 90
+            minute: 10,
+            timeToMinute: 70
         },
         {
             bg: BG_17,
             value: 'Paraffin Therapy For Feet',
             startPrice: 5000,
             endPrice: null,
-            hour: 1,
+            hour: null,
             minute: 30,
-            timeToMinute: 90
+            timeToMinute: 30
         },
         {
             bg: BG_18,
             value: 'Heel Treatment',
             startPrice: 2000,
             endPrice: null,
-            hour: 1,
-            minute: 30,
-            timeToMinute: 90
+            hour: null,
+            minute: 20,
+            timeToMinute: 20
         },
         {
             bg: BG_19,
             value: 'Acupressure Of The Feet',
             startPrice: 5000,
             endPrice: null,
-            hour: 1,
+            hour: null,
             minute: 15,
-            timeToMinute: 90
+            timeToMinute: 15
         },
     ],
     faceSkinCare: [
@@ -211,9 +211,9 @@ export const allServices = {
             bg: BG_20,
             value: "Manicure",
             startPrice: 5000,
-            hour: 1,
+            hour: null,
             minute: 30,
-            timeToMinute: 90
+            timeToMinute: 30
         },
         {
             bg: BG_21,
@@ -221,46 +221,46 @@ export const allServices = {
             startPrice: 11000,
             endPrice: null,
             hour: 1,
-            minute: 10,
-            timeToMinute: 70
+            minute: null,
+            timeToMinute: 60
         },
         {
             bg: BG_22,
             value: "Pedicure (Without Heel Treatment)",
             startPrice: 9000,
             endPrice: null,
-            hour: 1,
-            minute: 10,
-            timeToMinute: 70
+            hour: null,
+            minute: 30,
+            timeToMinute: 30
         },
         {
             bg: BG_23,
             value: "Paraffin Therapy For Hands",
             startPrice: 6000,
             endPrice: null,
-            hour: 1,
-            minute: 10,
-            timeToMinute: 70
+            hour: null,
+            minute: 30,
+            timeToMinute: 30
         },
         {
             bg: BG_24,
             value: "Paraffin Therapy For Feet",
             startPrice: 8000,
             endPrice: null,
-            hour: 1,
-            minute: 10,
-            timeToMinute: 70
+            hour: null,
+            minute: 30,
+            timeToMinute: 30
         },
     ],
     design: [
         {
             bg: BG_25,
             value: "Design Of Medium Complexity",
-            startPrice: 5000,
-            endPrice: null,
-            hour: 1,
-            minute: 30,
-            timeToMinute: 90
+            startPrice: 500,
+            endPrice: 3000,
+            hour: null,
+            minute: 10,
+            timeToMinute: 30
         },
 
         {
@@ -268,36 +268,36 @@ export const allServices = {
             value: "Stemping",
             startPrice: 3000,
             endPrice: null,
-            hour: 1,
-            minute: 30,
-            timeToMinute: 90
+            hour: null,
+            minute: 15,
+            timeToMinute: 15
         },
         {
             bg: BG_27,
             value: "French",
             startPrice: 3000,
             endPrice: null,
-            hour: 1,
+            hour: null,
             minute: 30,
-            timeToMinute: 90
+            timeToMinute: 30
         },
         {
             bg: BG_28,
             value: "Ombre",
             startPrice: 3000,
             endPrice: null,
-            hour: 1,
+            hour: null,
             minute: 30,
-            timeToMinute: 90
+            timeToMinute: 30
         },
         {
             bg: BG_29,
             value: "The Rub",
             startPrice: 3000,
             endPrice: null,
-            hour: 1,
-            minute: 30,
-            timeToMinute: 90
+            hour: null,
+            minute: 15,
+            timeToMinute: 15
         },
     ]
 }

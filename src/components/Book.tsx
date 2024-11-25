@@ -98,12 +98,13 @@ function Book() {
         const date = new Date(_date); // Assuming _date is a valid date string or object
         const formattedDate = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
         let message = ` Կատարվել է Գրանցում \n\n`;
+        message += `Անուն:\n ${_name} \n\n`;
         message += `Ամսաթիվ:\n ${formattedDate} \n\n`;
         message += `Ժամ:\n${_time} \n\n`;
         message += `Հեռախոս:\n${_phone} \n\n`;
         message += `Մասնագետ:\n${_master} \n\n`;
         message += `Ծառայություն:\n${_service} \n\n`;
-        message += `Ծառայություն:\n${_price} AMD\n\n`;
+        message += `Արժեք:\n${_price} AMD\n\n`;
 
         const token = "7919607900:AAESSDQomcRQ2gBFpJ5NEXVZijW8FdA4kiY"
         const chat_id = "-4552058619";
@@ -123,7 +124,7 @@ function Book() {
 
     const getData = () => {
 
-        fetch('http://chicchoc.top/public/public/service', {
+        fetch('https://chicchoc.top/public/public/service', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -168,7 +169,7 @@ function Book() {
             }
         ]
 
-        fetch('http://chicchoc.top/public/public/service/data', {
+        fetch('https://chicchoc.top/public/public/service/data', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
