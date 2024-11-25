@@ -4,16 +4,18 @@ import Clock from "../assets/clock.svg";
 import Phone from "../assets/phone.svg";
 import Email from "../assets/email.svg";
 import Map from "../assets/map.png";
+import {useTranslation} from "react-i18next";
 
 function Contact() {
+    const {t} = useTranslation()
     return (
         <div className="layout">
             <div className="contacts_page_1">
                 <div className="home_page_1_title">
-                    Feel free to reach out to us using any of the methods below. Our dedicated team is ready to assist you and ensure that your experience with us is nothing short of exceptional.
+                    {t('Feel free to reach out to us using any of the methods below. Our dedicated team is ready to assist you and ensure that your experience with us is nothing short of exceptional.')}
                 </div>
                 <div className="home_page_1_content">
-                    Contact Us
+                    {t('Contact  Us')}
                 </div>
             </div>
 
@@ -22,14 +24,14 @@ function Contact() {
                     <img src={Address} alt="address" />
                     <div className="address_content">
                         <a href="https://maps.app.goo.gl/jbLqe65ZFFcu3edY9" target="_blank" rel="noreferrer">
-                            Vardananc 16, Yerevan, Armenia
+                            {t('Vardananc 16, Yerevan, Armenia')}
                         </a>
                     </div>
                 </div>
                 <div className="map-navigation_item">
                     <img src={Clock} alt="address" />
                     <div className="clock_content">
-                        Monday - Sunday 10:00 - 20:00
+                        {t('Monday - Sunday')} 10:00 - 20:00
                     </div>
                 </div>
                 <div className="map-navigation_item">

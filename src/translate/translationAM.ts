@@ -81,4 +81,7 @@ export const translationAM = {
     "Awesome atmosphere, cool service, best personal!Thank you for being so Chic!": "Հիանալի մթնոլորտ, հիանալի սպասարկում, լավագույն անձնակազմ: Շնորհակալություն այսքան շքեղ լինելու համար:",
     "Registration Successfully Completed": "Գրանցումը Հաջողությամբ կատարված է",
     "Fill in all fields": "Լրացրեք բոլոր դաշտերը",
+    "Feel free to reach out to us using any of the methods below. Our dedicated team is ready to assist you and ensure that your experience with us is nothing short of exceptional.": "Կապ հաստատե՛ք մեզ հետ՝ օգտագործելով ստորև նշված տարբերակներից որևէ մեկը: Մեր անձնվեր թիմը պատրաստ է օգնել ձեզ և համոզվել, որ մեզ հետ ունեցած ձեր փորձը կլինի բացառիկ:",
+    "Monday - Sunday": "Երկուշաբթիից Կիրակ",
+    "Contact  Us": "Կապ մեզ հետ"
 }

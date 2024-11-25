@@ -79,6 +79,8 @@ export const translationEN = {
     "Acupressure Of The Feet": "Acupressure Of The Feet",
     "Registration Successfully Completed": "Registration Successfully Completed",
     "Fill in all fields": "Fill in all fields",
-    
+    "Feel free to reach out to us using any of the methods below. Our dedicated team is ready to assist you and ensure that your experience with us is nothing short of exceptional.": "Feel free to reach out to us using any of the methods below. Our dedicated team is ready to assist you and ensure that your experience with us is nothing short of exceptional.",
+    "Monday - Sunday": "Monday - Sunday",
+    "Contact  Us": "Contact Us"
 
 }
