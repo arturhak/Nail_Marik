@@ -3,6 +3,7 @@ import moment from "moment";
 import { Input, Modal } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { adminPassword } from "../constants/headerData";
+import QrScaner from "../components/Qr";
 
 function Admin() {
     const [allData, setAllData] = useState<any>([]);
@@ -157,6 +158,7 @@ function Admin() {
             <button className="table-remove-btn" onClick={handleReload}>
                 Update
             </button>
+            <QrScaner/>
 
         </div>
     )
