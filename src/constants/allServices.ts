@@ -209,7 +209,7 @@ export const allServices = {
     faceSkinCare: [
         {
             bg: BG_20,
-            value: "Manicure",
+            value: "Men's Manicure",
             startPrice: 5000,
             hour: null,
             minute: 30,
@@ -217,7 +217,7 @@ export const allServices = {
         },
         {
             bg: BG_21,
-            value: "Pedicure",
+            value: "Men's Pedicure",
             startPrice: 11000,
             endPrice: null,
             hour: 1,
@@ -226,7 +226,7 @@ export const allServices = {
         },
         {
             bg: BG_22,
-            value: "Pedicure (Without Heel Treatment)",
+            value: "Men's Pedicure (Without Heel Treatment)",
             startPrice: 9000,
             endPrice: null,
             hour: null,
@@ -235,7 +235,7 @@ export const allServices = {
         },
         {
             bg: BG_23,
-            value: "Paraffin Therapy For Hands",
+            value: "Men's Paraffin Therapy For Hands",
             startPrice: 6000,
             endPrice: null,
             hour: null,
@@ -244,7 +244,7 @@ export const allServices = {
         },
         {
             bg: BG_24,
-            value: "Paraffin Therapy For Feet",
+            value: "Men's Paraffin Therapy For Feet",
             startPrice: 8000,
             endPrice: null,
             hour: null,
