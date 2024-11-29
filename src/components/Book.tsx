@@ -37,7 +37,7 @@ function Book() {
 
 
     useEffect(() => {
-        let defaultDate = new Date().toLocaleString();
+        let defaultDate = new Date().toDateString();
         let date = new Date(defaultDate);
         let milliseconds = date.getTime();
         setDateState(milliseconds);
