@@ -43,7 +43,6 @@ function Book() {
         setDateState(milliseconds);
 
         const getSelectedItem: any = localStorage.getItem("selectedService")
-        console.log("selected item from services=>", JSON.parse(getSelectedItem))
         if (JSON.parse(getSelectedItem)?.value) {
             setSelectedItems([...selectedItems, JSON.parse(getSelectedItem).value])
             localStorage.removeItem("selectedService")
@@ -84,10 +83,6 @@ function Book() {
         }
     }, [lastTimes]);
 
-    // console.log("total Time", totalTime)
-    // console.log("total Price", totalPrice)
-    // console.log("selected for Book", selectedForBook)
-
     const allServiceGroup = Object.values(allServices).flat();
     // const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
 
@@ -113,7 +108,6 @@ function Book() {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             // You can handle the response if needed
-            console.log('Message sent successfully');
         } catch (error) {
             console.error('Error sending message:', error);
         }
@@ -143,7 +137,6 @@ function Book() {
                 const filteredTimes = data.map((el: any) => { return el.booked_hours })
                 setReceiveData(data)
                 setBusyTimes(filteredTimes.flat())
-                console.log('On Receive Data:', receiveData);
                 // Process data here
             })
             .catch(error => {
@@ -152,8 +145,6 @@ function Book() {
         // navigate("/")
 
     }
-    console.log("out Receive Data =>", receiveData)
-
     const handleBook = () => {
         if (userName !== "" && phoneNumber !== "" && selectMaster !== "" ) {
             let allBooks: any = [
@@ -188,15 +179,12 @@ function Book() {
             })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                        console.log("ConfStatus",confirmStatus);
-                        
+                        throw new Error(`HTTP error! Status: ${response.status}`);                        
                         setConfirmStatus(response.status.toString())
                     }
                     return setModalOpen(true);
                 })
                 .then(data => {
-                    console.log('Data received:', data);
                     tgFormWeb(allBooks[0]?.date, allBooks[0]?.timeState, allBooks[0]?.name, allBooks[0]?.phoneNumber, allBooks[0]?.master, allBooks[0]?.services, allBooks[0]?.totalPrice);
                     setConfirmStatus('Registration Successfully Completed')
                     setModalOpen(true);
@@ -206,7 +194,6 @@ function Book() {
                     setModalOpen(true);
                     setConfirmStatus("Fill in all fields")
                 });
-                console.log("Book = >", allBooks);
         }else{
             setConfirmStatus(t("Fill in all the fields for registration"))
             setModalOpen(true)            
@@ -218,7 +205,6 @@ function Book() {
         let date = moment(e).format('MMMM Do YYYY')
         let cleanDateString = date.replace(/(\d+)(st|nd|rd|th)/, '$1');
         let replace = new Date(cleanDateString);
-        console.log("timestamp", new Date(replace).getTime())
         setDateState(new Date(replace).getTime());
         getData()
     };

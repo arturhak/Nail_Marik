@@ -15,8 +15,6 @@ function WebHeader ({headerData,navigate}:any) {
         setLanguage(selectedLanguage)
     }
 
-    console.log("jkfdsgjf",language)
-
     const handleNavigate = (index:number) => {
         switch (index) {
             case 0:

@@ -33,7 +33,6 @@ function Admin() {
     }, [deletedData]);
 
     const handleCancelBook = (item: any) => {
-        console.log("handleRemoveItem", item)
 
         fetch('https://chicchoc.top/public/public/delete', {
             method: 'POST',
@@ -67,7 +66,6 @@ function Admin() {
     const handleInputPassword = (event: any) => {
         setPassword(event.target.value)
     };
-    console.log("password", password)
 
     const handleLogin = () => {
         if (password && password === adminPassword) {
@@ -97,7 +95,6 @@ function Admin() {
                 console.error('Fetch error:', error);
             });
     }
-    console.log("allData", allData)
 
     return (
         <div className="admin">

@@ -7,10 +7,10 @@ function QrScanner() {
     const [isEnabled, setIsEnabled] = useState(false);
     const [errStatus, setErrStatus] = useState("");
     const [qrMessage, setQrMessage] = useState("");
-    const [partnerName,setPartnerName] = useState<any>("")
-    const [chatID,setChatId] = useState<any>("")
-    const [tokenId,setTokenId] = useState<any>("")
-    const [partnerSale,setPartnerSale] = useState<any>("")
+    const [partnerName, setPartnerName] = useState<any>("")
+    const [chatID, setChatId] = useState<any>("")
+    const [tokenId, setTokenId] = useState<any>("")
+    const [partnerSale, setPartnerSale] = useState<any>("")
 
     useEffect(() => {
         const config = { fps: 10, qrbox: { width: 300, height: 300 } };
@@ -20,7 +20,6 @@ function QrScanner() {
         const scannerStop = async () => {
             try {
                 await html5QrCode.stop();
-                console.log("Scanner stopped");
             } catch (err) {
                 console.error("Error stopping scanner:", err);
                 setErrStatus("Error stopping scanner.");
@@ -34,20 +33,18 @@ function QrScanner() {
                 .catch((error) => console.error("Error playing sound:", error));
         };
 
-        const qrCodeSuccess = (decodedText:any) => {
-            console.log(decodedText);
+        const qrCodeSuccess = (decodedText: any) => {
             playSound();
             setQrMessage(decodedText);
             for (let i = 0; i < partnerList.length; i++) {
-                if (partnerList[i]?.name === decodedText ) {
-                 console.log("ChatId",partnerList[i].chatId);
-                setPartnerSale(partnerList[i].sale)
-                 
-                    tgForSale(partnerList[i].name,partnerList[i].tokenId,partnerList[i].chatId,partnerList[i].sale)
-                }else{
+                if (partnerList[i]?.name === decodedText) {
+                    setPartnerSale(partnerList[i].sale)
+
+                    tgForSale(partnerList[i].name, partnerList[i].tokenId, partnerList[i].chatId, partnerList[i].sale)
+                } else {
                     console.log("Not found");
-                    
-                }   
+
+                }
             }
             setIsEnabled(false); // Automatically disable the scanner
         };
@@ -86,14 +83,14 @@ function QrScanner() {
         setIsEnabled(!isEnabled);
     };
 
-    async function tgForSale(_name:any,_token:any,_chatId:any,_sale:any) {
+    async function tgForSale(_name: any, _token: any, _chatId: any, _sale: any) {
         // const date = new Date(_date); // Assuming _date is a valid date string or object
         // const formattedDate = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
-        let message = ` Զեղչի կտրոն \n\n`; 
+        let message = ` Զեղչի կտրոն \n\n`;
         message = _name;
         message = `Զեղչ - ${_sale}`;
 
-     
+
         const URI_API = `https://api.telegram.org/bot${_token}/sendMessage?chat_id=${_chatId}&text=${encodeURIComponent(message)}`;
 
         try {
@@ -102,7 +99,6 @@ function QrScanner() {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             // You can handle the response if needed
-            console.log('Message sent successfully');
         } catch (error) {
             console.error('Error sending message:', error);
         }
