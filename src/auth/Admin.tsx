@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
-import { Input, Modal } from "antd";
+import { Input, Modal, Pagination, DatePicker } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { adminPassword } from "../constants/headerData";
 import QrScaner from "../components/Qr";
@@ -10,8 +10,15 @@ function Admin() {
     const [deletedData, setDeletedData] = useState();
     const [modalOpen, setModalOpen] = useState(true);
     const [password, setPassword] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchDate, setSearchDate] = useState<string | null>(null);
+    const pageSize = 10;
 
     useEffect(() => {
+        fetchData();
+    }, [deletedData]);
+
+    const fetchData = () => {
         fetch('https://chicchoc.top/public/public/all/data', {
             method: 'POST',
             headers: {
@@ -25,15 +32,14 @@ function Admin() {
                 return response.json();
             })
             .then(data => {
-                setAllData(data.sort((a: any, b: any) => a.date - b.date))
+                setAllData(data.sort((a: any, b: any) => a.date - b.date));
             })
             .catch(error => {
                 console.error('Fetch error:', error);
             });
-    }, [deletedData]);
+    };
 
     const handleCancelBook = (item: any) => {
-
         fetch('https://chicchoc.top/public/public/delete', {
             method: 'POST',
             headers: {
@@ -55,86 +61,98 @@ function Admin() {
             })
             .then(data => {
                 console.log('Data Deleted', data);
-                setDeletedData(data)
-                // Process data here
+                setDeletedData(data);
             })
             .catch(error => {
                 console.error('Fetch error:', error);
             });
-    }
+    };
 
     const handleInputPassword = (event: any) => {
-        setPassword(event.target.value)
+        setPassword(event.target.value);
     };
 
     const handleLogin = () => {
         if (password && password === adminPassword) {
-            setModalOpen(false)
+            setModalOpen(false);
         }
-
-    }
+    };
 
     const handleReload = () => {
+        fetchData();
+    };
 
-        fetch('https://chicchoc.top/public/public/all/data', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                setAllData(data.sort((a: any, b: any) => a.date - b.date))
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-            });
-    }
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
+
+    const handleDateChange = (date: moment.Moment | null) => {
+        setSearchDate(date ? date.format("YYYY-MM-DD") : null);
+        setCurrentPage(1);
+    };
+
+    const filteredData = searchDate
+        ? allData.filter((item: any) => moment(item.date).format("YYYY-MM-DD") === searchDate)
+        : allData;
+
+    // Paginate filtered data
+    const startIndex = (currentPage - 1) * pageSize;
+    const paginatedData = filteredData.slice(startIndex, startIndex + pageSize);
 
     return (
         <div className="admin">
+            {/* Date Search Input */}
+            <div style={{ marginBottom: "20px", textAlign: "center" }}>
+                <DatePicker
+                    placeholder="Search by Date"
+                    onChange={handleDateChange}
+                    style={{ width: "200px" }}
+                />
+            </div>
+
             <table id="customers">
                 <thead>
-                    <tr>
-                        <th>Master</th>
-                        <th>User</th>
-                        <th>Phone</th>
-                        <th>Service</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Price</th>
-                        <th>Action</th>
-
-                    </tr>
+                <tr>
+                    <th>Master</th>
+                    <th>User</th>
+                    <th>Phone</th>
+                    <th>Service</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
                 </thead>
-                {allData.map((user: any) => {
-                    return (
-                        <tbody key={user.id}>
-                            <tr>
-                                <td>{user.master}</td>
-                                <td>{user.name}</td>
-                                <td>{user.phone_number}</td>
-                                <td>{user.services}</td>
-                                <td>{moment(user.date).format('DD.MM.YYYY')}</td>
-                                <td>{user.booked_hours[0]}</td>
-                                <td>{user.total_price} AMD</td>
-                                
-                                <td>
-                                    <button className="table-remove-btn" onClick={() => handleCancelBook(user)}>
-                                        Remove
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    )
-                })}
+                <tbody>
+                {paginatedData.map((user: any) => (
+                    <tr key={user.id}>
+                        <td>{user.master}</td>
+                        <td>{user.name}</td>
+                        <td>{user.phone_number}</td>
+                        <td>{user.services}</td>
+                        <td>{moment(user.date).format('DD.MM.YYYY')}</td>
+                        <td>{user.booked_hours[0]}</td>
+                        <td>{user.total_price} AMD</td>
+                        <td>
+                            <button className="table-remove-btn" onClick={() => handleCancelBook(user)}>
+                                Remove
+                            </button>
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
             </table>
 
+            {/* Pagination */}
+            <Pagination
+                current={currentPage}
+                pageSize={pageSize}
+                total={filteredData.length}
+                onChange={handlePageChange}
+                style={{ marginTop: "20px", textAlign: "center" }}
+            />
+
+            {/* Modal for Admin Login */}
             <Modal
                 open={modalOpen}
                 footer={null}
@@ -152,13 +170,13 @@ function Admin() {
                     <button className="login-btn" onClick={handleLogin}>Login</button>
                 </div>
             </Modal>
+
             <button className="table-remove-btn" onClick={handleReload}>
                 Update
             </button>
-            <QrScaner/>
-
+            <QrScaner />
         </div>
-    )
+    );
 }
 
-export default Admin
+export default Admin;
