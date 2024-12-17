@@ -94,13 +94,11 @@ function Admin() {
         ? allData.filter((item: any) => moment(item.date).format("YYYY-MM-DD") === searchDate)
         : allData;
 
-    // Paginate filtered data
     const startIndex = (currentPage - 1) * pageSize;
     const paginatedData = filteredData.slice(startIndex, startIndex + pageSize);
 
     return (
         <div className="admin">
-            {/* Date Search Input */}
             <div style={{ marginBottom: "20px", textAlign: "center" }}>
                 <DatePicker
                     placeholder="Search by Date"
@@ -141,8 +139,6 @@ function Admin() {
                 ))}
                 </tbody>
             </table>
-
-            {/* Pagination */}
             <Pagination
                 current={currentPage}
                 pageSize={pageSize}
