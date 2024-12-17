@@ -9,5 +9,3 @@ export const headerData = [
         title: "Contact Us"
     },
 ]
-
-export const adminPassword = "1234"

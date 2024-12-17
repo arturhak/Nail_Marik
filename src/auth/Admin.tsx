@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { Input, Modal, Pagination, DatePicker } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { adminPassword } from "../constants/headerData";
 import QrScaner from "../components/Qr";
 
 function Admin() {
@@ -73,7 +72,7 @@ function Admin() {
     };
 
     const handleLogin = () => {
-        if (password && password === adminPassword) {
+        if (process.env.REACT_APP_ADMIN_PASSWORD && process.env.REACT_APP_ADMIN_PASSWORD === password) {
             setModalOpen(false);
         }
     };
