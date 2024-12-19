@@ -1801,3 +1801,12 @@ video {
     text-align: center;
     word-break: break-all;
 }
+
+@media screen and (max-width: 1023px) {
+    .service-component_content_left-top {
+        font-size: 16px;
+    }
+    .service-component_content_left-bottom .price {
+        font-size: 16px;
+    }
+}
