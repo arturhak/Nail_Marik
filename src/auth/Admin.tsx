@@ -31,7 +31,9 @@ function Admin() {
                 return response.json();
             })
             .then(data => {
-                setAllData(data.sort((a: any, b: any) => a.date - b.date));
+                let newData = data.sort((a: any, b: any) => a.date - b.date);
+                let reversedData = newData.reverse()
+                setAllData(reversedData);
             })
             .catch(error => {
                 console.error('Fetch error:', error);
