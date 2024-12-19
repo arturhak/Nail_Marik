@@ -18,7 +18,7 @@ function Footer() {
             <hr />
             <div className="contacts">
                 <div className="contacts_item">
-                    {t('Step into a Realm of Beauty and Elegance, Where Your Nails Become a Canvas of Creativity.')}
+                    {t('Step into a place of Beauty and Elegance, Where Your Nails Become a Canvas of Creativity.')}
                 </div>
                 <div className="contacts_item">
                     {t('Vardananc 16, Yerevan, Armenia')}

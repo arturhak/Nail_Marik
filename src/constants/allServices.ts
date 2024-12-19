@@ -27,6 +27,8 @@ import BG_26 from "../assets/service-bg/bg_26.png";
 import BG_27 from "../assets/service-bg/bg_27.png";
 import BG_28 from "../assets/service-bg/bg_28.png";
 import BG_29 from "../assets/service-bg/bg_29.png";
+import BG_30 from "../assets/service-bg/bg_30.png";
+import BG_31 from "../assets/service-bg/bg_31.png";
 
 export const allServices = {
 
@@ -50,9 +52,18 @@ export const allServices = {
             timeToMinute: 60
         },
         {
+            bg: BG_30,
+            value: 'Gel Lac + Manicure (Luxio)',
+            startPrice: 9000,
+            endPrice: null,
+            hour: 1,
+            minute: 30,
+            timeToMinute: 90
+        },
+        {
             bg: BG_3,
-            value: 'Gel Lac + Manicure',
-            startPrice: 8000,
+            value: 'Gel Lac + Manicure (Rock Nail)',
+            startPrice: 6000,
             endPrice: null,
             hour: 1,
             minute: 30,
@@ -78,7 +89,7 @@ export const allServices = {
         },
         {
             bg: BG_6,
-            value: 'Japan Style',
+            value: 'Japanese Manicure',
             startPrice: 7000,
             endPrice: null,
             hour: null,
@@ -95,7 +106,7 @@ export const allServices = {
         },
         {
             bg: BG_8,
-            value: 'Refill Correction',
+            value: 'Extension Correction',
             startPrice: 15000,
             endPrice: null,
             hour: 1,
@@ -141,7 +152,7 @@ export const allServices = {
         },
         {
             bg: BG_13,
-            value: 'Paraffin Therapy For Hands',
+            value: 'Hands paraffin therapy',
             startPrice: 3500,
             endPrice: null,
             hour: null,
@@ -170,8 +181,17 @@ export const allServices = {
             timeToMinute: 70
         },
         {
+            bg: BG_31,
+            value: 'Pedicure + Gel Lac (Luxio)',
+            startPrice: 12000,
+            endPrice: null,
+            hour: 1,
+            minute: 10,
+            timeToMinute: 70
+        },
+        {
             bg: BG_16,
-            value: 'Pedicure + Gel Lac',
+            value: 'Pedicure + Gel Lac (Rock Nail)',
             startPrice: 10000,
             endPrice: null,
             hour: 1,
@@ -180,7 +200,7 @@ export const allServices = {
         },
         {
             bg: BG_17,
-            value: 'Paraffin Therapy For Feet',
+            value: 'Feets paraffin therapy',
             startPrice: 5000,
             endPrice: null,
             hour: null,
@@ -235,7 +255,7 @@ export const allServices = {
         },
         {
             bg: BG_23,
-            value: "Men's Paraffin Therapy For Hands",
+            value: "Men’s hands paraffin therapy",
             startPrice: 6000,
             endPrice: null,
             hour: null,
@@ -244,7 +264,7 @@ export const allServices = {
         },
         {
             bg: BG_24,
-            value: "Men's Paraffin Therapy For Feet",
+            value: "Men’s feets paraffin therapy",
             startPrice: 8000,
             endPrice: null,
             hour: null,
