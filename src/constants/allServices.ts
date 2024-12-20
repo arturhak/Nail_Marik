@@ -71,7 +71,7 @@ export const allServices = {
         },
         {
             bg: BG_4,
-            value: 'Gel Removal',
+            value: 'Gel Lac Removal',
             startPrice: 1000,
             endPrice: null,
             hour: null,
@@ -98,7 +98,7 @@ export const allServices = {
         },
         {
             bg: BG_7,
-            value: 'Nail Refill',
+            value: 'Nail Extension',
             startPrice: 18000,
             hour: 2,
             minute: null,
@@ -133,7 +133,7 @@ export const allServices = {
         },
         {
             bg: BG_11,
-            value: 'Removing The Charge',
+            value: 'Extension Removal',
             startPrice: 2000,
             endPrice: null,
             hour: null,
@@ -191,7 +191,7 @@ export const allServices = {
         },
         {
             bg: BG_17,
-            value: 'Feets paraffin therapy',
+            value: 'Feet paraffin therapy',
             startPrice: 5000,
             endPrice: null,
             hour: null,
@@ -209,7 +209,7 @@ export const allServices = {
         },
         {
             bg: BG_19,
-            value: 'Acupressure Of The Feet',
+            value: 'Feet Acupressure',
             startPrice: 5000,
             endPrice: null,
             hour: null,
@@ -255,7 +255,7 @@ export const allServices = {
         },
         {
             bg: BG_24,
-            value: "Men’s feets paraffin therapy",
+            value: "Men’s Feet paraffin therapy",
             startPrice: 8000,
             endPrice: null,
             hour: null,
@@ -276,7 +276,7 @@ export const allServices = {
 
         {
             bg: BG_26,
-            value: "Stemping",
+            value: "Stamping",
             startPrice: 3000,
             endPrice: null,
             hour: null,
