@@ -182,16 +182,7 @@ export const allServices = {
         },
         {
             bg: BG_31,
-            value: 'Pedicure + Gel Lac (Luxio)',
-            startPrice: 12000,
-            endPrice: null,
-            hour: 1,
-            minute: 10,
-            timeToMinute: 70
-        },
-        {
-            bg: BG_16,
-            value: 'Pedicure + Gel Lac (Rock Nail)',
+            value: 'Pedicure + Gel Lac',
             startPrice: 10000,
             endPrice: null,
             hour: 1,
