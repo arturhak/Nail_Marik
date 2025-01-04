@@ -30,7 +30,7 @@ export const translationAM = {
     "Men's Pedicure": "Տղամարդկանց Ոտնահարդարում",
     "Men's Pedicure (Without Heel Treatment)": "Տղամարդկանց Ոտնահարդարում (Առանց Կրունկի)",
     "Men’s hands paraffin therapy": "Տղ․ Ձեռքերի Պարաֆինաթերապիա",
-    "Men’s feet paraffin therapy" : "Տղ․ Ոտքերի Պարաֆինաթերապիա",
+    "Men’s Feet paraffin therapy" : "Տղ․ Ոտքերի Պարաֆինաթերապիա",
     "Design": "Դիզայն",
     "Design Of Medium Complexity": "Միջին Բարդության Դիզայն",
     "Stamping": "Ստեմպինգ",
@@ -53,7 +53,7 @@ export const translationAM = {
     "Hand Acupressure": "Կետային Մերսում",
     "Manicure + Simple Lac": "Մատնահարդարում + Լաք",
     "Hands paraffin therapy": "Պարաֆինաթերապիա",
-    "feet paraffin therapy": "Ոտքերի Պարաֆինաթերապիա",
+    "Feet paraffin therapy": "Ոտքերի Պարաֆինաթերապիա",
     "Pedicure + Simple Lac": "Ոտնահարդարում + լաք ",
     "Classic Pedicure": "Ոտնահարդարում",
     "Pedicure + Gel Lac": "Ոտնահարդարում + Գել Լաք",
@@ -85,5 +85,7 @@ export const translationAM = {
     "Feel free to reach out to us using any of the methods below. Our dedicated team is ready to assist you and ensure that your experience with us is nothing short of exceptional.": "Կապ հաստատե՛ք մեզ հետ՝ օգտագործելով ստորև նշված տարբերակներից որևէ մեկը: Մեր անձնվեր թիմը պատրաստ է օգնել ձեզ և համոզվել, որ մեզ հետ ունեցած ձեր փորձը կլինի բացառիկ:",
     "Monday - Sunday": "Երկուշաբթիից Կիրակ",
     "Contact  Us": "Կապ մեզ հետ",
-    "Fill in all the fields for registration": "Լրացրեք բոլոր դաշտերը գրանցվելու համար"
-}
+    "Fill in all the fields for registration": "Լրացրեք բոլոր դաշտերը գրանցվելու համար",
+    "If you want to receive a reminder about registration, click the Subscribe button.": "Եթե ​​ցանկանում եք գրանցման մասին հիշեցում ստանալ, սեղմեք Բաժանորդագրվել կոճակը:",
+    "Subscribe": "Բաժանորդագրվել"
+}   

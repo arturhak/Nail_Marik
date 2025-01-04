@@ -70,7 +70,7 @@ export const translationEN = {
     "Men's Pedicure": "Men's Pedicure",
     "Men's Pedicure (Without Heel Treatment)": "Pedicure (Without Heel Treatment)",
     "Men’s hands paraffin therapy": "Men’s hands paraffin therapy",
-    "Men’s feet paraffin therapy": "Men’s feet paraffin therapy",
+    "Men’s Feet paraffin therapy": "Men’s Feet paraffin therapy",
     "Design": "Design",
     "Design Of Medium Complexity": "Design Of Medium Complexity",
     "Stamping": "Stamping",

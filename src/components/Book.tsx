@@ -146,7 +146,7 @@ function Book() {
 
     }
     const handleBook = () => {
-        if (userName !== "" && phoneNumber !== "" && selectMaster !== "" ) {
+        if (userName !== "" && phoneNumber !== "" && selectMaster !== "" && selectedItems.length != 0 ) {
             let allBooks: any = [
                 {
                     master: selectMaster,

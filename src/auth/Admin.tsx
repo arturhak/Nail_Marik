@@ -171,7 +171,7 @@ function Admin() {
             <button className="table-remove-btn" onClick={handleReload}>
                 Update
             </button>
-            <QrScaner />
+            {/* <QrScaner /> */}
         </div>
     );
 }
