@@ -44,7 +44,7 @@ export const translationEN = {
     "Name Surname": "Name Surname",
     "Choose Master": "Choose Master",
     "Irina Kostanyan": "Irina Kostanyan",
-    "Ani Martoyan": "Ani Martoyan",
+    "Marianna Badalyan": "Marianna Badalyan",
     "Phone Number": "Phone Number",
     "Select the Service Type": "Select the Service Type",
     "Book": "Book",

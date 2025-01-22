@@ -71,7 +71,7 @@ export const translationAM = {
     "Name Surname": "Անուն Ազգանուն",
     "Choose Master": "Ընտրեք մասնագետ",
     "Irina Kostanyan": "Իրինա Կոստանյան",
-    "Ani Martoyan": "Անի Մարտոյան",
+    "Marianna Badalyan": "Մարիաննա Բադալյան",
     "Phone Number": "Հեռախոսահամար",
     "Select the Service Type": "Ծառայության տեսակ",
     "Book": "Ամրագրել",

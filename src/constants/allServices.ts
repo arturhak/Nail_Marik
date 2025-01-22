@@ -318,6 +318,6 @@ export const allMasters = [
         value: "Irina Kostanyan",
     },
     {
-        value: "Ani Martoyan",
+        value: "Marianna Badalyan",
     },
 ]
