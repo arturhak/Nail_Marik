@@ -8,7 +8,6 @@ import { getBookTime } from "../constants/bookTime";
 import { allServices } from "../constants/allServices";
 import { allMasters } from "../constants/allServices";
 import { useTranslation } from "react-i18next";
-import i18n from "../translate/i18n";
 
 function Book() {
     const [dateState, setDateState] = useState<any>();
@@ -28,7 +27,27 @@ function Book() {
     const [busyTimes, setBusyTimes] = useState<any>();
     const [modalOpen, setModalOpen] = useState(false)
     const [confirmStatus, setConfirmStatus] = useState("")
-    const { t } = useTranslation()
+    const [newMaster, setNewMaster] = useState<any>();
+    const [newDayOfWeek, setNewDayOfWeek] = useState<any>(new Date().getDay());
+    const { t } = useTranslation();
+
+
+    useEffect(() => {
+        const translatedMasters = allMasters.map((master) => ({
+            value: master.value,
+            label: t(`${master.value}`)
+        }));
+
+        if (newDayOfWeek === 3) {
+            setNewMaster([translatedMasters[1]]);
+            setSelectMaster("Marianna Badalyan")
+        }
+       else if (newDayOfWeek === 0 || newDayOfWeek === 2 || newDayOfWeek === 4 || newDayOfWeek === 5) {
+           setNewMaster([translatedMasters[0]])
+            setSelectMaster("Irina Kostanyan")
+
+        }else  setNewMaster(translatedMasters)
+    },[t,dateState])
 
 
     useEffect(() => {
@@ -206,6 +225,10 @@ function Book() {
         let cleanDateString = date.replace(/(\d+)(st|nd|rd|th)/, '$1');
         let replace = new Date(cleanDateString);
         setDateState(new Date(replace).getTime());
+
+        let day = new Date(e);
+        let dayOfWeek = day.getDay();
+        setNewDayOfWeek(dayOfWeek)
         getData()
     };
 
@@ -227,11 +250,6 @@ function Book() {
     const handleSelectedMaster = (master: any) => {
         setSelectMaster(master)
     }
-
-    const translatedMasters = allMasters.map((master) => ({
-        value: master.value,
-        label: t(`${master.value}`)
-    }));
 
     const translatedServices = allServiceGroup.map((service) => ({
         value: service.value,
@@ -271,7 +289,7 @@ function Book() {
                                 placeholder={t("Choose Master")}
                                 value={selectMaster || undefined}
                                 onChange={handleSelectedMaster}
-                                options={translatedMasters}
+                                options={newMaster}
                             />
                         </div>
 
