@@ -36,7 +36,7 @@ function Book() {
         const translatedMasters = allMasters.map((master) => ({
             value: master.value,
             label: t(`${master.value}`),
-            disable: false
+            disable: master.disabled
         }));
 
         if (newDayOfWeek === 3) {
