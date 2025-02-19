@@ -316,8 +316,10 @@ export const allServices = {
 export const allMasters = [
     {
         value: "Irina Kostanyan",
+        disabled: false
     },
     {
         value: "Marianna Badalyan",
+        disabled: false
     },
 ]

@@ -35,20 +35,20 @@ function Book() {
     useEffect(() => {
         const translatedMasters = allMasters.map((master) => ({
             value: master.value,
-            label: t(`${master.value}`)
+            label: t(`${master.value}`),
+            disable: true
         }));
 
         if (newDayOfWeek === 3) {
-            setNewMaster([translatedMasters[1]]);
+            setNewMaster([translatedMasters[1], {...translatedMasters[0],disabled: true}]);
             setSelectMaster("Marianna Badalyan")
         }
        else if (newDayOfWeek === 0 || newDayOfWeek === 2 || newDayOfWeek === 4 || newDayOfWeek === 5) {
-           setNewMaster([translatedMasters[0]])
+           setNewMaster([translatedMasters[0],{...translatedMasters[1],disabled: true}])
             setSelectMaster("Irina Kostanyan")
 
         }else  setNewMaster(translatedMasters)
     },[t,dateState])
-
 
     useEffect(() => {
         getData();
