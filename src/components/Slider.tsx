@@ -1,5 +1,5 @@
 import React from "react";
-import { Carousel, message } from "antd";
+import { Carousel } from "antd";
 
 const data: any = [
 

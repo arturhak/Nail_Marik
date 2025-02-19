@@ -13,7 +13,6 @@ import BG_12 from "../assets/service-bg/bg_12.png";
 import BG_13 from "../assets/service-bg/bg_13.png";
 import BG_14 from "../assets/service-bg/bg_14.png";
 import BG_15 from "../assets/service-bg/bg_15.png";
-import BG_16 from "../assets/service-bg/bg_16.png";
 import BG_17 from "../assets/service-bg/bg_17.png";
 import BG_18 from "../assets/service-bg/bg_18.png";
 import BG_19 from "../assets/service-bg/bg_19.png";
