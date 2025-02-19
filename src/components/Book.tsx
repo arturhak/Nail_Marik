@@ -36,7 +36,7 @@ function Book() {
         const translatedMasters = allMasters.map((master) => ({
             value: master.value,
             label: t(`${master.value}`),
-            disable: true
+            disable: false
         }));
 
         if (newDayOfWeek === 3) {
@@ -198,7 +198,7 @@ function Book() {
             })
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);                        
+                        throw new Error(`HTTP error! Status: ${response.status}`);
                         setConfirmStatus(response.status.toString())
                     }
                     return setModalOpen(true);
