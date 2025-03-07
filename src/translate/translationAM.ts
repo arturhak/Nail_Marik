@@ -67,7 +67,7 @@ export const translationAM = {
     "Lamination": "Հոնքերի Լամինացիա",
     "Waxing": "Ոսկային Մազահեռացում",
     "Simply fill in the necessary information to secure your appointment with us. From preferred service to date and time, your nail care needs are in good hands.": "Պարզապես լրացրու՛ անհրաժեշտ տեղեկատվությունը մեզ հետ քո հանդիպումը ապահովելու համար: Նախընտրելի ծառայությունից մինչև օր և ժամ։ Քո եղունգների խնամքը հուսալի ձեռքերում են:",
-    "Book an Arrangement": "Ամրագրի՛ ր պայմանավորվածություն",
+    "Book a Visit": "Ամրագրել Այց",
     "Name Surname": "Անուն Ազգանուն",
     "Choose Master": "Ընտրեք մասնագետ",
     "Irina Kostanyan": "Իրինա Կոստանյան",

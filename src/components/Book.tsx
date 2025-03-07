@@ -271,7 +271,7 @@ function Book() {
             <div className="book-right-side book-right-side-margin">
                 <div className="form">
                     <div className="book-right-side-title">
-                        {t('Book an Arrangement')}
+                        {t('Book a Visit')}
                     </div>
                     <div className="input-group">
                         <div className="input_item">
