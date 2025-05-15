@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import moment from "moment";
 import { Input, Modal, Pagination, DatePicker } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import QrScaner from "../components/Qr";
+import { format, parseISO, isSameDay, isValid } from 'date-fns';
 
 function Admin() {
-    const [allData, setAllData] = useState<any>([]);
-    const [deletedData, setDeletedData] = useState();
+    const [allData, setAllData] = useState<any[]>([]);
+    const [deletedData, setDeletedData] = useState<any>();
     const [modalOpen, setModalOpen] = useState(true);
     const [password, setPassword] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const [searchDate, setSearchDate] = useState<string | null>(null);
+    const [searchDate, setSearchDate] = useState<Date | null>(null);
     const pageSize = 10;
 
     useEffect(() => {
@@ -31,9 +31,8 @@ function Admin() {
                 return response.json();
             })
             .then(data => {
-                let newData = data.sort((a: any, b: any) => a.date - b.date);
-                let reversedData = newData.reverse()
-                setAllData(reversedData);
+                const newData = data.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
+                setAllData(newData.reverse());
             })
             .catch(error => {
                 console.error('Fetch error:', error);
@@ -69,7 +68,7 @@ function Admin() {
             });
     };
 
-    const handleInputPassword = (event: any) => {
+    const handleInputPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(event.target.value);
     };
 
@@ -87,17 +86,26 @@ function Admin() {
         setCurrentPage(page);
     };
 
-    const handleDateChange = (date: moment.Moment | null) => {
-        setSearchDate(date ? date.format("YYYY-MM-DD") : null);
+    const handleDateChange = (date: any) => {
+        setSearchDate(date ? new Date(date.toISOString()) : null);
         setCurrentPage(1);
     };
 
+
     const filteredData = searchDate
-        ? allData.filter((item: any) => moment(item.date).format("YYYY-MM-DD") === searchDate)
+        ? allData.filter((item: any) => {
+            try {
+                const itemDate = new Date(Number(item.date)); // безопасно преобразуем timestamp
+                return !isNaN(itemDate.getTime()) && isSameDay(itemDate, searchDate);
+            } catch {
+                return false;
+            }
+        })
         : allData;
 
     const startIndex = (currentPage - 1) * pageSize;
     const paginatedData = filteredData.slice(startIndex, startIndex + pageSize);
+
 
     return (
         <div className="admin">
@@ -111,36 +119,42 @@ function Admin() {
 
             <table id="customers">
                 <thead>
-                <tr>
-                    <th>Master</th>
-                    <th>User</th>
-                    <th>Phone</th>
-                    <th>Service</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Price</th>
-                    <th>Action</th>
-                </tr>
+                    <tr>
+                        <th>Master</th>
+                        <th>User</th>
+                        <th>Phone</th>
+                        <th>Service</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {paginatedData.map((user: any) => (
-                    <tr key={user.id}>
-                        <td>{user.master}</td>
-                        <td>{user.name}</td>
-                        <td>{user.phone_number}</td>
-                        <td>{user.services}</td>
-                        <td>{moment(user.date).format('DD.MM.YYYY')}</td>
-                        <td>{user.booked_hours[0]}</td>
-                        <td>{user.total_price} AMD</td>
-                        <td>
-                            <button className="table-remove-btn" onClick={() => handleCancelBook(user)}>
-                                Remove
-                            </button>
-                        </td>
-                    </tr>
-                ))}
+                    {paginatedData.map((user: any) => (
+                        <tr key={user.id}>
+                            <td>{user.master}</td>
+                            <td>{user.name}</td>
+                            <td>{user.phone_number}</td>
+                            <td>{user.services}</td>
+                            <td>
+                                {user.date && !isNaN(Number(user.date))
+                                    ? format(new Date(Number(user.date)), 'dd.MM.yyyy')
+                                    : '—'}
+                            </td>
+
+                            <td>{user.booked_hours?.[0]}</td>
+                            <td>{user.total_price} AMD</td>
+                            <td>
+                                <button className="table-remove-btn" onClick={() => handleCancelBook(user)}>
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
+
             <Pagination
                 current={currentPage}
                 pageSize={pageSize}
@@ -171,6 +185,7 @@ function Admin() {
             <button className="table-remove-btn" onClick={handleReload}>
                 Update
             </button>
+
             {/* <QrScaner /> */}
         </div>
     );

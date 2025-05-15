@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Input, Modal, Select } from 'antd';
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css';
-import moment from 'moment';
+// import moment from 'moment';
+import { format } from 'date-fns';
 import MainButton from "../buttons/MainButton";
 import { getBookTime } from "../constants/bookTime";
 import { allServices } from "../constants/allServices";
@@ -40,15 +41,15 @@ function Book() {
         }));
 
         if (newDayOfWeek === 3) {
-            setNewMaster([translatedMasters[1], {...translatedMasters[0],disabled: true}]);
+            setNewMaster([translatedMasters[1], { ...translatedMasters[0], disabled: true }]);
             setSelectMaster("Marianna Badalyan")
         }
-       else if (newDayOfWeek === 0 || newDayOfWeek === 2 || newDayOfWeek === 4 || newDayOfWeek === 5) {
-           setNewMaster([translatedMasters[0],{...translatedMasters[1],disabled: true}])
+        else if (newDayOfWeek === 0 || newDayOfWeek === 2 || newDayOfWeek === 4 || newDayOfWeek === 5) {
+            setNewMaster([translatedMasters[0], { ...translatedMasters[1], disabled: true }])
             setSelectMaster("Irina Kostanyan")
 
-        }else  setNewMaster(translatedMasters)
-    },[t,dateState])
+        } else setNewMaster(translatedMasters)
+    }, [t, dateState])
 
     useEffect(() => {
         getData();
@@ -131,8 +132,8 @@ function Book() {
             console.error('Error sending message:', error);
         }
     }
-    
-    
+
+
 
     const getData = () => {
 
@@ -159,13 +160,15 @@ function Book() {
                 // Process data here
             })
             .catch(error => {
+                console.log("test", dateState);
+
                 console.error('Fetch error:', error);
             });
         // navigate("/")
 
     }
     const handleBook = () => {
-        if (userName !== "" && phoneNumber !== "" && selectMaster !== "" && selectedItems.length !== 0 ) {
+        if (userName !== "" && phoneNumber !== "" && selectMaster !== "" && selectedItems.length !== 0) {
             let allBooks: any = [
                 {
                     master: selectMaster,
@@ -178,14 +181,14 @@ function Book() {
                     totalTime: totalTime
                 }
             ]
-    
+
             fetch('https://chicchoc.top/public/public/service/data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-    
+
                     master: allBooks[0]?.master,
                     name: allBooks[0]?.name,
                     date: allBooks[0]?.date,
@@ -213,15 +216,16 @@ function Book() {
                     setModalOpen(true);
                     setConfirmStatus("Fill in all fields")
                 });
-        }else{
+        } else {
             setConfirmStatus(t("Fill in all the fields for registration"))
-            setModalOpen(true)            
+            setModalOpen(true)
         }
-      
+
     };
 
     const changeDate = (e: any) => {
-        let date = moment(e).format('MMMM Do YYYY')
+        // let date = moment(e).format('MMMM Do YYYY')
+        const date = format(new Date(Number(e)), 'dd.MM.yyyy') // Например: "May 15th 2025"
         let cleanDateString = date.replace(/(\d+)(st|nd|rd|th)/, '$1');
         let replace = new Date(cleanDateString);
         setDateState(new Date(replace).getTime());
