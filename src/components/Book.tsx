@@ -34,22 +34,37 @@ function Book() {
 
 
     useEffect(() => {
+        if (!dateState || isNaN(dateState)) return;
+
+        const date = new Date(dateState);
+        const newDayOfWeek = date.getDay(); // 0 (вс) до 6 (сб)
+
         const translatedMasters = allMasters.map((master) => ({
             value: master.value,
             label: t(`${master.value}`),
-            disable: master.disabled
+            disabled: master.disabled
         }));
 
         if (newDayOfWeek === 3) {
-            setNewMaster([translatedMasters[1], { ...translatedMasters[0], disabled: true }]);
-            setSelectMaster("Marianna Badalyan")
+            // Среда — только Marianna, Irina отключена
+            setNewMaster([
+                translatedMasters.find(m => m.value === "Marianna Badalyan")!,
+                { ...translatedMasters.find(m => m.value === "Irina Kostanyan")!, disabled: true }
+            ]);
+            setSelectMaster("Marianna Badalyan");
+        } else if ([0, 2, 4, 5].includes(newDayOfWeek)) {
+            // Воскр, вторник, четверг, пятница — только Irina, Marianna отключена
+            setNewMaster([
+                translatedMasters.find(m => m.value === "Irina Kostanyan")!,
+                { ...translatedMasters.find(m => m.value === "Marianna Badalyan")!, disabled: true }
+            ]);
+            setSelectMaster("Irina Kostanyan");
+        } else {
+            // Понедельник и суббота — обе активны
+            setNewMaster(translatedMasters);
         }
-        else if (newDayOfWeek === 0 || newDayOfWeek === 2 || newDayOfWeek === 4 || newDayOfWeek === 5) {
-            setNewMaster([translatedMasters[0], { ...translatedMasters[1], disabled: true }])
-            setSelectMaster("Irina Kostanyan")
+    }, [t, dateState]);
 
-        } else setNewMaster(translatedMasters)
-    }, [t, dateState])
 
     useEffect(() => {
         getData();
@@ -57,10 +72,13 @@ function Book() {
 
 
     useEffect(() => {
-        let defaultDate = new Date().toDateString();
-        let date = new Date(defaultDate);
-        let milliseconds = date.getTime();
-        setDateState(milliseconds);
+        // Сегодняшняя дата без времени — формат YYYY-MM-DD
+        const todayString = new Date().toISOString().split("T")[0]; // '2025-05-14'
+        const timestamp = new Date(todayString).getTime(); // Надёжный UTC timestamp
+
+        setDateState(timestamp);
+
+
 
         const getSelectedItem: any = localStorage.getItem("selectedService")
         if (JSON.parse(getSelectedItem)?.value) {
@@ -135,17 +153,58 @@ function Book() {
 
 
 
+    // const getData = () => {
+
+    //     fetch('https://chicchoc.top/public/public/service', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             master: selectMaster,
+    //             date: dateState,
+    //         })
+    //     })
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 throw new Error(`HTTP error! Status: ${response.status}`);
+    //             }
+    //             return response.json();
+    //         })
+    //         .then(data => {
+    //             const filteredTimes = data.map((el: any) => { return el.booked_hours })
+    //             setReceiveData(data)
+    //             setBusyTimes(filteredTimes.flat())
+    //             // Process data here
+    //         })
+    //         .catch(error => {
+    //             console.log("test", dateState);
+
+    //             console.error('Fetch error:', error);
+    //         });
+    //     // navigate("/")
+
+    // }
+
     const getData = () => {
+        if (!dateState || isNaN(dateState)) {
+            console.error("Invalid dateState:", dateState);
+            return;
+        }
+
+        const payload = {
+            master: selectMaster,
+            date: String(dateState), // timestamp как строка
+        };
+
+        console.log("Sending request with:", payload);
 
         fetch('https://chicchoc.top/public/public/service', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                master: selectMaster,
-                date: dateState,
-            })
+            body: JSON.stringify(payload),
         })
             .then(response => {
                 if (!response.ok) {
@@ -154,19 +213,15 @@ function Book() {
                 return response.json();
             })
             .then(data => {
-                const filteredTimes = data.map((el: any) => { return el.booked_hours })
-                setReceiveData(data)
-                setBusyTimes(filteredTimes.flat())
-                // Process data here
+                const filteredTimes = data.map((el: any) => el.booked_hours);
+                setReceiveData(data);
+                setBusyTimes(filteredTimes.flat());
             })
             .catch(error => {
-                console.log("test", dateState);
-
                 console.error('Fetch error:', error);
             });
-        // navigate("/")
+    };
 
-    }
     const handleBook = () => {
         if (userName !== "" && phoneNumber !== "" && selectMaster !== "" && selectedItems.length !== 0) {
             let allBooks: any = [
@@ -224,16 +279,17 @@ function Book() {
     };
 
     const changeDate = (e: any) => {
-        // let date = moment(e).format('MMMM Do YYYY')
-        const date = format(new Date(Number(e)), 'dd.MM.yyyy') // Например: "May 15th 2025"
-        let cleanDateString = date.replace(/(\d+)(st|nd|rd|th)/, '$1');
-        let replace = new Date(cleanDateString);
-        setDateState(new Date(replace).getTime());
+        // Если e — это timestamp (число):
+        const timestamp = typeof e === "number" ? e : new Date(e).getTime();
 
-        let day = new Date(e);
-        let dayOfWeek = day.getDay();
-        setNewDayOfWeek(dayOfWeek)
-        getData()
+        // Устанавливаем timestamp напрямую как строку
+        setDateState(timestamp);
+
+        // Получаем день недели
+        const dayOfWeek = new Date(timestamp).getDay();
+        setNewDayOfWeek(dayOfWeek);
+
+        getData();
     };
 
     const handleSelectedServices = (e: any) => {
