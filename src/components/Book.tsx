@@ -246,7 +246,7 @@ function Book() {
 
                     master: allBooks[0]?.master,
                     name: allBooks[0]?.name,
-                    date: allBooks[0]?.date,
+                    date: String(allBooks[0]?.date),
                     timeState: allBooks[0]?.timeState,
                     services: allBooks[0]?.services,
                     phoneNumber: allBooks[0]?.phoneNumber,
