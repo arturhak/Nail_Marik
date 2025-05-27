@@ -24,6 +24,9 @@ function WebHeader ({headerData,navigate}:any) {
                 navigate("./services")
                 break;
             case 2:
+                navigate("./baby")
+                break;
+            case 3:
                 navigate("./contact")
                 break;
 

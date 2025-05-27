@@ -41,6 +41,10 @@ function MobileHeader({headerData, navigate}: any) {
                 break;
             case 2:
                 setOpen(false);
+                navigate("./baby")
+                break;
+            case 3:
+                setOpen(false);
                 navigate("./contact")
                 break;
 

@@ -3,9 +3,12 @@ export const headerData = [
         title: "About Us"
     },
     {
-        title: "Our Services"
+        title: "For Adults"
     },
     {
+        title: "For Kids"
+    },
+     {
         title: "Contact Us"
     },
 ]
