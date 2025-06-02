@@ -1810,3 +1810,56 @@ video {
         font-size: 16px;
     }
 }
+
+.rotate-arrow-transition {
+    transition: .2s ease;
+    rotate: -90deg;
+}
+
+.rotate-arrow {
+    rotate: 90deg;
+}
+
+.book-now-dropdown-items {
+    font-family: "NotoSans REG";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.3s ease;
+
+}
+.book-now-dropdown-items:hover {
+    font-family: "NotoSans REG";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.3s ease;
+}
+
+.book-text {
+    display: flex;
+    width: auto;
+    height: 44px;
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    background: #FD2C03;
+    color: #FFF;
+    font-family: "NotoSans REG";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: 0.3s ease;
+}
+
