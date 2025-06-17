@@ -1,13 +1,15 @@
 import React, {useState} from "react";
-import {Drawer} from "antd";
+import {Drawer, Dropdown, MenuProps, Space} from "antd";
 import headerLogoTablet from "../assets/header-logo-tablet.svg";
 import MainButton from "../buttons/MainButton";
 import {useTranslation} from "react-i18next";
 import i18n from "../translate/i18n";
+import ArrowUp from "../assets/next.svg";
 
 function MobileHeader({headerData, navigate}: any) {
     const [open, setOpen] = useState(false);
     const [language, setLanguage] = useState<any>(localStorage.getItem("selectedLanguage"))
+    const [nftDropdownOpen, setNftDropdownOpen] = useState<any>();
     const {t} = useTranslation();
 
     const handleChangeLanguage = (lang:any) => {
@@ -24,10 +26,10 @@ function MobileHeader({headerData, navigate}: any) {
     const onClose = () => {
         setOpen(false);
     };
-    const bookNow = () => {
-        setOpen(false);
-        navigate("./book")
-    }
+    // const bookNow = () => {
+    //     setOpen(false);
+    //     navigate("./book")
+    // }
 
     const handleNavigate = (index:number) => {
         switch (index) {
@@ -51,8 +53,40 @@ function MobileHeader({headerData, navigate}: any) {
             default:
                 navigate("./error")
         }
-    }
-    
+    };
+
+    const handleOpenBookDropdown = (e: any) => {
+        setNftDropdownOpen(e)
+    };
+
+    const handleNavigateChild = () => {
+        setOpen(false);
+        navigate("./hair")
+    };
+    const handleNavigateManicure = () => {
+        setOpen(false);
+        navigate("./book")
+    };
+
+    const items: MenuProps['items'] = [
+        {
+            key: '1',
+            label: (
+                <a className="book-now-dropdown-items" rel="noopener noreferrer" onClick={handleNavigateChild}>
+                    {t('For Kids')}
+                </a>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <a className="book-now-dropdown-items" rel="noopener noreferrer" onClick={handleNavigateManicure}>
+                    {t('For Adults')}
+                </a>
+            ),
+        },
+    ];
+
 
     return (
         <div className="mobile-header">
@@ -90,10 +124,24 @@ function MobileHeader({headerData, navigate}: any) {
                                 <div className={language === "AM" ? "language_item is-lang-selected" : "language_item"} onClick={() => handleChangeLanguage('AM')}>ՀԱՅ</div>
                             </div>
                         </div>
-                        <MainButton
-                            text="Book Now"
-                            func={bookNow}
-                        />
+                        {/*<MainButton*/}
+                        {/*    text="Book Now"*/}
+                        {/*    func={bookNow}*/}
+                        {/*/>*/}
+                        <Dropdown
+                            menu={{items}}
+                            trigger={["click"]}
+                            onOpenChange={handleOpenBookDropdown}
+                            placement="bottomRight"
+                        >
+                            <a onClick={(e) => e.preventDefault()}>
+                                <Space>
+                                    <span className="book-text">{t('Book Now')}</span>
+                                    <img src={ArrowUp} alt="up"
+                                         className={nftDropdownOpen ? "rotate-arrow-transition" : "rotate-arrow-transition rotate-arrow"}/>
+                                </Space>
+                            </a>
+                        </Dropdown>
                     </div>
                 </div>
 
