@@ -1,16 +1,20 @@
 import React from 'react';
-import './App.css';
+import './Apps.scss';
 import Header from "./auth/Header";
 import Footer from "./auth/Footer";
-import Home from "./components/Home";
+import "./fonts/futura-pt/FuturaCyrillicDemi.ttf"
+import IndexRoute from "./routes/IndexRoute";
 
 function App() {
+
     return (
         <>
            <div className="App">
-               <Header/>
-               <Home />
-               <Footer/>
+               <div className="app-layout">
+                   <Header/>
+                    <IndexRoute />
+                   <Footer/>
+               </div>
            </div>
         </>
     );
