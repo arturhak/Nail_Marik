@@ -317,13 +317,20 @@
         mix-blend-mode: color-dodge;
     }
 }
+.service-item_3:hover {
+    filter: brightness(0.8);
+
+    .service-text {
+        opacity: 1;
+        mix-blend-mode: color-dodge;
+    }
+}
 
 .service-item_1 {
     background-image: url("./assets/service_image_1.png");
     background-repeat: no-repeat;
     background-size: cover;
     /*display: flex;*/
-
     width: 560px;
     height: 550px;
     transition: 0.3s ease-in-out;
@@ -341,11 +348,21 @@
     position: relative;
 
 }
+.service-item_3 {
+    background-image: url("./assets/service_image_3.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 560px;
+    height: 550px;
+    transition: 0.3s ease-in-out;
+    position: relative;
+
+}
 
 .service-text {
     color: #FFF;
     font-family: "NotoSans REG";
-    font-size: 48px;
+    font-size: 34px;
     font-style: normal;
     font-weight: 450;
     line-height: normal;
@@ -660,6 +677,19 @@ a:-webkit-any-link {
     padding-top: 36px;
     height: 434px;
 }
+.service_baby_page_1 {
+    width: 100%;
+    background-image: url("./assets/baby_cover.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 44px;
+    padding-top: 36px;
+    height: 434px;
+}
 
 .services {
     display: flex;
@@ -805,6 +835,21 @@ a:-webkit-any-link {
     flex-direction: column;
     align-items: center;
     background-image: url("./assets/book_bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 200px;
+    padding-left: 25px;
+    padding-right: 25px;
+    //background:red;
+}
+
+.book-baby-left-side {
+    width: 29%;
+    height: 1049px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("./assets/baby-book-cover.png");
     background-repeat: no-repeat;
     background-size: cover;
     padding-top: 200px;
@@ -1329,6 +1374,11 @@ button {
         height: 400px;
         background-size: contain;
     }
+    .service-item_3 {
+        width: 440px;
+        height: 400px;
+        background-size: contain;
+    }
 
     .service-text {
         bottom: 130px;
@@ -1459,6 +1509,10 @@ button {
         width: 220px;
         height: 180px;
     }
+    .service-item_3 {
+        width: 220px;
+        height: 180px;
+    }
 
     .home_page_2 {
         margin-bottom: 12px;
@@ -1548,6 +1602,11 @@ button {
         height: 360px;
         padding-top: 36px;
     }
+    .book-baby-left-side {
+        width: 100%;
+        height: 360px;
+        padding-top: 36px;
+    }
 
     .book-left-side_content {
         gap: 31px
@@ -1631,6 +1690,10 @@ button {
     }
 
     .book-left-side {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    .book-baby-left-side {
         padding-left: 16px;
         padding-right: 16px;
     }

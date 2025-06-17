@@ -25,12 +25,12 @@ function Baby () {
 
     return (
         <div className="layout">
-            <div className="service_page_1">
+            <div className="service_baby_page_1">
                 <div className="home_page_1_title">
-                    {t('Visit our calm retreat and leave behind the busy pace of daily life. Our skilled technicians will provide you with exceptional nail care, creating the perfect experience for you.')}
+                    {t("The world of caring for your little ones. Our children's salon is created exclusively for children, with a pleasant environment, caring professionals and a cheerful atmosphere.Check out the services below")}
                 </div>
                 <div className="home_page_1_content">
-                    {t('For Kids')}
+                    {t('Services')}
                 </div>
             </div>
 
@@ -77,8 +77,8 @@ function Baby () {
             </div>
 
             <div className="services margin-bottom">
-                <div className="services-title">{t("Men's Manicure/Pedicure")}<span>.</span></div>
-                <div className="service-content">
+                {/* <div className="services-title">{t("Men's Manicure/Pedicure")}<span>.</span></div> */}
+                {/* <div className="service-content">
                     {allServices.faceSkinCare.map((serviceItem:any, index   ) => {
                         return (
                             <ServiceItem
@@ -94,10 +94,10 @@ function Baby () {
                             />
                         )
                     })}
-                </div>
+                </div> */}
             </div>
 
-            <div className="services margin-bottom">
+            {/* <div className="services margin-bottom">
                 <div className="services-title">{t("Design")}<span>.</span></div>
                 <div className="service-content">
                     {allServices.design.map((serviceItem:any, index   ) => {
@@ -116,7 +116,7 @@ function Baby () {
                         )
                     })}
                 </div>
-            </div>
+            </div> */}
 
 
         </div>

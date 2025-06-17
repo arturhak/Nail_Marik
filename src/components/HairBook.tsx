@@ -318,7 +318,7 @@ function HairBook() {
     }));
     return (
         <div className="book-layout">
-            <div className="book-left-side">
+            <div className="book-baby-left-side">
                 <div className="book-left-side_content">
                     <div className="book-left-side_content_top">
                         {t('Simply fill in the necessary information to secure your appointment with us. From preferred service to date and time, your nail care needs are in good hands.')}

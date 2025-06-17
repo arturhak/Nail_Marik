@@ -3,15 +3,16 @@ export const translationEN = {
     "For Adults": "For Adults",
     "Contact Us": "Contact Us",
     "For Kids": "For Kids",
+    "Chic-Choc kids": "Chic-Choc kids",
     "Book Now": 'Book Now',
     "For Girls": 'For Girls',
     "Haircut": 'Haircut',
     "For Boys": "For Boys",
     "Hair Styling": 'Hair Styling',
-    "The waves": 'The waves',
+    "The Waves": 'The Waves',
     "2 Braids With Kanekalon": '2 Braids With Kanekalon',
-    "Short / Long Braid From Root": 'Short / Long Braid From Root',
-    "Short / Long Braid With Thread": 'Short / Long Braid With Thread',
+    "Short / Long Braid From Root (Per Braid)": 'Short / Long Braid From Root (Per Braid)',
+    "Short / Long Braid With Thread (Per Braid)": 'Short / Long Braid With Thread (Per Braid)',
     "African Braids (Per Braid)": 'African Braids (Per Braid)',
     "Festive Hairstyle": 'Festive Hairstyle',
     "Ear Piercing": 'Ear Piercing',
@@ -100,6 +101,6 @@ export const translationEN = {
     "Contact  Us": "Contact Us",
     "Fill in all the fields for registration": "Fill in all the fields for registration",
     "If you want to receive a reminder about registration, click the Subscribe button.": "If you want to receive a reminder about registration, click the Subscribe button.",
-    "Subscribe": "Subscribe"
-
+    "Subscribe": "Subscribe",
+    "The world of caring for your little ones. Our children's salon is created exclusively for children, with a pleasant environment, caring professionals and a cheerful atmosphere.Check out the services below": "The world of caring for your little ones. Our children's salon is created exclusively for children, with a pleasant environment, caring professionals and a cheerful atmosphere.Check out the services below"
 }

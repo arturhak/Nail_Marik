@@ -52,6 +52,7 @@ function MobileHeader({headerData, navigate}: any) {
                 navigate("./error")
         }
     }
+    
 
     return (
         <div className="mobile-header">

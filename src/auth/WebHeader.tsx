@@ -43,7 +43,7 @@ function WebHeader ({headerData,navigate}:any) {
     };
 
     const handleNavigateChild = () => {
-        navigate("./book")
+        navigate("./hair")
     };
     const handleNavigateManicure = () => {
         navigate("./book")
@@ -54,7 +54,7 @@ function WebHeader ({headerData,navigate}:any) {
             key: '1',
             label: (
                 <a className="book-now-dropdown-items" rel="noopener noreferrer" onClick={handleNavigateChild}>
-                    {t('Value1')}
+                    {t('For Kids')}
                 </a>
             ),
         },
@@ -62,7 +62,7 @@ function WebHeader ({headerData,navigate}:any) {
             key: '2',
             label: (
                 <a className="book-now-dropdown-items" rel="noopener noreferrer" onClick={handleNavigateManicure}>
-                    {t('Value2')}
+                    {t('For Adults')}
                 </a>
             ),
         },

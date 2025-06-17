@@ -43,6 +43,9 @@ function Home () {
                 <div className="service-item_2">
                     <div className="service-text">{t('Pedicure')}<span>.</span></div>
                 </div>
+                <div className="service-item_3">
+                    <div className="service-text">{t('For Kids')}<span>.</span></div>
+                </div>
             </div>
             <div className="content-footer">
                 {t("Get ready to witness perfection in action! Our awesome team is all about making your nails look and feel amazing. Whether you're after a fancy manicure or just chilling with a pedicure, we promise a super comfy vibe every step of the way.")}
