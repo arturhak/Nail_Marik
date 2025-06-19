@@ -20,7 +20,7 @@ export const babyServices = {
     girls: [
         {
             bg: BG_1,
-            value: 'Haircut',
+            value: "Girl's Haircut",
             startPrice: 3000,
             endPrice: null,
             hour: null,
@@ -140,7 +140,7 @@ export const babyServices = {
     boys: [
         {
             bg: BG_14,
-            value: 'Haircut',
+            value: "Boy's Haircut",
             startPrice: 3000,
             endPrice: null,
             hour: null,
