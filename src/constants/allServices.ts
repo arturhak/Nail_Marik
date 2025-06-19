@@ -321,4 +321,8 @@ export const allMasters = [
         value: "Marianna Badalyan",
         disabled: false
     },
+    {
+        value: "Anna Poghosyan",
+        disabled: false
+    },
 ]

@@ -42,28 +42,36 @@ function Book() {
         const translatedMasters = allMasters.map((master) => ({
             value: master.value,
             label: t(`${master.value}`),
-            disabled: master.disabled
+            disabled: master.disabled,
         }));
 
         if (newDayOfWeek === 3) {
-            // Среда — только Marianna, Irina отключена
+            // Среда — Marianna и Anna (Irina отключена)
             setNewMaster([
-                translatedMasters.find(m => m.value === "Marianna Badalyan")!,
-                { ...translatedMasters.find(m => m.value === "Irina Kostanyan")!, disabled: true }
+                translatedMasters.find((m) => m.value === "Marianna Badalyan")!,
+                { ...translatedMasters.find((m) => m.value === "Irina Kostanyan")!, disabled: true },
+                translatedMasters.find((m) => m.value === "Anna Poghosyan")!,
             ]);
-            setSelectMaster("Marianna Badalyan");
         } else if ([0, 2, 4, 5].includes(newDayOfWeek)) {
-            // Воскр, вторник, четверг, пятница — только Irina, Marianna отключена
+            // Воскр, вторник, четверг, пятница — Irina и Anna (Marianna отключена)
             setNewMaster([
-                translatedMasters.find(m => m.value === "Irina Kostanyan")!,
-                { ...translatedMasters.find(m => m.value === "Marianna Badalyan")!, disabled: true }
+                translatedMasters.find((m) => m.value === "Irina Kostanyan")!,
+                { ...translatedMasters.find((m) => m.value === "Marianna Badalyan")!, disabled: true },
+                translatedMasters.find((m) => m.value === "Anna Poghosyan")!,
             ]);
-            setSelectMaster("Irina Kostanyan");
         } else {
-            // Понедельник и суббота — обе активны
-            setNewMaster(translatedMasters);
+            // Понедельник и суббота — Marianna и Irina (Anna отключена)
+            setNewMaster(
+                translatedMasters.map((m) =>
+                    m.value === "Anna Poghosyan" ? { ...m, disabled: true } : m
+                )
+            );
         }
+
+        // Очищаем выбранного мастера, чтобы показать placeholder
+        setSelectMaster("");
     }, [t, dateState]);
+
 
 
     useEffect(() => {
