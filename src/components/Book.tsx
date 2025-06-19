@@ -32,7 +32,6 @@ function Book() {
     const [newDayOfWeek, setNewDayOfWeek] = useState<any>(new Date().getDay());
     const { t } = useTranslation();
 
-
     useEffect(() => {
         if (!dateState || isNaN(dateState)) return;
 
@@ -45,22 +44,22 @@ function Book() {
             disabled: master.disabled,
         }));
 
-        if (newDayOfWeek === 3) {
-            // Среда — Marianna и Anna (Irina отключена)
+        if (newDayOfWeek === 3 || newDayOfWeek === 5) {
+            // Среда(3) и пятница(5) — Irina активна, Marianna и Anna отключены
             setNewMaster([
-                translatedMasters.find((m) => m.value === "Marianna Badalyan")!,
-                { ...translatedMasters.find((m) => m.value === "Irina Kostanyan")!, disabled: true },
-                translatedMasters.find((m) => m.value === "Anna Poghosyan")!,
+                translatedMasters.find((m) => m.value === "Irina Kostanyan")!,
+                { ...translatedMasters.find((m) => m.value === "Marianna Badalyan")!, disabled: true },
+                { ...translatedMasters.find((m) => m.value === "Anna Poghosyan")!, disabled: true },
             ]);
-        } else if ([0, 2, 4, 5].includes(newDayOfWeek)) {
-            // Воскр, вторник, четверг, пятница — Irina и Anna (Marianna отключена)
+        } else if ([0, 2, 4].includes(newDayOfWeek)) {
+            // Воскресенье(0), вторник(2), четверг(4) — Irina и Anna активны, Marianna отключена
             setNewMaster([
                 translatedMasters.find((m) => m.value === "Irina Kostanyan")!,
                 { ...translatedMasters.find((m) => m.value === "Marianna Badalyan")!, disabled: true },
                 translatedMasters.find((m) => m.value === "Anna Poghosyan")!,
             ]);
         } else {
-            // Понедельник и суббота — Marianna и Irina (Anna отключена)
+            // Понедельник(1) и суббота(6) — Marianna и Irina активны, Anna отключена
             setNewMaster(
                 translatedMasters.map((m) =>
                     m.value === "Anna Poghosyan" ? { ...m, disabled: true } : m
@@ -68,7 +67,6 @@ function Book() {
             );
         }
 
-        // Очищаем выбранного мастера, чтобы показать placeholder
         setSelectMaster("");
     }, [t, dateState]);
 
