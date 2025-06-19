@@ -38,33 +38,40 @@ function HairBook() {
         if (!dateState || isNaN(dateState)) return;
 
         const date = new Date(dateState);
-        const newDayOfWeek = date.getDay(); // 0 (вс) до 6 (сб)
+        const newDayOfWeek = date.getDay(); // 0 (вс) - 6 (сб)
 
         const translatedMasters = hairMasters.map((master) => ({
             value: master.value,
             label: t(`${master.value}`),
-            // disabled: master.disabled
         }));
 
-        if (newDayOfWeek === 3) {
-            // Среда — только Marianna, Irina отключена
+        const anushik = translatedMasters.find((m) => m.value === "Anushik")!;
+        const noro = translatedMasters.find((m) => m.value === "Noro")!;
+
+        if ([4, 6].includes(newDayOfWeek)) {
+            // Четверг и Воскресенье — Anushik активна, Noro отключен
             setNewMaster([
-                translatedMasters.find(m => m.value === "Anushik")!,
-                { ...translatedMasters.find(m => m.value === "Marieta Vardanyan")!, disabled: true }
+                anushik,
+                { ...noro, disabled: true }
             ]);
-            setSelectMaster("Anushik");
-        } else if ([3, 4, 6].includes(newDayOfWeek)) {
-            // Воскр, вторник, четверг, пятница — только Irina, Marianna отключена
+            setSelectMaster("");
+        } else if ([2, 5].includes(newDayOfWeek)) {
+            // Вторник и Пятница — Noro активен, Anushik отключена
             setNewMaster([
-                translatedMasters.find(m => m.value === "Anushik")!,
-                { ...translatedMasters.find(m => m.value === "Marieta Vardanyan")!, disabled: true }
+                noro,
+                { ...anushik, disabled: true }
             ]);
-            setSelectMaster("Marieta Vardanyan");
+            setSelectMaster("");
         } else {
-            // Понедельник и суббота — обе активны
-            setNewMaster(translatedMasters);
+            // Остальные дни — оба мастера, но оба отключены
+            setNewMaster([
+                { ...anushik, disabled: true },
+                { ...noro, disabled: true }
+            ]);
+            setSelectMaster("");
         }
     }, [t, dateState]);
+
 
 
     useEffect(() => {

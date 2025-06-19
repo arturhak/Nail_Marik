@@ -166,7 +166,7 @@ export const hairMasters = [
         disabled: false
     },
     {
-        value: "Marieta Vardanyan",
+        value: "Noro",
         disabled: false
     },
 ]
