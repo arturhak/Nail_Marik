@@ -44,22 +44,29 @@ function Book() {
             disabled: master.disabled,
         }));
 
-        if (newDayOfWeek === 3 || newDayOfWeek === 5) {
-            // Среда(3) и пятница(5) — Irina активна, Marianna и Anna отключены
+        if (newDayOfWeek === 3) {
+            // Среда — Marianna и Anna активны, Irina отключена
+            setNewMaster([
+                translatedMasters.find((m) => m.value === "Marianna Badalyan")!,
+                { ...translatedMasters.find((m) => m.value === "Irina Kostanyan")!, disabled: true },
+                translatedMasters.find((m) => m.value === "Anna Poghosyan")!,
+            ]);
+        } else if (newDayOfWeek === 5) {
+            // Пятница — Irina активна, Marianna и Anna отключены
             setNewMaster([
                 translatedMasters.find((m) => m.value === "Irina Kostanyan")!,
                 { ...translatedMasters.find((m) => m.value === "Marianna Badalyan")!, disabled: true },
                 { ...translatedMasters.find((m) => m.value === "Anna Poghosyan")!, disabled: true },
             ]);
         } else if ([0, 2, 4].includes(newDayOfWeek)) {
-            // Воскресенье(0), вторник(2), четверг(4) — Irina и Anna активны, Marianna отключена
+            // Воскресенье, вторник, четверг — Irina и Anna активны, Marianna отключена
             setNewMaster([
                 translatedMasters.find((m) => m.value === "Irina Kostanyan")!,
                 { ...translatedMasters.find((m) => m.value === "Marianna Badalyan")!, disabled: true },
                 translatedMasters.find((m) => m.value === "Anna Poghosyan")!,
             ]);
         } else {
-            // Понедельник(1) и суббота(6) — Marianna и Irina активны, Anna отключена
+            // Понедельник и суббота — Marianna и Irina активны, Anna отключена
             setNewMaster(
                 translatedMasters.map((m) =>
                     m.value === "Anna Poghosyan" ? { ...m, disabled: true } : m
