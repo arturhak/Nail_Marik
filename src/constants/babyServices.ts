@@ -29,7 +29,7 @@ export const babyServices = {
         },
         {
             bg: BG_2,
-            value: 'Hair Styling',
+            value: "Girl's Hair Styling",
             startPrice: 2000,
             endPrice: 3000,
             hour: null,
@@ -57,7 +57,7 @@ export const babyServices = {
         {
             bg: BG_5,
             value: '2 Braids with Threads',
-            startPrice: 4000,
+            startPrice: 5000,
             endPrice: 7000,
             hour: null,
             minute: 20,
@@ -94,7 +94,7 @@ export const babyServices = {
             bg: BG_9,
             value: 'African Braids (Per Braid)',
             startPrice: 700,
-            endPrice: 1500,
+            endPrice: null,
             hour: null,
             minute: 20,
             timeToMinute: 20
@@ -149,7 +149,7 @@ export const babyServices = {
         },
         {
             bg: BG_15,
-            value: 'Hair Styling',
+            value: "Boy's Hair Styling",
             startPrice: 1000,
             endPrice: 2000,
             hour: null,
