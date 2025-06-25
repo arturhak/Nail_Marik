@@ -38,44 +38,42 @@ function Book() {
         const date = new Date(dateState);
         const newDayOfWeek = date.getDay(); // 0 (вс) до 6 (сб)
 
-        const translatedMasters = allMasters.map((master) => ({
-            value: master.value,
-            label: t(`${master.value}`),
-            disabled: master.disabled,
-        }));
+        const translatedMasters = allMasters
+            .filter((master) => master.value !== "Anna Poghosyan") // убираем Анну
+            .map((master) => ({
+                value: master.value,
+                label: t(`${master.value}`),
+                disabled: master.disabled,
+            }));
 
         if (newDayOfWeek === 3) {
-            // Среда — Marianna и Anna активны, Irina отключена
+            // Среда — Marianna активна, Irina отключена
             setNewMaster([
                 translatedMasters.find((m) => m.value === "Marianna Badalyan")!,
                 { ...translatedMasters.find((m) => m.value === "Irina Kostanyan")!, disabled: true },
-                translatedMasters.find((m) => m.value === "Anna Poghosyan")!,
             ]);
         } else if (newDayOfWeek === 5) {
-            // Пятница — Irina активна, Marianna и Anna отключены
+            // Пятница — Irina активна, Marianna отключена
             setNewMaster([
                 translatedMasters.find((m) => m.value === "Irina Kostanyan")!,
                 { ...translatedMasters.find((m) => m.value === "Marianna Badalyan")!, disabled: true },
-                { ...translatedMasters.find((m) => m.value === "Anna Poghosyan")!, disabled: true },
             ]);
         } else if ([0, 2, 4].includes(newDayOfWeek)) {
-            // Воскресенье, вторник, четверг — Irina и Anna активны, Marianna отключена
+            // Воскресенье, вторник, четверг — Irina активна, Marianna отключена
             setNewMaster([
                 translatedMasters.find((m) => m.value === "Irina Kostanyan")!,
                 { ...translatedMasters.find((m) => m.value === "Marianna Badalyan")!, disabled: true },
-                translatedMasters.find((m) => m.value === "Anna Poghosyan")!,
             ]);
         } else {
-            // Понедельник и суббота — Marianna и Irina активны, Anna отключена
+            // Понедельник и суббота — Marianna и Irina активны
             setNewMaster(
-                translatedMasters.map((m) =>
-                    m.value === "Anna Poghosyan" ? { ...m, disabled: true } : m
-                )
+                translatedMasters.map((m) => ({ ...m, disabled: false }))
             );
         }
 
         setSelectMaster("");
     }, [t, dateState]);
+
 
 
 

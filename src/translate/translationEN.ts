@@ -57,6 +57,7 @@ export const translationEN = {
     "Lamination": "Lamination",
     "Waxing": "Waxing",
     "Simply fill in the necessary information to secure your appointment with us. From preferred service to date and time, your nail care needs are in good hands.": "Simply fill in the necessary information to secure your appointment with us. From preferred service to date and time, your nail care needs are in good hands.",
+    "Simply fill in the necessary information to secure your appointment with us. From preferred service to date and time, Your little ones' care is in safe hands.": "Simply fill in the necessary information to secure your appointment with us. From preferred service to date and time, Your little ones' care is in safe hands.",
     "Book a Visit": "Book a Visit",
     "Name Surname": "Name Surname",
     "Choose Master": "Choose Master",

@@ -328,7 +328,7 @@ function HairBook() {
             <div className="book-baby-left-side">
                 <div className="book-left-side_content">
                     <div className="book-left-side_content_top">
-                        {t('Simply fill in the necessary information to secure your appointment with us. From preferred service to date and time, your nail care needs are in good hands.')}
+                        {t("Simply fill in the necessary information to secure your appointment with us. From preferred service to date and time, Your little ones' care is in safe hands.")}
                     </div>
                     <div className="book-left-side_content_bottom">
                         {t('Book Now')}
