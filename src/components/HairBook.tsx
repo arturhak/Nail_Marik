@@ -144,8 +144,8 @@ function HairBook() {
         message += `Ծառայություն:\n${_service} \n\n`;
         message += `Արժեք:\n${_price} AMD\n\n`;
 
-        const token = "7919607900:AAESSDQomcRQ2gBFpJ5NEXVZijW8FdA4kiY"
-        const chat_id = "-4552058619";
+        const token = "7999100182:AAHx_AkoTDBLJG9hkvI4eb5IisxsL7_J3V8"
+        const chat_id = "-4875084189";
         const URI_API = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`;
 
         try {
