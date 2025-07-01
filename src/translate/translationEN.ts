@@ -107,5 +107,12 @@ export const translationEN = {
     "Fill in all the fields for registration": "Fill in all the fields for registration",
     "If you want to receive a reminder about registration, click the Subscribe button.": "If you want to receive a reminder about registration, click the Subscribe button.",
     "Subscribe": "Subscribe",
-    "The world of caring for your little ones. Our children's salon is created exclusively for children, with a pleasant environment, caring professionals and a cheerful atmosphere.Check out the services below": "The world of caring for your little ones. Our children's salon is created exclusively for children, with a pleasant environment, caring professionals and a cheerful atmosphere.Check out the services below"
+    "The world of caring for your little ones. Our children's salon is created exclusively for children, with a pleasant environment, caring professionals and a cheerful atmosphere.Check out the services below": "The world of caring for your little ones. Our children's salon is created exclusively for children, with a pleasant environment, caring professionals and a cheerful atmosphere.Check out the services below",
+    "Please enter your name": "Please enter your name",
+    "Please enter a valid phone number": "Please enter a valid phone number",
+    "Please select a master": "Please select a master",
+    "Please select at least one service": "Please select at least one service",
+    "Please select a date": "Please select a date",
+    "Please select a time": "Please select a time"
+
 }

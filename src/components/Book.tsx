@@ -46,33 +46,39 @@ function Book() {
                 disabled: master.disabled,
             }));
 
+        let dayMasters;
+
         if (newDayOfWeek === 3) {
             // Среда — Marianna активна, Irina отключена
-            setNewMaster([
+            dayMasters = [
                 translatedMasters.find((m) => m.value === "Marianna Badalyan")!,
                 { ...translatedMasters.find((m) => m.value === "Irina Kostanyan")!, disabled: true },
-            ]);
+            ];
         } else if (newDayOfWeek === 5) {
             // Пятница — Irina активна, Marianna отключена
-            setNewMaster([
+            dayMasters = [
                 translatedMasters.find((m) => m.value === "Irina Kostanyan")!,
                 { ...translatedMasters.find((m) => m.value === "Marianna Badalyan")!, disabled: true },
-            ]);
+            ];
         } else if ([0, 2, 4].includes(newDayOfWeek)) {
             // Воскресенье, вторник, четверг — Irina активна, Marianna отключена
-            setNewMaster([
+            dayMasters = [
                 translatedMasters.find((m) => m.value === "Irina Kostanyan")!,
                 { ...translatedMasters.find((m) => m.value === "Marianna Badalyan")!, disabled: true },
-            ]);
+            ];
         } else {
             // Понедельник и суббота — Marianna и Irina активны
-            setNewMaster(
-                translatedMasters.map((m) => ({ ...m, disabled: false }))
-            );
+            dayMasters = translatedMasters.map((m) => ({ ...m, disabled: false }));
         }
 
-        setSelectMaster("");
+        setNewMaster(dayMasters);
+
+        const stillAvailable = dayMasters.find((m) => m.value === selectMaster && !m.disabled);
+        if (!stillAvailable) {
+            setSelectMaster("");
+        }
     }, [t, dateState]);
+
 
 
 
@@ -234,60 +240,68 @@ function Book() {
     };
 
     const handleBook = () => {
-        if (userName !== "" && phoneNumber !== "" && selectMaster !== "" && selectedItems.length !== 0) {
-            let allBooks: any = [
-                {
-                    master: selectMaster,
-                    name: userName,
-                    date: dateState,
-                    timeState: timeState,
-                    services: [...selectedItems],
-                    phoneNumber: phoneNumber,
-                    totalPrice: totalPrice,
-                    totalTime: totalTime
-                }
-            ]
+        const errors = [];
 
-            fetch('https://chicchoc.top/public/public/service/data', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+        if (!userName || userName.trim() === "") errors.push(t("Please enter your name"));
+        if (!phoneNumber || phoneNumber.trim().length < 8) errors.push(t("Please enter a valid phone number"));
+        if (!selectMaster) errors.push(t("Please select a master"));
+        if (!selectedItems || selectedItems.length === 0) errors.push(t("Please select at least one service"));
+        if (!dateState) errors.push(t("Please select a date"));
+        if (!timeState) errors.push(t("Please select a time"));
 
-                    master: allBooks[0]?.master,
-                    name: allBooks[0]?.name,
-                    date: String(allBooks[0]?.date),
-                    timeState: allBooks[0]?.timeState,
-                    services: allBooks[0]?.services,
-                    phoneNumber: allBooks[0]?.phoneNumber,
-                    totalPrice: allBooks[0]?.totalPrice,
-                    totalTime: allBooks[0]?.totalTime
-                })
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                        setConfirmStatus(response.status.toString())
-                    }
-                    return setModalOpen(true);
-                })
-                .then(data => {
-                    tgFormWeb(allBooks[0]?.date, allBooks[0]?.timeState, allBooks[0]?.name, allBooks[0]?.phoneNumber, allBooks[0]?.master, allBooks[0]?.services, allBooks[0]?.totalPrice);
-                    setConfirmStatus('Registration Successfully Completed')
-                    setModalOpen(true);
-                })
-                .catch(error => {
-                    console.error('Fetch error:', error);
-                    setModalOpen(true);
-                    setConfirmStatus("Fill in all fields")
-                });
-        } else {
-            setConfirmStatus(t("Fill in all the fields for registration"))
-            setModalOpen(true)
+        if (errors.length > 0) {
+            setConfirmStatus(errors.join("\n"));
+            setModalOpen(true);
+            return;
         }
 
+        // Если всё заполнено корректно
+        const allBooks: any = [
+            {
+                master: selectMaster,
+                name: userName,
+                date: dateState,
+                timeState: timeState,
+                services: [...selectedItems],
+                phoneNumber: phoneNumber,
+                totalPrice: totalPrice,
+                totalTime: totalTime
+            }
+        ];
+
+        fetch('https://chicchoc.top/public/public/service/data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(allBooks[0])
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                tgFormWeb(
+                    allBooks[0].date,
+                    allBooks[0].timeState,
+                    allBooks[0].name,
+                    allBooks[0].phoneNumber,
+                    allBooks[0].master,
+                    allBooks[0].services,
+                    allBooks[0].totalPrice
+                );
+                setConfirmStatus(t('Registration Successfully Completed'));
+                setModalOpen(true);
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                setConfirmStatus(t("There was an error submitting the form"));
+                setModalOpen(true);
+            });
     };
+
 
     const changeDate = (e: any) => {
         // Если e — это timestamp (число):
@@ -391,7 +405,9 @@ function Book() {
                     <Calendar
                         value={dateState}
                         onChange={changeDate}
+                        minDate={new Date()} // ❗ Блокирует все прошедшие даты
                     />
+
                     <div className="book-time">
                         <div className="book-time-title">{t('Time')}</div>
                         <div className="time-group">
