@@ -412,15 +412,36 @@ function Book() {
                         <div className="book-time-title">{t('Time')}</div>
                         <div className="time-group">
                             {allTimes.map((time: any, index: number) => {
+                                const selectedDate = new Date(dateState);
+                                const today = new Date();
+                                const [hour, minute] = time.split(":").map(Number);
+
+                                const timeDate = new Date(selectedDate);
+                                timeDate.setHours(hour, minute, 0, 0);
+
+                                const isPastTime = selectedDate.toDateString() === today.toDateString() && timeDate < today;
+
+                                const isBusy = busyTimes?.includes(time);
+
                                 return (
                                     <div
                                         key={index}
-                                        className={!busyTimes?.includes(time) ? (timeIndex !== index ? "book-time-local" : "book-time-local is-selected") : "is-time-busy"}
-                                        onClick={() => handleSetTime(time, index)}
+                                        className={
+                                            isPastTime || isBusy
+                                                ? "is-time-busy"
+                                                : timeIndex !== index
+                                                    ? "book-time-local"
+                                                    : "book-time-local is-selected"
+                                        }
+                                        onClick={() => {
+                                            if (!isPastTime && !isBusy) handleSetTime(time, index);
+                                        }}
                                     >
                                         {time}
-                                    </div>)
+                                    </div>
+                                );
                             })}
+
                         </div>
                     </div>
                 </div>
