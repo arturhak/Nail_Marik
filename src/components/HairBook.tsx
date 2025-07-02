@@ -250,7 +250,7 @@ function HairBook() {
             {
                 master: selectMaster,
                 name: userName,
-                date: dateState,
+                date: dateState.toString(),
                 timeState: timeState,
                 services: [...selectedItems],
                 phoneNumber: phoneNumber,

@@ -89,9 +89,8 @@ function Book() {
 
 
     useEffect(() => {
-        // Сегодняшняя дата без времени — формат YYYY-MM-DD
-        const todayString = new Date().toISOString().split("T")[0]; // '2025-05-14'
-        const timestamp = new Date(todayString).getTime(); // Надёжный UTC timestamp
+        const todayString = new Date().toISOString().split("T")[0];
+        const timestamp = new Date(todayString).getTime();
 
         setDateState(timestamp);
 
@@ -260,7 +259,7 @@ function Book() {
             {
                 master: selectMaster,
                 name: userName,
-                date: dateState,
+                date: dateState.toString(),
                 timeState: timeState,
                 services: [...selectedItems],
                 phoneNumber: phoneNumber,
@@ -304,18 +303,33 @@ function Book() {
 
 
     const changeDate = (e: any) => {
-        // Если e — это timestamp (число):
-        const timestamp = typeof e === "number" ? e : new Date(e).getTime();
+        if (!e) return;
 
-        // Устанавливаем timestamp напрямую как строку
+        const timestamp = new Date(e).getTime();
+
+        if (isNaN(timestamp)) {
+            console.warn("Некорректная дата:", e);
+            return;
+        }
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const selectedDate = new Date(timestamp);
+        selectedDate.setHours(0, 0, 0, 0);
+
+        // Не даём выбрать прошедшую дату
+        if (selectedDate < today) {
+            console.warn("Прошлая дата выбрана:", selectedDate);
+            return;
+        }
+
         setDateState(timestamp);
-
-        // Получаем день недели
-        const dayOfWeek = new Date(timestamp).getDay();
-        setNewDayOfWeek(dayOfWeek);
-
+        setNewDayOfWeek(new Date(timestamp).getDay());
         getData();
     };
+
+
 
     const handleSelectedServices = (e: any) => {
         setSelectedItems(e);
@@ -405,8 +419,9 @@ function Book() {
                     <Calendar
                         value={dateState}
                         onChange={changeDate}
-                        minDate={new Date()} // ❗ Блокирует все прошедшие даты
+                        minDate={new Date()} // ⛔ запрещает прошлые дни
                     />
+
 
                     <div className="book-time">
                         <div className="book-time-title">{t('Time')}</div>
@@ -419,28 +434,31 @@ function Book() {
                                 const timeDate = new Date(selectedDate);
                                 timeDate.setHours(hour, minute, 0, 0);
 
-                                const isPastTime = selectedDate.toDateString() === today.toDateString() && timeDate < today;
-
+                                const isSameDay = selectedDate.toDateString() === today.toDateString();
+                                const isPastTime = isSameDay && timeDate < today;
                                 const isBusy = busyTimes?.includes(time);
+
+                                const isDisabled = isPastTime || isBusy;
 
                                 return (
                                     <div
                                         key={index}
                                         className={
-                                            isPastTime || isBusy
+                                            isDisabled
                                                 ? "is-time-busy"
                                                 : timeIndex !== index
                                                     ? "book-time-local"
                                                     : "book-time-local is-selected"
                                         }
                                         onClick={() => {
-                                            if (!isPastTime && !isBusy) handleSetTime(time, index);
+                                            if (!isDisabled) handleSetTime(time, index);
                                         }}
                                     >
                                         {time}
                                     </div>
                                 );
                             })}
+
 
                         </div>
                     </div>
