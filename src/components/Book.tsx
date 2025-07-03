@@ -46,53 +46,50 @@ function Book() {
                 disabled: master.disabled,
             }));
 
-        let dayMasters;
-
         if (newDayOfWeek === 3) {
             // Среда — Marianna активна, Irina отключена
-            dayMasters = [
+            setNewMaster([
                 translatedMasters.find((m) => m.value === "Marianna Badalyan")!,
                 { ...translatedMasters.find((m) => m.value === "Irina Kostanyan")!, disabled: true },
-            ];
+            ]);
         } else if (newDayOfWeek === 5) {
             // Пятница — Irina активна, Marianna отключена
-            dayMasters = [
+            setNewMaster([
                 translatedMasters.find((m) => m.value === "Irina Kostanyan")!,
                 { ...translatedMasters.find((m) => m.value === "Marianna Badalyan")!, disabled: true },
-            ];
+            ]);
         } else if ([0, 2, 4].includes(newDayOfWeek)) {
             // Воскресенье, вторник, четверг — Irina активна, Marianna отключена
-            dayMasters = [
+            setNewMaster([
                 translatedMasters.find((m) => m.value === "Irina Kostanyan")!,
                 { ...translatedMasters.find((m) => m.value === "Marianna Badalyan")!, disabled: true },
-            ];
+            ]);
         } else {
             // Понедельник и суббота — Marianna и Irina активны
-            dayMasters = translatedMasters.map((m) => ({ ...m, disabled: false }));
+            setNewMaster(
+                translatedMasters.map((m) => ({ ...m, disabled: false }))
+            );
         }
 
-        setNewMaster(dayMasters);
-
-        const stillAvailable = dayMasters.find((m) => m.value === selectMaster && !m.disabled);
-        if (!stillAvailable) {
-            setSelectMaster("");
-        }
+        // setSelectMaster("");
     }, [t, dateState]);
-
 
 
 
 
     useEffect(() => {
         getData();
-    }, [dateState, selectMaster]);
+
+
+    }, [dateState, selectMaster, modalOpen]);
 
 
     useEffect(() => {
-        const todayString = new Date().toISOString().split("T")[0];
-        const timestamp = new Date(todayString).getTime();
+        const now = new Date();
+        const localMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+        setDateState(localMidnight);
 
-        setDateState(timestamp);
+
 
 
 
@@ -137,11 +134,13 @@ function Book() {
         }
     }, [lastTimes]);
 
+
+
     const allServiceGroup = Object.values(allServices).flat();
     // const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
 
     async function tgFormWeb(_date: any, _time: any, _name: any, _phone: any, _master: any, _service: any, _price: any) {
-        const date = new Date(_date); // Assuming _date is a valid date string or object
+        const date = typeof _date === 'number' || typeof _date === 'string' ? new Date(Number(_date)) : new Date(_date);
         const formattedDate = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
         let message = ` Կատարվել է Գրանցում \n\n`;
         message += `Անուն:\n ${_name} \n\n`;
@@ -202,16 +201,21 @@ function Book() {
 
     // }
 
-    const getData = () => {
-        if (!dateState || isNaN(dateState)) {
-            console.error("Invalid dateState:", dateState);
+    const getData = (customDate?: number) => {
+        const dateToUse = customDate || dateState;
+
+        if (!dateToUse || isNaN(dateToUse)) {
+            console.error("Invalid dateState:", dateToUse);
             return;
         }
 
+        const formattedDate = new Date(dateToUse).toISOString().split("T")[0]; // 'YYYY-MM-DD'
+
         const payload = {
             master: selectMaster,
-            date: String(dateState), // timestamp как строка
+            date: String(dateState), // timestamp в виде строки
         };
+
 
         console.log("Sending request with:", payload);
 
@@ -238,7 +242,8 @@ function Book() {
             });
     };
 
-    const handleBook = () => {
+
+    const handleBook = async () => {
         const errors = [];
 
         if (!userName || userName.trim() === "") errors.push(t("Please enter your name"));
@@ -254,7 +259,6 @@ function Book() {
             return;
         }
 
-        // Если всё заполнено корректно
         const allBooks: any = [
             {
                 master: selectMaster,
@@ -264,83 +268,104 @@ function Book() {
                 services: [...selectedItems],
                 phoneNumber: phoneNumber,
                 totalPrice: totalPrice,
-                totalTime: totalTime
-            }
+                totalTime: totalTime,
+            },
         ];
 
-        fetch('https://chicchoc.top/public/public/service/data', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(allBooks[0])
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                tgFormWeb(
-                    allBooks[0].date,
-                    allBooks[0].timeState,
-                    allBooks[0].name,
-                    allBooks[0].phoneNumber,
-                    allBooks[0].master,
-                    allBooks[0].services,
-                    allBooks[0].totalPrice
-                );
-                setConfirmStatus(t('Registration Successfully Completed'));
-                setModalOpen(true);
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-                setConfirmStatus(t("There was an error submitting the form"));
-                setModalOpen(true);
+        try {
+            const response = await fetch('https://chicchoc.top/public/public/service/data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    master: allBooks[0]?.master,
+                    name: allBooks[0]?.name,
+                    date: String(allBooks[0]?.date),
+                    timeState: allBooks[0]?.timeState,
+                    services: allBooks[0]?.services,
+                    phoneNumber: allBooks[0]?.phoneNumber,
+                    totalPrice: allBooks[0]?.totalPrice,
+                    totalTime: allBooks[0]?.totalTime,
+                }),
             });
+
+            if (!response.ok) {
+                setConfirmStatus(`HTTP error! Status: ${response.status}`);
+                setModalOpen(true);
+                return;
+            }
+
+            // Предположим, что response.json() возвращает что-то, если нужно
+            const data = await response.json();
+
+            tgFormWeb(
+                allBooks[0]?.date,
+                allBooks[0]?.timeState,
+                allBooks[0]?.name,
+                allBooks[0]?.phoneNumber,
+                allBooks[0]?.master,
+                allBooks[0]?.services,
+                allBooks[0]?.totalPrice
+            );
+
+            setConfirmStatus('Registration Successfully Completed');
+            setModalOpen(true);
+        } catch (error) {
+            console.error('Fetch error:', error);
+            setConfirmStatus("Fill in all fields");
+            setModalOpen(true);
+        }
     };
 
 
     const changeDate = (e: any) => {
-        if (!e) return;
-
-        const timestamp = new Date(e).getTime();
-
-        if (isNaN(timestamp)) {
-            console.warn("Некорректная дата:", e);
-            return;
-        }
-
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        const selectedDate = new Date(timestamp);
-        selectedDate.setHours(0, 0, 0, 0);
-
-        // Не даём выбрать прошедшую дату
-        if (selectedDate < today) {
-            console.warn("Прошлая дата выбрана:", selectedDate);
-            return;
-        }
+        const dateObj = new Date(e);
+        dateObj.setHours(0, 0, 0, 0);
+        const timestamp = dateObj.getTime();
 
         setDateState(timestamp);
-        setNewDayOfWeek(new Date(timestamp).getDay());
-        getData();
+
+        const dayOfWeek = dateObj.getDay();
+        setNewDayOfWeek(dayOfWeek);
+
+        getData(); // используем актуальный dateState
     };
 
+
+    function isPastTimeSlot(time: string): boolean {
+        const today = new Date();
+        const selectedDate = new Date(dateState);
+
+        // Если не сегодня — ничего не блокируем
+        if (
+            today.getFullYear() !== selectedDate.getFullYear() ||
+            today.getMonth() !== selectedDate.getMonth() ||
+            today.getDate() !== selectedDate.getDate()
+        ) {
+            return false;
+        }
+
+        // Текущее время
+        const [hours, minutes] = time.split(":").map(Number);
+        const timeSlotDate = new Date(dateState);
+        timeSlotDate.setHours(hours, minutes, 0, 0);
+
+        return timeSlotDate.getTime() < today.getTime();
+    }
 
 
     const handleSelectedServices = (e: any) => {
         setSelectedItems(e);
     };
-    const handleSetTime = (time: any, index: number) => {
-        if (!busyTimes?.includes(time)) {
-            setTimeState(time);
-            setTimeIndex(index)
-        }
 
+    const handleSetTime = (time: any, index: number) => {
+        if (!busyTimes?.includes(time) && !isPastTimeSlot(time)) {
+            setTimeState(time);
+            setTimeIndex(index);
+        }
     };
+
 
     const handleInputPhoneNumber = (event: any) => {
         setPhoneNumber('+374 ' + event.target.value)
@@ -419,47 +444,25 @@ function Book() {
                     <Calendar
                         value={dateState}
                         onChange={changeDate}
-                        minDate={new Date()} // ⛔ запрещает прошлые дни
+                        minDate={new Date()} // 🚫 запрещает выбор прошедших дат
                     />
-
-
                     <div className="book-time">
                         <div className="book-time-title">{t('Time')}</div>
                         <div className="time-group">
                             {allTimes.map((time: any, index: number) => {
-                                const selectedDate = new Date(dateState);
-                                const today = new Date();
-                                const [hour, minute] = time.split(":").map(Number);
-
-                                const timeDate = new Date(selectedDate);
-                                timeDate.setHours(hour, minute, 0, 0);
-
-                                const isSameDay = selectedDate.toDateString() === today.toDateString();
-                                const isPastTime = isSameDay && timeDate < today;
-                                const isBusy = busyTimes?.includes(time);
-
-                                const isDisabled = isPastTime || isBusy;
-
                                 return (
                                     <div
                                         key={index}
                                         className={
-                                            isDisabled
-                                                ? "is-time-busy"
-                                                : timeIndex !== index
-                                                    ? "book-time-local"
-                                                    : "book-time-local is-selected"
+                                            !busyTimes?.includes(time) && !isPastTimeSlot(time)
+                                                ? (timeIndex !== index ? "book-time-local" : "book-time-local is-selected")
+                                                : "is-time-busy"
                                         }
-                                        onClick={() => {
-                                            if (!isDisabled) handleSetTime(time, index);
-                                        }}
+                                        onClick={() => handleSetTime(time, index)}
                                     >
                                         {time}
-                                    </div>
-                                );
+                                    </div>)
                             })}
-
-
                         </div>
                     </div>
                 </div>
