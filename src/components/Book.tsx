@@ -39,40 +39,63 @@ function Book() {
         const newDayOfWeek = date.getDay(); // 0 (вс) до 6 (сб)
 
         const translatedMasters = allMasters
-            .filter((master) => master.value !== "Anna Poghosyan") // убираем Анну
+            .filter((master) => master.value !== "Anna Poghosyan")
             .map((master) => ({
                 value: master.value,
                 label: t(`${master.value}`),
-                disabled: master.disabled,
             }));
 
-        if (newDayOfWeek === 3) {
-            // Среда — Marianna активна, Irina отключена
-            setNewMaster([
-                translatedMasters.find((m) => m.value === "Marianna Badalyan")!,
-                { ...translatedMasters.find((m) => m.value === "Irina Kostanyan")!, disabled: true },
-            ]);
-        } else if (newDayOfWeek === 5) {
-            // Пятница — Irina активна, Marianna отключена
-            setNewMaster([
-                translatedMasters.find((m) => m.value === "Irina Kostanyan")!,
-                { ...translatedMasters.find((m) => m.value === "Marianna Badalyan")!, disabled: true },
-            ]);
-        } else if ([0, 2, 4].includes(newDayOfWeek)) {
-            // Воскресенье, вторник, четверг — Irina активна, Marianna отключена
-            setNewMaster([
-                translatedMasters.find((m) => m.value === "Irina Kostanyan")!,
-                { ...translatedMasters.find((m) => m.value === "Marianna Badalyan")!, disabled: true },
-            ]);
-        } else {
-            // Понедельник и суббота — Marianna и Irina активны
-            setNewMaster(
-                translatedMasters.map((m) => ({ ...m, disabled: false }))
-            );
+        const irina = translatedMasters.find((m) => m.value === "Irina Kostanyan")!;
+        const marianna = translatedMasters.find((m) => m.value === "Marianna Badalyan")!;
+
+        let newOptions: any[] = [];
+        let autoSelect: string | null = null;
+
+        switch (newDayOfWeek) {
+            case 1: // понедельник
+                newOptions = [
+                    marianna,
+                    { ...irina, disabled: true },
+                ];
+                autoSelect = marianna.value;
+                break;
+            case 2: // вторник
+            case 4: // четверг
+            case 0: // воскресенье
+                newOptions = [
+                    irina,
+                    { ...marianna, disabled: true },
+                ];
+                autoSelect = irina.value;
+                break;
+            case 3: // среда
+                newOptions = [
+                    marianna,
+                    { ...irina, disabled: true },
+                ];
+                autoSelect = marianna.value;
+                break;
+            case 5: // пятница
+                newOptions = [
+                    irina,
+                    { ...marianna, disabled: true },
+                ];
+                autoSelect = irina.value;
+                break;
+            case 6: // суббота
+                newOptions = translatedMasters.map((m) => ({ ...m, disabled: false }));
+                autoSelect = null;
+                break;
+            default:
+                newOptions = translatedMasters.map((m) => ({ ...m, disabled: false }));
+                autoSelect = null;
+                break;
         }
 
-        // setSelectMaster("");
+        setNewMaster(newOptions);
+        setSelectMaster(autoSelect);
     }, [t, dateState]);
+
 
 
 
