@@ -54,11 +54,12 @@ function Book() {
         switch (newDayOfWeek) {
             case 1: // понедельник
                 newOptions = [
-                    marianna,
-                    { ...irina, disabled: true },
+                    marianna,     // обе доступны
+                    irina
                 ];
-                autoSelect = marianna.value;
+                autoSelect = marianna.value; // можно оставить автоселект на Марианну
                 break;
+
             case 2: // вторник
             case 4: // четверг
             case 0: // воскресенье
@@ -68,6 +69,7 @@ function Book() {
                 ];
                 autoSelect = irina.value;
                 break;
+
             case 3: // среда
                 newOptions = [
                     marianna,
@@ -75,6 +77,7 @@ function Book() {
                 ];
                 autoSelect = marianna.value;
                 break;
+
             case 5: // пятница
                 newOptions = [
                     irina,
@@ -82,15 +85,18 @@ function Book() {
                 ];
                 autoSelect = irina.value;
                 break;
+
             case 6: // суббота
                 newOptions = translatedMasters.map((m) => ({ ...m, disabled: false }));
                 autoSelect = null;
                 break;
+
             default:
                 newOptions = translatedMasters.map((m) => ({ ...m, disabled: false }));
                 autoSelect = null;
                 break;
         }
+
 
         setNewMaster(newOptions);
         setSelectMaster(autoSelect);

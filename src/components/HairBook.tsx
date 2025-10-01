@@ -38,39 +38,36 @@ function HairBook() {
         if (!dateState || isNaN(dateState)) return;
 
         const date = new Date(dateState);
-        const newDayOfWeek = date.getDay(); // 0 (вс) - 6 (сб)
+        const dow = date.getDay(); // 0 (вс) - 6 (сб)
 
-        const translatedMasters = hairMasters.map((master) => ({
-            value: master.value,
-            label: t(`${master.value}`),
-        }));
+        // Убираем Anushik из вариантов полностью
+        const translatedMasters = hairMasters
+            .filter((m) => m.value !== "Anushik")
+            .map((master) => ({
+                value: master.value,
+                label: t(`${master.value}`),
+            }));
 
-        const anushik = translatedMasters.find((m) => m.value === "Anushik")!;
-        const noro = translatedMasters.find((m) => m.value === "Noro")!;
+        const noro = translatedMasters.find((m) => m.value === "Noro");
 
-        if ([4, 6].includes(newDayOfWeek)) {
-            // Четверг и Воскресенье — Anushik активна, Noro отключен
-            setNewMaster([
-                anushik,
-                { ...noro, disabled: true }
-            ]);
+        if (!noro) {
+            // На случай если в hairMasters нет Noro
+            setNewMaster([]);
             setSelectMaster("");
-        } else if ([2, 5].includes(newDayOfWeek)) {
-            // Вторник и Пятница — Noro активен, Anushik отключена
-            setNewMaster([
-                noro,
-                { ...anushik, disabled: true }
-            ]);
-            setSelectMaster("");
+            return;
+        }
+
+        if (dow === 1 || dow === 2) {
+            // Понедельник или вторник — Noro доступен
+            setNewMaster([noro]);
+            setSelectMaster("Noro"); // можно авто-выбирать
         } else {
-            // Остальные дни — оба мастера, но оба отключены
-            setNewMaster([
-                { ...anushik, disabled: true },
-                { ...noro, disabled: true }
-            ]);
+            // В другие дни — Noro есть в списке, но недоступен
+            setNewMaster([{ ...noro, disabled: true }]);
             setSelectMaster("");
         }
     }, [t, dateState]);
+
 
 
 
@@ -356,7 +353,7 @@ function HairBook() {
             setTimeIndex(index);
         }
     };
-    
+
     const handleInputPhoneNumber = (event: any) => {
         setPhoneNumber('+374 ' + event.target.value)
     }
