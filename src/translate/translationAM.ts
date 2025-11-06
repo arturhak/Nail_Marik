@@ -117,4 +117,12 @@ export const translationAM = {
     "Please select a date": "Խնդրում ենք ընտրել ամսաթիվը",
     "Please select a time": "Խնդրում ենք ընտրել ժամ",
     "The world of caring for your little ones. Our children's salon is created exclusively for children, with a pleasant environment, caring professionals and a cheerful atmosphere.Check out the services below": "Ձեր փոքրիկների խնամքի աշխարհը։ Մեր մանկական սրահը ստեղծված է բացառապես երեխաների համար՝ հաճելի միջավայրով, հոգատար՝ պրոֆեսիոնալ մասնագետներով և զվարճալի մթնոլորտով։ Ծառայություններին ծանոթացի՛ ր ներքևում",
+    "Lash lift and lamination": "Թարթիչների լիցք և լամինացիա",
+    "Brow lamination": "Հոնքերի լամինացիա",
+    "Brow correction": "Հոնքերի կորեկցիա",
+    "Brow tinting & correction": "Հոնքերի ներկում և կորեկցիա",
+    "Lash & Brow Lamination": "Թարթիչների և հոնքերի լամինացիա",
+    "See more": "Տեսնել ավելին",
+    "See less": "Փակել",
+    "Search for a service...": "Գտեք ձեր ծառայությունը...",
 }   

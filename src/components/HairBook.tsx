@@ -128,33 +128,58 @@ function HairBook() {
     const allServiceGroup = Object.values(babyServices).flat();
     // const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
 
+    // async function tgFormWeb(_date: any, _time: any, _name: any, _phone: any, _master: any, _service: any, _price: any) {
+    //     const date = typeof _date === 'number' || typeof _date === 'string' ? new Date(Number(_date)) : new Date(_date);
+    //     const formattedDate = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
+    //     let message = ` Կատարվել է Գրանցում \n\n`;
+    //     message += `Անուն:\n ${_name} \n\n`;
+    //     message += `Ամսաթիվ:\n ${formattedDate} \n\n`;
+    //     message += `Ժամ:\n${_time} \n\n`;
+    //     message += `Հեռախոս:\n${_phone} \n\n`;
+    //     message += `Մասնագետ:\n${_master} \n\n`;
+    //     message += `Ծառայություն:\n${_service} \n\n`;
+    //     message += `Արժեք:\n${_price} AMD\n\n`;
+
+    //     const token = "7999100182:AAHx_AkoTDBLJG9hkvI4eb5IisxsL7_J3V8"
+    //     const chat_id = "-4875084189";
+    //     const URI_API = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`;
+
+    //     try {
+    //         let response = await fetch(URI_API, { method: 'GET' });
+    //         if (!response.ok) {
+    //             throw new Error(`HTTP error! Status: ${response.status}`);
+    //         }
+    //         // You can handle the response if needed
+    //     } catch (error) {
+    //         console.error('Error sending message:', error);
+    //     }
+    // }
+
+
     async function tgFormWeb(_date: any, _time: any, _name: any, _phone: any, _master: any, _service: any, _price: any) {
         const date = typeof _date === 'number' || typeof _date === 'string' ? new Date(Number(_date)) : new Date(_date);
         const formattedDate = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
-        let message = ` Կատարվել է Գրանցում \n\n`;
-        message += `Անուն:\n ${_name} \n\n`;
-        message += `Ամսաթիվ:\n ${formattedDate} \n\n`;
-        message += `Ժամ:\n${_time} \n\n`;
-        message += `Հեռախոս:\n${_phone} \n\n`;
-        message += `Մասնագետ:\n${_master} \n\n`;
-        message += `Ծառայություն:\n${_service} \n\n`;
-        message += `Արժեք:\n${_price} AMD\n\n`;
 
-        const token = "7999100182:AAHx_AkoTDBLJG9hkvI4eb5IisxsL7_J3V8"
-        const chat_id = "-4875084189";
-        const URI_API = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`;
+        const payload = {
+            name: _name,
+            date: formattedDate,
+            time: _time,
+            phone: _phone,
+            master: _master,
+            service: Array.isArray(_service) ? _service.join(', ') : _service,
+            price: _price,
+        };
 
         try {
-            let response = await fetch(URI_API, { method: 'GET' });
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            // You can handle the response if needed
-        } catch (error) {
-            console.error('Error sending message:', error);
+            await fetch(' https://6cc0d3529e46.ngrok-free.app/book', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+        } catch (err) {
+            console.error('Error sending booking:', err);
         }
     }
-
 
 
     // const getData = () => {
@@ -394,6 +419,18 @@ function HairBook() {
                                 onChange={(event) => setUserName(event.target.value)}
                             />
                         </div>
+
+                        <div className="input_item">
+                            <div className="input_item-title">{t('Select the Service Type')}</div>
+                            <Select
+                                mode="multiple"
+                                placeholder={t("Services")}
+                                value={selectedItems}
+                                onChange={handleSelectedServices}
+                                options={translatedServices}
+                            />
+                        </div>
+
                         <div className="input_item">
                             <div className="input_item-title">{t('Choose Master')}</div>
                             <Select
@@ -412,17 +449,6 @@ function HairBook() {
                                 placeholder="92309128"
                                 prefix="+374"
                                 onChange={handleInputPhoneNumber}
-                            />
-                        </div>
-
-                        <div className="input_item">
-                            <div className="input_item-title">{t('Select the Service Type')}</div>
-                            <Select
-                                mode="multiple"
-                                placeholder={t("Services")}
-                                value={selectedItems}
-                                onChange={handleSelectedServices}
-                                options={translatedServices}
                             />
                         </div>
                     </div>

@@ -28,7 +28,6 @@ const publicRoutes: Array<RouteProps> = [
   { path: "/hair", component: HairBook },
   { path: "/admin", component: Admin },
   { path: "*", component: Error },
-
 ];
 
 export {

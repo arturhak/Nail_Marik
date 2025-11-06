@@ -309,6 +309,54 @@ export const allServices = {
             minute: 15,
             timeToMinute: 15
         },
+    ],
+    LashLiftandLamination: [
+        {
+            bg: BG_25,
+            value: "Lash lift and lamination",
+            startPrice: 10000,
+            // endPrice: 10000,
+            hour: 1,
+            minute: null,
+            timeToMinute: null
+        },
+
+        {
+            bg: BG_26,
+            value: "Brow lamination",
+            startPrice: 8000,
+            endPrice: null,
+            hour: 1,
+            minute: null,
+            timeToMinute: null
+        },
+        {
+            bg: BG_27,
+            value: "Brow correction",
+            startPrice: 2000,
+            endPrice: null,
+            hour: 1,
+            minute: null,
+            timeToMinute: null
+        },
+        {
+            bg: BG_28,
+            value: "Brow tinting & correction",
+            startPrice: 4000,
+            endPrice: null,
+            hour: 1,
+            minute: null,
+            timeToMinute: null
+        },
+        {
+            bg: BG_29,
+            value: "Lash & Brow Lamination",
+            startPrice: 15000,
+            endPrice: null,
+            hour: 1,
+            minute: 30,
+            timeToMinute: null
+        },
     ]
 }
 

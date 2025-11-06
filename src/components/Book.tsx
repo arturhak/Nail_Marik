@@ -436,6 +436,18 @@ function Book() {
                                 onChange={(event) => setUserName(event.target.value)}
                             />
                         </div>
+
+                        <div className="input_item">
+                            <div className="input_item-title">{t('Select the Service Type')}</div>
+                            <Select
+                                mode="multiple"
+                                placeholder={t("Services")}
+                                value={selectedItems}
+                                onChange={handleSelectedServices}
+                                options={translatedServices}
+                            />
+                        </div>
+                        
                         <div className="input_item">
                             <div className="input_item-title">{t('Choose Master')}</div>
                             <Select
@@ -457,16 +469,6 @@ function Book() {
                             />
                         </div>
 
-                        <div className="input_item">
-                            <div className="input_item-title">{t('Select the Service Type')}</div>
-                            <Select
-                                mode="multiple"
-                                placeholder={t("Services")}
-                                value={selectedItems}
-                                onChange={handleSelectedServices}
-                                options={translatedServices}
-                            />
-                        </div>
                     </div>
                 </div>
                 <div className="book-now-datetime">

@@ -113,6 +113,14 @@ export const translationEN = {
     "Please select a master": "Please select a master",
     "Please select at least one service": "Please select at least one service",
     "Please select a date": "Please select a date",
-    "Please select a time": "Please select a time"
+    "Please select a time": "Please select a time",
+    "Lash lift and lamination": "Lash Lift and Lamination",
+     "Brow lamination": "Brow Lamination",
+    "Brow correction": "Brow Correction",
+    "Brow tinting & correction": "Brow Tinting & Correction",
+    "Lash & Brow Lamination": "Lash & Brow Lamination",
+    "See more": "See More",
+    "See less": "See Less",
+    "Search for a service...": "Search for a service...",   
 
 }
