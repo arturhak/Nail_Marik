@@ -18,7 +18,7 @@ function Admin() {
     }, [deletedData]);
 
     const fetchData = () => {
-        fetch('https://chicchoc.top/public/public/all/data', {
+        fetch('https://chicchoc.top/public/all/data', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ function Admin() {
     };
 
     const handleCancelBook = (item: any) => {
-        fetch('https://chicchoc.top/public/public/delete', {
+        fetch('https://chicchoc.top/public/delete', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -233,7 +233,7 @@ function HairBook() {
 
         console.log("Sending request with:", payload);
 
-        fetch('https://chicchoc.top/public/public/service', {
+        fetch('https://chicchoc.top/public/service', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -308,7 +308,7 @@ function HairBook() {
         ];
 
         try {
-            const response = await fetch('https://chicchoc.top/public/public/service/data', {
+            const response = await fetch('https://chicchoc.top/public/service/data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
