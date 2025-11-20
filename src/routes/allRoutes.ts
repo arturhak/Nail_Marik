@@ -9,7 +9,9 @@ import Services from "../components/Services";
 import Book from "../components/Book";
 import Admin from "../auth/Admin";
 import Baby from "../components/Baby";
+import ChildBook from "../components/ChaildBook";
 import HairBook from "../components/HairBook";
+import LashesBook from "../components/LashesBook";
 
 interface RouteProps {
   path: string;
@@ -25,7 +27,9 @@ const publicRoutes: Array<RouteProps> = [
   { path: "/baby", component: Baby },
   { path: "/services", component: Services },
   { path: "/book", component: Book },
+  { path: "/chaild", component: ChildBook },
   { path: "/hair", component: HairBook },
+  { path: "/lashbrows", component: LashesBook },
   { path: "/admin", component: Admin },
   { path: "*", component: Error },
 ];

@@ -310,54 +310,131 @@ export const allServices = {
             timeToMinute: 15
         },
     ],
-    LashLiftandLamination: [
+    hairstyling: [
         {
-            bg: BG_25,
-            value: "Lash lift and lamination",
+            bg: BG_1,
+            value: "Haircut",
+            startPrice: 3000,
+            endPrice: 8000,
+            hour: 1,
+            minute: 0,
+            timeToMinute: 60,
+        },
+        {
+            bg: BG_2,
+            value: "Blow Dry Styling",
+            startPrice: 3000,
+            endPrice: 8000,
+            hour: 1,
+            minute: 0,
+            timeToMinute: 60,
+        },
+        {
+            bg: BG_3,
+            value: "Hot Tool Styling",
+            startPrice: 6000,
+            endPrice: 15000,
+            hour: 1,
+            minute: 0,
+            timeToMinute: 60,
+        },
+        {
+            bg: BG_4,
+            value: "Evening Hairstyle",
             startPrice: 10000,
-            // endPrice: 10000,
-            hour: 1,
-            minute: null,
-            timeToMinute: null
-        },
-
-        {
-            bg: BG_26,
-            value: "Brow lamination",
-            startPrice: 8000,
-            endPrice: null,
-            hour: 1,
-            minute: null,
-            timeToMinute: null
-        },
-        {
-            bg: BG_27,
-            value: "Brow correction",
-            startPrice: 2000,
-            endPrice: null,
-            hour: 1,
-            minute: null,
-            timeToMinute: null
-        },
-        {
-            bg: BG_28,
-            value: "Brow tinting & correction",
-            startPrice: 4000,
-            endPrice: null,
-            hour: 1,
-            minute: null,
-            timeToMinute: null
-        },
-        {
-            bg: BG_29,
-            value: "Lash & Brow Lamination",
-            startPrice: 15000,
             endPrice: null,
             hour: 1,
             minute: 30,
-            timeToMinute: null
+            timeToMinute: 90,
         },
-    ]
+        {
+            bg: BG_5,
+            value: "Root Coloring",
+            startPrice: 10000,
+            endPrice: null,
+            hour: 2,
+            minute: 0,
+            timeToMinute: 120,
+        },
+        {
+            bg: BG_6,
+            value: "Full Hair Coloring",
+            startPrice: 15000,
+            endPrice: 20000,
+            hour: 1,
+            minute: 30,
+            timeToMinute: 90,
+        },
+        {
+            bg: BG_7,
+            value: "Toning",
+            startPrice: 10000,
+            endPrice: 20000,
+            hour: 1,
+            minute: 30,
+            timeToMinute: 90,
+        },
+        {
+            bg: BG_8,
+            value: "Hair Lightening",
+            startPrice: 30000,
+            endPrice: 100000,
+            hour: 7,
+            minute: 0,
+            timeToMinute: 420,
+        },
+        {
+            bg: BG_9,
+            value: "Hair Treatment",
+            startPrice: 10000,
+            endPrice: 20000,
+            hour: 1,
+            minute: 30,
+            timeToMinute: 90,
+        },
+    ],
+    lashesAndBrows: [
+        // 🩷 BROWS (Հոնքերի հարդարում)
+        {
+            bg: BG_8,
+            value: "Brow Shaping",
+            startPrice: 2000,
+            endPrice: null,
+            hour: 1,
+            minute: 0,
+            timeToMinute: 60,
+        },
+        {
+            bg: BG_9,
+            value: "Brow Tinting",
+            startPrice: 4000,
+            endPrice: null,
+            hour: 1,
+            minute: 0,
+            timeToMinute: 60,
+        },
+        {
+            bg: BG_10,
+            value: "Brow Lamination",
+            startPrice: 8000,
+            endPrice: null,
+            hour: 1,
+            minute: 30,
+            timeToMinute: 90,
+        },
+        {
+            bg: BG_10,
+            value: "Eyelash Lamination",
+            startPrice: 10000,
+            endPrice: null,
+            hour: 1,
+            minute: 30,
+            timeToMinute: 90,
+        },
+    ],
+
+
+
 }
 
 export const allMasters = [
@@ -371,6 +448,14 @@ export const allMasters = [
     },
     {
         value: "Anna Poghosyan",
+        disabled: false
+    },
+    {
+        value: "Gayane Khudoyan",
+        disabled: false
+    },
+    {
+        value: "Arpi Poghosyan",
         disabled: false
     },
 ]

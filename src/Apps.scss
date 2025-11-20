@@ -142,7 +142,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 24px;
+    gap: 40px;
     height: 73%;
     width: 33.3%;
 }
@@ -290,7 +290,7 @@
     justify-content: center;
     width: 100%;
     gap: 84px;
-    cursor: pointer;
+    // cursor: pointer;
     transition: 0.3s ease-in-out;
 }
 
@@ -839,6 +839,36 @@ a:-webkit-any-link {
     flex-direction: column;
     align-items: center;
     background-image: url("./assets/book_bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 200px;
+    padding-left: 25px;
+    padding-right: 25px;
+    //background:red;
+}
+
+.lash-left-side {
+    width: 29%;
+    height: 1049px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("./assets/lash.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 200px;
+    padding-left: 25px;
+    padding-right: 25px;
+    //background:red;
+}
+
+.hair-left-side {
+    width: 29%;
+    height: 1049px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("./assets/hair.png");
     background-repeat: no-repeat;
     background-size: cover;
     padding-top: 200px;
@@ -1610,6 +1640,18 @@ button {
         padding-top: 36px;
     }
 
+    .lash-left-side {
+        width: 100%;
+        height: 360px;
+        padding-top: 36px;
+    }
+
+    .hair-left-side {
+        width: 100%;
+        height: 360px;
+        padding-top: 36px;
+    }
+
     .book-baby-left-side {
         width: 100%;
         height: 360px;
@@ -1655,7 +1697,7 @@ button {
     }
 
     .time-group {
-        gap: 20px 22px
+        gap: 20px 20px
     }
 
     .react-calendar__month-view__weekdays__weekday {
@@ -2006,4 +2048,179 @@ video {
 .service-search-input:focus {
     border-color: #d36c3f;
     box-shadow: 0 0 4px rgba(211, 108, 63, 0.3);
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* 2 колонки */
+    grid-gap: 20px 30px;
+    /* отступы между рядами и колонками */
+    margin-bottom: 25px;
+}
+
+.input_item {
+    display: flex;
+    flex-direction: column;
+}
+
+.input_item-title {
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+
+/* Сетка для формы */
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* 2 колонки */
+    gap: 20px 30px;
+    margin-bottom: 25px;
+}
+
+/* Элементы формы */
+.input_item {
+    display: flex;
+    flex-direction: column;
+}
+
+.input_item-title {
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+/* 🌐 Адаптив под мобильные устройства */
+@media (max-width: 768px) {
+    .input-grid {
+        grid-template-columns: 1fr;
+        /* одна колонка */
+        gap: 20px;
+    }
+
+    .input_item {
+        width: 100%;
+    }
+
+    .input_item .input {
+        width: 100%;
+    }
+}
+
+.telegram-subscribe {
+    text-align: center;
+    margin-top: 15px;
+    color: #ddd;
+}
+
+.telegram-subscribe p {
+    font-size: 14px;
+    color: #3a2a17;
+    margin-bottom: 12px;
+}
+
+.telegram-button {
+    display: inline-block;
+    background-color: #FD2C03;
+    color: #fff;
+    font-weight: 500;
+    border-radius: 6px;
+    padding: 10px 22px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.telegram-button:hover {
+    background-color: #FD2C03;
+    transform: translateY(-1px);
+
+}
+
+//----------------------------- New Web Headr ---------------------//
+
+/* Убрать фон hover в dropdown */
+.ant-dropdown-menu-item:hover,
+.ant-dropdown-menu-item-active,
+.ant-dropdown-menu-item-selected {
+    background-color: transparent !important;
+}
+
+/* Убрать серую рамку при active */
+.ant-dropdown-menu-item:not(.ant-dropdown-menu-item-disabled):active {
+    background-color: transparent !important;
+}
+
+/* Убрать серый background у выбранного элемента */
+.ant-dropdown-menu-title-content:hover {
+    background: transparent !important;
+}
+
+/* Стили твоих пунктов */
+.services-menu-item {
+    font-family: "NotoSans REG";
+    font-size: 15px;
+    padding: 6px 2px;
+    display: block;
+    color: #000;
+    transition: color 0.2s ease;
+}
+
+.header-nav-item {
+    font-family: "NotoSans REG";
+
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.header-nav-item:hover {
+    color: #FD2C03;
+    /* красивый фиолетовый */
+}
+
+.menu-dropdown-item {
+    font-size: 15px;
+    color: #333;
+    padding: 6px 2px;
+    display: block;
+}
+
+
+.menu-dropdown-item:hover {
+    color: #FD2C03 !important;
+    background-color: #ffffff !important;
+}
+
+.rotate-arrow-transition {
+    transition: 0.25s ease;
+}
+
+/* стрелка */
+.dropdown-arrow {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    transition: transform 0.25s ease;
+    filter: brightness(0);
+    /* делает стрелку чёрной */
+    margin-left: 6px;
+}
+
+/* открытое состояние */
+.dropdown-arrow.open {
+    transform: rotate(90deg);
+}
+
+
+.services-menu-item {
+    font-family: "NotoSans REG";
+    font-size: 15px;
+    padding: 4px 2px;
+    display: block;
+    transition: 0.2s ease;
+}
+
+.services-menu-item:hover {
+    color: #E75F36;
 }

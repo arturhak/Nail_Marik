@@ -1,21 +1,21 @@
-import React, {useState} from "react";
-import {Drawer, Dropdown, MenuProps, Space} from "antd";
+import React, { useState } from "react";
+import { Drawer, Dropdown, MenuProps, Space } from "antd";
 import headerLogoTablet from "../assets/header-logo-tablet.svg";
 import MainButton from "../buttons/MainButton";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 import i18n from "../translate/i18n";
 import ArrowUp from "../assets/next.svg";
 
-function MobileHeader({headerData, navigate}: any) {
+function MobileHeader({ headerData, navigate }: any) {
     const [open, setOpen] = useState(false);
     const [language, setLanguage] = useState<any>(localStorage.getItem("selectedLanguage"))
     const [nftDropdownOpen, setNftDropdownOpen] = useState<any>();
-    const {t} = useTranslation();
+    const { t } = useTranslation();
 
-    const handleChangeLanguage = (lang:any) => {
+    const handleChangeLanguage = (lang: any) => {
         i18n.changeLanguage(lang);
         localStorage.setItem("selectedLanguage", lang)
-        let selectedLanguage:any = localStorage.getItem("selectedLanguage")
+        let selectedLanguage: any = localStorage.getItem("selectedLanguage")
         setLanguage(selectedLanguage);
         setOpen(false);
     }
@@ -31,22 +31,21 @@ function MobileHeader({headerData, navigate}: any) {
     //     navigate("./book")
     // }
 
-    const handleNavigate = (index:number) => {
+    const handleNavigate = (index: number) => {
         switch (index) {
             case 0:
-                setOpen(false);
-                navigate("./about")
+                navigate("./book")
                 break;
             case 1:
-                setOpen(false);
-                navigate("./services")
+                navigate("./lashbrows")
                 break;
             case 2:
-                setOpen(false);
-                navigate("./baby")
+                navigate("./hair")
                 break;
             case 3:
-                setOpen(false);
+                navigate("./chaild")
+                break;
+            case 4:
                 navigate("./contact")
                 break;
 
@@ -91,7 +90,7 @@ function MobileHeader({headerData, navigate}: any) {
     return (
         <div className="mobile-header">
             <div className="center_block">
-                <img src={headerLogoTablet} alt="headerLogo" onClick={() => navigate("/")}/>
+                <img src={headerLogoTablet} alt="headerLogo" onClick={() => navigate("/")} />
             </div>
             <div className="burger" onClick={showDrawer}>
                 <div className="burger-line"></div>
@@ -110,7 +109,7 @@ function MobileHeader({headerData, navigate}: any) {
                             return <div
                                 className="mob-nav-group_item"
                                 key={index}
-                                onClick={()=>handleNavigate(index)}
+                                onClick={() => handleNavigate(index)}
                             >
                                 {t(nav.title)}
                             </div>
@@ -129,7 +128,7 @@ function MobileHeader({headerData, navigate}: any) {
                         {/*    func={bookNow}*/}
                         {/*/>*/}
                         <Dropdown
-                            menu={{items}}
+                            menu={{ items }}
                             trigger={["click"]}
                             onOpenChange={handleOpenBookDropdown}
                             placement="bottomRight"
@@ -138,7 +137,7 @@ function MobileHeader({headerData, navigate}: any) {
                                 <Space>
                                     <span className="book-text">{t('Book Now')}</span>
                                     <img src={ArrowUp} alt="up"
-                                         className={nftDropdownOpen ? "rotate-arrow-transition" : "rotate-arrow-transition rotate-arrow"}/>
+                                        className={nftDropdownOpen ? "rotate-arrow-transition" : "rotate-arrow-transition rotate-arrow"} />
                                 </Space>
                             </a>
                         </Dropdown>

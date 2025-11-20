@@ -9,8 +9,9 @@ import { getBookTime } from "../constants/bookTime";
 import { allServices } from "../constants/allServices";
 import { allMasters } from "../constants/allServices";
 import { useTranslation } from "react-i18next";
+import { babyServices, hairMasters } from "../constants/babyServices";
 
-function Book() {
+function ChildBook() {
     const [dateState, setDateState] = useState<any>();
     const [timeState, setTimeState] = useState<any>();
     const [allTimes, setAllTimes] = useState<any>([]);
@@ -32,48 +33,46 @@ function Book() {
     const [newDayOfWeek, setNewDayOfWeek] = useState<any>(new Date().getDay());
     const { t } = useTranslation();
 
+
     useEffect(() => {
         if (!dateState || isNaN(dateState)) return;
 
-        const day = new Date(dateState).getDay(); // день недели 0-6
+        const date = new Date(dateState);
+        const dow = date.getDay(); // 0 (вс) - 6 (сб)
 
-        const masters = [
-            { value: "Marianna Badalyan", label: t("Marianna Badalyan") },
-            { value: "Irina Kostanyan", label: t("Irina Kostanyan") },
+        // 🔹 Базовый список мастеров
+        const allMastersList = [
+            { value: "Gayane Khudoyan", label: t("Gayane Khudoyan") },
+            { value: "Noro", label: t("Noro") },
         ];
 
-        // НЕ РАБОЧИЕ ДНИ
-        const mariannaOff = [2, 4, 0]; // Tue, Thu, Sun
-        const irinaOff = [3];         // Wed
+        let availableMasters: any[] = [];
 
-        // Проверяем кто работает
-        const mariannaWorks = !mariannaOff.includes(day);
-        const irinaWorks = !irinaOff.includes(day);
-
-        let options: any[] = [];
-        let autoSelect: string | null = null;
-
-        // Формируем список с disabled
-        options = [
-            { ...masters[0], disabled: !mariannaWorks },
-            { ...masters[1], disabled: !irinaWorks },
-        ];
-
-        // Автовыбор мастера
-        if (mariannaWorks && !irinaWorks) autoSelect = masters[0].value;
-        else if (!mariannaWorks && irinaWorks) autoSelect = masters[1].value;
-        else if (mariannaWorks && irinaWorks) {
-            // если раньше выбрал Ирину — оставить её
-            if (selectMaster === masters[1].value) autoSelect = masters[1].value;
-            else autoSelect = masters[0].value;
+        // 🔹 Условия по дням недели
+        if (dow === 4) {
+            // Четверг → работает Noro и Gayane
+            availableMasters = allMastersList.map((m) => ({
+                ...m,
+                disabled: false,
+            }));
+        } else {
+            // Остальные дни → только Gayane
+            availableMasters = [
+                { value: "Gayane Khudoyan", label: t("Gayane Khudoyan"), disabled: false },
+                { value: "Noro", label: t("Noro"), disabled: true },
+            ];
         }
-        else autoSelect = null;
 
+        // Обновляем состояние
+        setNewMaster(availableMasters);
 
-        setNewMaster(options);
-        setSelectMaster(autoSelect);
+        // Если сегодня четверг — по умолчанию Noro, иначе Gayane
+        if (dow === 4) {
+            setSelectMaster("Noro");
+        } else {
+            setSelectMaster("Gayane Khudoyan");
+        }
     }, [t, dateState]);
-
 
 
 
@@ -81,8 +80,6 @@ function Book() {
 
     useEffect(() => {
         getData();
-
-
     }, [dateState, selectMaster, modalOpen]);
 
 
@@ -94,11 +91,10 @@ function Book() {
 
 
 
-
-        const getSelectedItem: any = localStorage.getItem("selectedService")
+        const getSelectedItem: any = localStorage.getItem("selectedHairService")
         if (JSON.parse(getSelectedItem)?.value) {
             setSelectedItems([...selectedItems, JSON.parse(getSelectedItem).value])
-            localStorage.removeItem("selectedService")
+            localStorage.removeItem("selectedHairService")
         }
     }, []);
 
@@ -136,10 +132,36 @@ function Book() {
         }
     }, [lastTimes]);
 
-
-
-    const allServiceGroup = Object.values(allServices).flat();
+    const allServiceGroup = Object.values(babyServices).flat();
     // const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
+
+    // async function tgFormWeb(_date: any, _time: any, _name: any, _phone: any, _master: any, _service: any, _price: any) {
+    //     const date = typeof _date === 'number' || typeof _date === 'string' ? new Date(Number(_date)) : new Date(_date);
+    //     const formattedDate = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
+    //     let message = ` Կատարվել է Գրանցում \n\n`;
+    //     message += `Անուն:\n ${_name} \n\n`;
+    //     message += `Ամսաթիվ:\n ${formattedDate} \n\n`;
+    //     message += `Ժամ:\n${_time} \n\n`;
+    //     message += `Հեռախոս:\n${_phone} \n\n`;
+    //     message += `Մասնագետ:\n${_master} \n\n`;
+    //     message += `Ծառայություն:\n${_service} \n\n`;
+    //     message += `Արժեք:\n${_price} AMD\n\n`;
+
+    //     const token = "7999100182:AAHx_AkoTDBLJG9hkvI4eb5IisxsL7_J3V8"
+    //     const chat_id = "-4875084189";
+    //     const URI_API = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`;
+
+    //     try {
+    //         let response = await fetch(URI_API, { method: 'GET' });
+    //         if (!response.ok) {
+    //             throw new Error(`HTTP error! Status: ${response.status}`);
+    //         }
+    //         // You can handle the response if needed
+    //     } catch (error) {
+    //         console.error('Error sending message:', error);
+    //     }
+    // }
+
 
     async function tgFormWeb(_date: any, _time: any, _name: any, _phone: any, _master: any, _service: any, _price: any) {
         const date = typeof _date === 'number' || typeof _date === 'string' ? new Date(Number(_date)) : new Date(_date);
@@ -169,39 +191,6 @@ function Book() {
     }
 
 
-
-    // const getData = () => {
-
-    //     fetch('https://chicchoc.top/public/public/service', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({
-    //             master: selectMaster,
-    //             date: dateState,
-    //         })
-    //     })
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 throw new Error(`HTTP error! Status: ${response.status}`);
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             const filteredTimes = data.map((el: any) => { return el.booked_hours })
-    //             setReceiveData(data)
-    //             setBusyTimes(filteredTimes.flat())
-    //             // Process data here
-    //         })
-    //         .catch(error => {
-    //             console.log("test", dateState);
-
-    //             console.error('Fetch error:', error);
-    //         });
-    //     // navigate("/")
-
-    // }
 
     const getData = (customDate?: number) => {
         const dateToUse = customDate || dateState;
@@ -243,6 +232,27 @@ function Book() {
                 console.error('Fetch error:', error);
             });
     };
+
+    function isPastTimeSlot(time: string): boolean {
+        const today = new Date();
+        const selectedDate = new Date(dateState);
+
+        // Если не сегодня — ничего не блокируем
+        if (
+            today.getFullYear() !== selectedDate.getFullYear() ||
+            today.getMonth() !== selectedDate.getMonth() ||
+            today.getDate() !== selectedDate.getDate()
+        ) {
+            return false;
+        }
+
+        // Текущее время
+        const [hours, minutes] = time.split(":").map(Number);
+        const timeSlotDate = new Date(dateState);
+        timeSlotDate.setHours(hours, minutes, 0, 0);
+
+        return timeSlotDate.getTime() < today.getTime();
+    }
 
 
     const handleBook = async () => {
@@ -310,7 +320,6 @@ function Book() {
                 allBooks[0]?.services,
                 allBooks[0]?.totalPrice
             );
-
             setConfirmStatus('Registration Successfully Completed');
             setModalOpen(true);
         } catch (error) {
@@ -335,28 +344,6 @@ function Book() {
     };
 
 
-    function isPastTimeSlot(time: string): boolean {
-        const today = new Date();
-        const selectedDate = new Date(dateState);
-
-        // Если не сегодня — ничего не блокируем
-        if (
-            today.getFullYear() !== selectedDate.getFullYear() ||
-            today.getMonth() !== selectedDate.getMonth() ||
-            today.getDate() !== selectedDate.getDate()
-        ) {
-            return false;
-        }
-
-        // Текущее время
-        const [hours, minutes] = time.split(":").map(Number);
-        const timeSlotDate = new Date(dateState);
-        timeSlotDate.setHours(hours, minutes, 0, 0);
-
-        return timeSlotDate.getTime() < today.getTime();
-    }
-
-
     const handleSelectedServices = (e: any) => {
         setSelectedItems(e);
     };
@@ -367,7 +354,6 @@ function Book() {
             setTimeIndex(index);
         }
     };
-
 
     const handleInputPhoneNumber = (event: any) => {
         setPhoneNumber('+374 ' + event.target.value)
@@ -383,10 +369,10 @@ function Book() {
     }));
     return (
         <div className="book-layout">
-            <div className="book-left-side">
+            <div className="book-baby-left-side">
                 <div className="book-left-side_content">
                     {/* <div className="book-left-side_content_top">
-                        {t('Simply fill in the necessary information to secure your appointment with us. From preferred service to date and time, your nail care needs are in good hands.')}
+                        {t("Simply fill in the necessary information to secure your appointment with us. From preferred service to date and time, Your little ones' care is in safe hands.")}
                     </div> */}
                     <div className="book-left-side_content_bottom">
                         {t('Book Now')}
@@ -433,18 +419,11 @@ function Book() {
                         <div className="input_item">
                             <div className="input_item-title">{t("Choose Master")}</div>
                             <Select
-                                value={selectMaster}
-                                options={newMaster || []}
-                                onChange={(v) => setSelectMaster(v)}
-                                disabled={
-                                    !newMaster ||
-                                    newMaster.filter((m: any) => !m.disabled).length === 1 &&
-                                    selectMaster === newMaster.find((m: any) => !m.disabled)?.value
-                                }
+                                placeholder={t("Choose Master")}
+                                value={selectMaster || undefined}
+                                onChange={handleSelectedMaster}
+                                options={newMaster}
                             />
-
-
-
                         </div>
                     </div>
 
@@ -455,6 +434,7 @@ function Book() {
                         onChange={changeDate}
                         minDate={new Date()} // 🚫 запрещает выбор прошедших дат
                     />
+
                     <div className="book-time">
                         <div className="book-time-title">{t('Time')}</div>
                         <div className="time-group">
@@ -485,7 +465,6 @@ function Book() {
                     />
                 </div>
             </div>
-
             <Modal
                 open={modalOpen}
                 footer={null}
@@ -549,9 +528,8 @@ function Book() {
                     </a>
                 </div>
             </Modal>
-
         </div>
     )
 }
 
-export default Book
+export default ChildBook

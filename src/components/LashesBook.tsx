@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Input, Modal, Select } from 'antd';
-import Calendar from 'react-calendar'
-import 'react-calendar/dist/Calendar.css';
-// import moment from 'moment';
-import { format } from 'date-fns';
+import { Input, Modal, Select } from "antd";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import MainButton from "../buttons/MainButton";
 import { getBookTime } from "../constants/bookTime";
 import { allServices } from "../constants/allServices";
-import { allMasters } from "../constants/allServices";
 import { useTranslation } from "react-i18next";
 
 function Book() {
@@ -17,129 +14,90 @@ function Book() {
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
     const [userName, setUserName] = useState<any>("");
     const [phoneNumber, setPhoneNumber] = useState<any>("");
-    const [selectedForBook, setSelectedForBook] = useState<any>([]);
     const [price, setPrice] = useState<any>([]);
     const [totalPrice, setTotalPrice] = useState<any>();
     const [timeIndex, setTimeIndex] = useState<any>();
     const [lastTimes, setLastTimes] = useState<any>([]);
     const [totalTime, setTotalTime] = useState<any>();
-    const [selectMaster, setSelectMaster] = useState<any>("");
-    const [receiveData, setReceiveData] = useState<any>([]);
-    const [busyTimes, setBusyTimes] = useState<any>();
-    const [modalOpen, setModalOpen] = useState(false)
-    const [confirmStatus, setConfirmStatus] = useState("")
-    const [newMaster, setNewMaster] = useState<any>();
-    const [newDayOfWeek, setNewDayOfWeek] = useState<any>(new Date().getDay());
+    const [busyTimes, setBusyTimes] = useState<any>([]);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [confirmStatus, setConfirmStatus] = useState("");
     const { t } = useTranslation();
 
+    // 💇‍♀️ Hairstyling services only
+    const allServiceGroup = allServices["lashesAndBrows"] || [];
+
+    // 💅 Only one master now
+    const master = "Arpi Poghosyan";
+
+    // init times
     useEffect(() => {
-        if (!dateState || isNaN(dateState)) return;
-
-        const day = new Date(dateState).getDay(); // день недели 0-6
-
-        const masters = [
-            { value: "Marianna Badalyan", label: t("Marianna Badalyan") },
-            { value: "Irina Kostanyan", label: t("Irina Kostanyan") },
-        ];
-
-        // НЕ РАБОЧИЕ ДНИ
-        const mariannaOff = [2, 4, 0]; // Tue, Thu, Sun
-        const irinaOff = [3];         // Wed
-
-        // Проверяем кто работает
-        const mariannaWorks = !mariannaOff.includes(day);
-        const irinaWorks = !irinaOff.includes(day);
-
-        let options: any[] = [];
-        let autoSelect: string | null = null;
-
-        // Формируем список с disabled
-        options = [
-            { ...masters[0], disabled: !mariannaWorks },
-            { ...masters[1], disabled: !irinaWorks },
-        ];
-
-        // Автовыбор мастера
-        if (mariannaWorks && !irinaWorks) autoSelect = masters[0].value;
-        else if (!mariannaWorks && irinaWorks) autoSelect = masters[1].value;
-        else if (mariannaWorks && irinaWorks) {
-            // если раньше выбрал Ирину — оставить её
-            if (selectMaster === masters[1].value) autoSelect = masters[1].value;
-            else autoSelect = masters[0].value;
-        }
-        else autoSelect = null;
-
-
-        setNewMaster(options);
-        setSelectMaster(autoSelect);
-    }, [t, dateState]);
-
-
-
-
-
-
+        setAllTimes(getBookTime(10, 30));
+    }, []);
     useEffect(() => {
         getData();
 
 
-    }, [dateState, selectMaster, modalOpen]);
-
-
+    }, [dateState, modalOpen]);
+    // calculate price and duration
     useEffect(() => {
-        const now = new Date();
-        const localMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-        setDateState(localMidnight);
-
-
-
-
-
-        const getSelectedItem: any = localStorage.getItem("selectedService")
-        if (JSON.parse(getSelectedItem)?.value) {
-            setSelectedItems([...selectedItems, JSON.parse(getSelectedItem).value])
-            localStorage.removeItem("selectedService")
-        }
-    }, []);
-
-    useEffect(() => {
-        setAllTimes(getBookTime(10, 30))
-
         if (selectedItems.length > 0) {
-            selectedItems.forEach(() => {
-                const filteredSelections = allServiceGroup.filter((o) => selectedItems.includes(o.value));
-
-                let selectedItemsPrice = filteredSelections.map((item: any) => item.startPrice)
-                setPrice(selectedItemsPrice)
-
-                let selectedItemsTime = filteredSelections.map((item: any) => item.timeToMinute);
-                setLastTimes(selectedItemsTime)
-
-                setSelectedForBook(filteredSelections);
-            });
+            const filtered = allServiceGroup.filter((o) =>
+                selectedItems.includes(o.value)
+            );
+            setPrice(filtered.map((i: any) => i.startPrice));
+            setLastTimes(filtered.map((i: any) => i.timeToMinute));
         } else {
-            setPrice([])
+            setPrice([]);
+            setLastTimes([]);
         }
     }, [selectedItems]);
 
+    useEffect(() => {
+        setTotalPrice(price.reduce((a: any, b: any) => a + b, 0));
+    }, [price]);
 
     useEffect(() => {
-        let total = 0
-        price?.map((el: any) => total = total + el);
-        setTotalPrice(total)
-    }, [price, selectedItems]);
-
-    useEffect(() => {
-        if (lastTimes.length > 0) {
-            let total = lastTimes.reduce((x: any, y: any) => x + y);
-            setTotalTime(total)
-        }
+        setTotalTime(lastTimes.reduce((a: any, b: any) => a + b, 0));
     }, [lastTimes]);
 
+    function isSaturday(date: Date) {
+        return date.getDay() === 6; // Saturday
+    }
 
 
-    const allServiceGroup = Object.values(allServices).flat();
-    // const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
+
+    // 🔹 Get booked times for this master/date
+    const getData = async (customDate?: number) => {
+        const dateToUse = customDate || dateState;
+        if (!dateToUse || isNaN(dateToUse)) return;
+
+        try {
+            const response = await fetch("https://chicchoc.top/public/service", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    master,
+                    date: String(dateToUse),
+                }),
+            });
+
+            const data = await response.json();
+            console.log("📅 Received bookings:", data);
+
+            if (Array.isArray(data)) {
+                const filtered = data.filter((i: any) => i.master === master);
+                const booked = filtered.flatMap((i: any) => i.booked_hours || []);
+                setBusyTimes(booked);
+            } else if (data?.conflicting_time) {
+                setBusyTimes(data.conflicting_time);
+                setConfirmStatus(t(data.message || "Some time slots are unavailable"));
+                setModalOpen(true);
+            }
+        } catch (e) {
+            console.error("Fetch error:", e);
+        }
+    };
 
     async function tgFormWeb(_date: any, _time: any, _name: any, _phone: any, _master: any, _service: any, _price: any) {
         const date = typeof _date === 'number' || typeof _date === 'string' ? new Date(Number(_date)) : new Date(_date);
@@ -168,89 +126,12 @@ function Book() {
         }
     }
 
-
-
-    // const getData = () => {
-
-    //     fetch('https://chicchoc.top/public/public/service', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({
-    //             master: selectMaster,
-    //             date: dateState,
-    //         })
-    //     })
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 throw new Error(`HTTP error! Status: ${response.status}`);
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             const filteredTimes = data.map((el: any) => { return el.booked_hours })
-    //             setReceiveData(data)
-    //             setBusyTimes(filteredTimes.flat())
-    //             // Process data here
-    //         })
-    //         .catch(error => {
-    //             console.log("test", dateState);
-
-    //             console.error('Fetch error:', error);
-    //         });
-    //     // navigate("/")
-
-    // }
-
-    const getData = (customDate?: number) => {
-        const dateToUse = customDate || dateState;
-
-        if (!dateToUse || isNaN(dateToUse)) {
-            console.error("Invalid dateState:", dateToUse);
-            return;
-        }
-
-        const formattedDate = new Date(dateToUse).toISOString().split("T")[0]; // 'YYYY-MM-DD'
-
-        const payload = {
-            master: selectMaster,
-            date: String(dateState), // timestamp в виде строки
-        };
-
-
-        console.log("Sending request with:", payload);
-
-        fetch('https://chicchoc.top/public/service', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload),
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                const filteredTimes = data.map((el: any) => el.booked_hours);
-                setReceiveData(data);
-                setBusyTimes(filteredTimes.flat());
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-            });
-    };
-
-
     const handleBook = async () => {
         const errors = [];
 
         if (!userName || userName.trim() === "") errors.push(t("Please enter your name"));
         if (!phoneNumber || phoneNumber.trim().length < 8) errors.push(t("Please enter a valid phone number"));
-        if (!selectMaster) errors.push(t("Please select a master"));
+        if (!master) errors.push(t("Please select a master"));
         if (!selectedItems || selectedItems.length === 0) errors.push(t("Please select at least one service"));
         if (!dateState) errors.push(t("Please select a date"));
         if (!timeState) errors.push(t("Please select a time"));
@@ -263,7 +144,7 @@ function Book() {
 
         const allBooks: any = [
             {
-                master: selectMaster,
+                master: master,
                 name: userName,
                 date: dateState.toString(),
                 timeState: timeState,
@@ -320,85 +201,44 @@ function Book() {
         }
     };
 
-
     const changeDate = (e: any) => {
-        const dateObj = new Date(e);
-        dateObj.setHours(0, 0, 0, 0);
-        const timestamp = dateObj.getTime();
-
-        setDateState(timestamp);
-
-        const dayOfWeek = dateObj.getDay();
-        setNewDayOfWeek(dayOfWeek);
-
-        getData(); // используем актуальный dateState
+        const d = new Date(e);
+        d.setHours(0, 0, 0, 0);
+        const ts = d.getTime();
+        setDateState(ts);
+        getData(ts);
     };
-
 
     function isPastTimeSlot(time: string): boolean {
         const today = new Date();
-        const selectedDate = new Date(dateState);
-
-        // Если не сегодня — ничего не блокируем
+        const selected = new Date(dateState);
         if (
-            today.getFullYear() !== selectedDate.getFullYear() ||
-            today.getMonth() !== selectedDate.getMonth() ||
-            today.getDate() !== selectedDate.getDate()
+            today.getFullYear() !== selected.getFullYear() ||
+            today.getMonth() !== selected.getMonth() ||
+            today.getDate() !== selected.getDate()
         ) {
             return false;
         }
-
-        // Текущее время
-        const [hours, minutes] = time.split(":").map(Number);
-        const timeSlotDate = new Date(dateState);
-        timeSlotDate.setHours(hours, minutes, 0, 0);
-
-        return timeSlotDate.getTime() < today.getTime();
-    }
-
-
-    const handleSelectedServices = (e: any) => {
-        setSelectedItems(e);
-    };
-
-    const handleSetTime = (time: any, index: number) => {
-        if (!busyTimes?.includes(time) && !isPastTimeSlot(time)) {
-            setTimeState(time);
-            setTimeIndex(index);
-        }
-    };
-
-
-    const handleInputPhoneNumber = (event: any) => {
-        setPhoneNumber('+374 ' + event.target.value)
-    }
-
-    const handleSelectedMaster = (master: any) => {
-        setSelectMaster(master)
+        const [h, m] = time.split(":").map(Number);
+        const slot = new Date(dateState);
+        slot.setHours(h, m, 0, 0);
+        return slot.getTime() < today.getTime();
     }
 
     const translatedServices = allServiceGroup.map((service) => ({
         value: service.value,
-        label: t(`${service.value}`) + ' - ' + `${service.startPrice}` + ' ' + `${t('AMD')}`
+        label: `${t(service.value)} - ${service.startPrice} ${t("AMD")}`,
     }));
+
     return (
         <div className="book-layout">
-            <div className="book-left-side">
-                <div className="book-left-side_content">
-                    {/* <div className="book-left-side_content_top">
-                        {t('Simply fill in the necessary information to secure your appointment with us. From preferred service to date and time, your nail care needs are in good hands.')}
-                    </div> */}
-                    <div className="book-left-side_content_bottom">
-                        {t('Book Now')}
-                    </div>
-                </div>
+            <div className="lash-left-side">
+                <div className="book-left-side_content_bottom">{t("Book Now")}</div>
             </div>
 
             <div className="book-right-side book-right-side-margin">
                 <div className="form">
-                    <div className="book-right-side-title">
-                        {t('Book a Visit')}
-                    </div>
+                    <div className="book-right-side-title">{t("Book a Visit")}</div>
                     <div className="input-grid">
                         <div className="input_item">
                             <div className="input_item-title">{t("Name Surname")}</div>
@@ -415,7 +255,7 @@ function Book() {
                             <Input
                                 placeholder="92309128"
                                 prefix="+374"
-                                onChange={(e) => setPhoneNumber("+374 " + e.target.value)}
+                                onChange={(e) => setPhoneNumber("+374" + e.target.value)}
                             />
                         </div>
 
@@ -433,56 +273,53 @@ function Book() {
                         <div className="input_item">
                             <div className="input_item-title">{t("Choose Master")}</div>
                             <Select
-                                value={selectMaster}
-                                options={newMaster || []}
-                                onChange={(v) => setSelectMaster(v)}
-                                disabled={
-                                    !newMaster ||
-                                    newMaster.filter((m: any) => !m.disabled).length === 1 &&
-                                    selectMaster === newMaster.find((m: any) => !m.disabled)?.value
-                                }
+                                value={master}
+                                options={[{ value: master, label: t(master) }]}
+                                disabled
                             />
-
-
-
                         </div>
                     </div>
-
                 </div>
+
                 <div className="book-now-datetime">
                     <Calendar
                         value={dateState}
                         onChange={changeDate}
-                        minDate={new Date()} // 🚫 запрещает выбор прошедших дат
+                        minDate={new Date()}
+                        tileDisabled={({ date }) => isSaturday(date)}
                     />
                     <div className="book-time">
-                        <div className="book-time-title">{t('Time')}</div>
+                        <div className="book-time-title">{t("Time")}</div>
                         <div className="time-group">
-                            {allTimes.map((time: any, index: number) => {
-                                return (
-                                    <div
-                                        key={index}
-                                        className={
-                                            !busyTimes?.includes(time) && !isPastTimeSlot(time)
-                                                ? (timeIndex !== index ? "book-time-local" : "book-time-local is-selected")
-                                                : "is-time-busy"
+                            {allTimes.map((time: any, index: number) => (
+                                <div
+                                    key={index}
+                                    className={
+                                        !busyTimes?.includes(time) && !isPastTimeSlot(time)
+                                            ? timeIndex !== index
+                                                ? "book-time-local"
+                                                : "book-time-local is-selected"
+                                            : "is-time-busy"
+                                    }
+                                    onClick={() => {
+                                        if (!busyTimes?.includes(time) && !isPastTimeSlot(time)) {
+                                            setTimeState(time);
+                                            setTimeIndex(index);
                                         }
-                                        onClick={() => handleSetTime(time, index)}
-                                    >
-                                        {time}
-                                    </div>)
-                            })}
+                                    }}
+                                >
+                                    {time}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
+
                 <div className="book-footer">
                     <div className="book-price">
-                        {t('The service will cost')} <span>{totalPrice} {t('AMD')}</span>
+                        {t("The service will cost")} <span>{totalPrice} {t("AMD")}</span>
                     </div>
-                    <MainButton
-                        text="Book"
-                        func={handleBook}
-                    />
+                    <MainButton text="Book" func={handleBook} />
                 </div>
             </div>
 
@@ -518,7 +355,7 @@ function Book() {
                     >
                         <div><b>Ամսաթիվ․</b>   {new Date(Number(dateState)).toLocaleDateString("hy-AM")}</div>
                         <div><b>Ժամ․</b> {timeState}</div>
-                        <div><b>Մասնագետ․</b> {selectMaster}</div>
+                        <div><b>Մասնագետ․</b> {master}</div>
                         <div><b>Հեռախոսահամար․</b> {phoneNumber}</div>
                         <div><b>Ծառայություն․</b> {selectedItems[0]}</div>
                         <div><b>Արժեք․</b> {totalPrice} AMD</div>
@@ -551,7 +388,7 @@ function Book() {
             </Modal>
 
         </div>
-    )
+    );
 }
 
-export default Book
+export default Book;

@@ -1,506 +1,394 @@
 import React, { useEffect, useState } from "react";
-import { Input, Modal, Select } from 'antd';
-import Calendar from 'react-calendar'
-import 'react-calendar/dist/Calendar.css';
-// import moment from 'moment';
-import { format } from 'date-fns';
+import { Input, Modal, Select } from "antd";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import MainButton from "../buttons/MainButton";
 import { getBookTime } from "../constants/bookTime";
 import { allServices } from "../constants/allServices";
-import { allMasters } from "../constants/allServices";
 import { useTranslation } from "react-i18next";
-import { babyServices, hairMasters } from "../constants/babyServices";
 
-function HairBook() {
-    const [dateState, setDateState] = useState<any>();
-    const [timeState, setTimeState] = useState<any>();
-    const [allTimes, setAllTimes] = useState<any>([]);
-    const [selectedItems, setSelectedItems] = useState<string[]>([]);
-    const [userName, setUserName] = useState<any>("");
-    const [phoneNumber, setPhoneNumber] = useState<any>("");
-    const [selectedForBook, setSelectedForBook] = useState<any>([]);
-    const [price, setPrice] = useState<any>([]);
-    const [totalPrice, setTotalPrice] = useState<any>();
-    const [timeIndex, setTimeIndex] = useState<any>();
-    const [lastTimes, setLastTimes] = useState<any>([]);
-    const [totalTime, setTotalTime] = useState<any>();
-    const [selectMaster, setSelectMaster] = useState<any>("");
-    const [receiveData, setReceiveData] = useState<any>([]);
-    const [busyTimes, setBusyTimes] = useState<any>();
-    const [modalOpen, setModalOpen] = useState(false)
-    const [confirmStatus, setConfirmStatus] = useState("")
-    const [newMaster, setNewMaster] = useState<any>();
-    const [newDayOfWeek, setNewDayOfWeek] = useState<any>(new Date().getDay());
-    const { t } = useTranslation();
+function Book() {
+  const [dateState, setDateState] = useState<any>();
+  const [timeState, setTimeState] = useState<any>();
+  const [allTimes, setAllTimes] = useState<any>([]);
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const [userName, setUserName] = useState<any>("");
+  const [phoneNumber, setPhoneNumber] = useState<any>("");
+  const [price, setPrice] = useState<any>([]);
+  const [totalPrice, setTotalPrice] = useState<any>();
+  const [timeIndex, setTimeIndex] = useState<any>();
+  const [lastTimes, setLastTimes] = useState<any>([]);
+  const [totalTime, setTotalTime] = useState<any>();
+  const [busyTimes, setBusyTimes] = useState<any>([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [confirmStatus, setConfirmStatus] = useState("");
+  const { t } = useTranslation();
 
+  // 💇‍♀️ Hairstyling services only
+  const allServiceGroup = allServices["hairstyling"] || [];
 
-    useEffect(() => {
-        if (!dateState || isNaN(dateState)) return;
+  // 💅 Only one master now
+  const master = "Gayane Khudoyan";
 
-        const date = new Date(dateState);
-        const dow = date.getDay(); // 0 (вс) - 6 (сб)
+  // init times
+  useEffect(() => {
+    setAllTimes(getBookTime(10, 30));
+  }, []);
 
-        // Убираем Anushik из вариантов полностью
-        const translatedMasters = hairMasters
-            .filter((m) => m.value !== "Anushik")
-            .map((master) => ({
-                value: master.value,
-                label: t(`${master.value}`),
-            }));
+  // calculate price and duration
+  useEffect(() => {
+    if (selectedItems.length > 0) {
+      const filtered = allServiceGroup.filter((o) =>
+        selectedItems.includes(o.value)
+      );
+      setPrice(filtered.map((i: any) => i.startPrice));
+      setLastTimes(filtered.map((i: any) => i.timeToMinute));
+    } else {
+      setPrice([]);
+      setLastTimes([]);
+    }
+  }, [selectedItems]);
 
-        const noro = translatedMasters.find((m) => m.value === "Noro");
+  useEffect(() => {
+    setTotalPrice(price.reduce((a: any, b: any) => a + b, 0));
+  }, [price]);
 
-        if (!noro) {
-            // На случай если в hairMasters нет Noro
-            setNewMaster([]);
-            setSelectMaster("");
-            return;
-        }
+  useEffect(() => {
+    setTotalTime(lastTimes.reduce((a: any, b: any) => a + b, 0));
+  }, [lastTimes]);
 
-        if (dow === 1 || dow === 2) {
-            // Понедельник или вторник — Noro доступен
-            setNewMaster([noro]);
-            setSelectMaster("Noro"); // можно авто-выбирать
-        } else {
-            // В другие дни — Noro есть в списке, но недоступен
-            setNewMaster([{ ...noro, disabled: true }]);
-            setSelectMaster("");
-        }
-    }, [t, dateState]);
+  // 🔹 Get booked times for this master/date
+  const getData = async (customDate?: number) => {
+    const dateToUse = customDate || dateState;
+    if (!dateToUse || isNaN(dateToUse)) return;
 
+    try {
+      const response = await fetch("https://chicchoc.top/public/service", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          master,
+          date: String(dateToUse),
+        }),
+      });
 
+      const data = await response.json();
+      console.log("📅 Received bookings:", data);
 
+      if (Array.isArray(data)) {
+        const filtered = data.filter((i: any) => i.master === master);
+        const booked = filtered.flatMap((i: any) => i.booked_hours || []);
+        setBusyTimes(booked);
+      } else if (data?.conflicting_time) {
+        setBusyTimes(data.conflicting_time);
+        setConfirmStatus(t(data.message || "Some time slots are unavailable"));
+        setModalOpen(true);
+      }
+    } catch (e) {
+      console.error("Fetch error:", e);
+    }
+  };
 
-    useEffect(() => {
-        getData();
-    }, [dateState, selectMaster, modalOpen]);
+  async function tgFormWeb(_date: any, _time: any, _name: any, _phone: any, _master: any, _service: any, _price: any) {
+    const date = typeof _date === 'number' || typeof _date === 'string' ? new Date(Number(_date)) : new Date(_date);
+    const formattedDate = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
+    let message = ` Կատարվել է Գրանցում \n\n`;
+    message += `Անուն:\n ${_name} \n\n`;
+    message += `Ամսաթիվ:\n ${formattedDate} \n\n`;
+    message += `Ժամ:\n${_time} \n\n`;
+    message += `Հեռախոս:\n${_phone} \n\n`;
+    message += `Մասնագետ:\n${_master} \n\n`;
+    message += `Ծառայություն:\n${_service} \n\n`;
+    message += `Արժեք:\n${_price} AMD\n\n`;
 
+    const token = "7919607900:AAESSDQomcRQ2gBFpJ5NEXVZijW8FdA4kiY"
+    const chat_id = "-4552058619";
+    const URI_API = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`;
 
-    useEffect(() => {
-        const now = new Date();
-        const localMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
-        setDateState(localMidnight);
+    try {
+      let response = await fetch(URI_API, { method: 'GET' });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      // You can handle the response if needed
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
+  }
 
+  const handleBook = async () => {
+    const errors = [];
 
+    if (!userName || userName.trim() === "") errors.push(t("Please enter your name"));
+    if (!phoneNumber || phoneNumber.trim().length < 8) errors.push(t("Please enter a valid phone number"));
+    if (!master) errors.push(t("Please select a master"));
+    if (!selectedItems || selectedItems.length === 0) errors.push(t("Please select at least one service"));
+    if (!dateState) errors.push(t("Please select a date"));
+    if (!timeState) errors.push(t("Please select a time"));
 
-
-        const getSelectedItem: any = localStorage.getItem("selectedHairService")
-        if (JSON.parse(getSelectedItem)?.value) {
-            setSelectedItems([...selectedItems, JSON.parse(getSelectedItem).value])
-            localStorage.removeItem("selectedHairService")
-        }
-    }, []);
-
-    useEffect(() => {
-        setAllTimes(getBookTime(10, 30))
-
-        if (selectedItems.length > 0) {
-            selectedItems.forEach(() => {
-                const filteredSelections = allServiceGroup.filter((o) => selectedItems.includes(o.value));
-
-                let selectedItemsPrice = filteredSelections.map((item: any) => item.startPrice)
-                setPrice(selectedItemsPrice)
-
-                let selectedItemsTime = filteredSelections.map((item: any) => item.timeToMinute);
-                setLastTimes(selectedItemsTime)
-
-                setSelectedForBook(filteredSelections);
-            });
-        } else {
-            setPrice([])
-        }
-    }, [selectedItems]);
-
-
-    useEffect(() => {
-        let total = 0
-        price?.map((el: any) => total = total + el);
-        setTotalPrice(total)
-    }, [price, selectedItems]);
-
-    useEffect(() => {
-        if (lastTimes.length > 0) {
-            let total = lastTimes.reduce((x: any, y: any) => x + y);
-            setTotalTime(total)
-        }
-    }, [lastTimes]);
-
-    const allServiceGroup = Object.values(babyServices).flat();
-    // const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
-
-    // async function tgFormWeb(_date: any, _time: any, _name: any, _phone: any, _master: any, _service: any, _price: any) {
-    //     const date = typeof _date === 'number' || typeof _date === 'string' ? new Date(Number(_date)) : new Date(_date);
-    //     const formattedDate = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
-    //     let message = ` Կատարվել է Գրանցում \n\n`;
-    //     message += `Անուն:\n ${_name} \n\n`;
-    //     message += `Ամսաթիվ:\n ${formattedDate} \n\n`;
-    //     message += `Ժամ:\n${_time} \n\n`;
-    //     message += `Հեռախոս:\n${_phone} \n\n`;
-    //     message += `Մասնագետ:\n${_master} \n\n`;
-    //     message += `Ծառայություն:\n${_service} \n\n`;
-    //     message += `Արժեք:\n${_price} AMD\n\n`;
-
-    //     const token = "7999100182:AAHx_AkoTDBLJG9hkvI4eb5IisxsL7_J3V8"
-    //     const chat_id = "-4875084189";
-    //     const URI_API = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`;
-
-    //     try {
-    //         let response = await fetch(URI_API, { method: 'GET' });
-    //         if (!response.ok) {
-    //             throw new Error(`HTTP error! Status: ${response.status}`);
-    //         }
-    //         // You can handle the response if needed
-    //     } catch (error) {
-    //         console.error('Error sending message:', error);
-    //     }
-    // }
-
-
-    async function tgFormWeb(_date: any, _time: any, _name: any, _phone: any, _master: any, _service: any, _price: any) {
-        const date = typeof _date === 'number' || typeof _date === 'string' ? new Date(Number(_date)) : new Date(_date);
-        const formattedDate = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
-
-        const payload = {
-            name: _name,
-            date: formattedDate,
-            time: _time,
-            phone: _phone,
-            master: _master,
-            service: Array.isArray(_service) ? _service.join(', ') : _service,
-            price: _price,
-        };
-
-        try {
-            await fetch(' https://6cc0d3529e46.ngrok-free.app/book', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-            });
-        } catch (err) {
-            console.error('Error sending booking:', err);
-        }
+    if (errors.length > 0) {
+      setConfirmStatus(errors.join("\n"));
+      setModalOpen(true);
+      return;
     }
 
+    const allBooks: any = [
+      {
+        master: master,
+        name: userName,
+        date: dateState.toString(),
+        timeState: timeState,
+        services: [...selectedItems],
+        phoneNumber: phoneNumber,
+        totalPrice: totalPrice,
+        totalTime: totalTime,
+      },
+    ];
 
-    // const getData = () => {
+    try {
+      const response = await fetch('https://chicchoc.top/public/service/data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          master: allBooks[0]?.master,
+          name: allBooks[0]?.name,
+          date: String(allBooks[0]?.date),
+          timeState: allBooks[0]?.timeState,
+          services: allBooks[0]?.services,
+          phoneNumber: allBooks[0]?.phoneNumber,
+          totalPrice: allBooks[0]?.totalPrice,
+          totalTime: allBooks[0]?.totalTime,
+        }),
+      });
 
-    //     fetch('https://chicchoc.top/public/public/service', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({
-    //             master: selectMaster,
-    //             date: dateState,
-    //         })
-    //     })
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 throw new Error(`HTTP error! Status: ${response.status}`);
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             const filteredTimes = data.map((el: any) => { return el.booked_hours })
-    //             setReceiveData(data)
-    //             setBusyTimes(filteredTimes.flat())
-    //             // Process data here
-    //         })
-    //         .catch(error => {
-    //             console.log("test", dateState);
+      if (!response.ok) {
+        setConfirmStatus(`HTTP error! Status: ${response.status}`);
+        setModalOpen(true);
+        return;
+      }
 
-    //             console.error('Fetch error:', error);
-    //         });
-    //     // navigate("/")
+      // Предположим, что response.json() возвращает что-то, если нужно
+      const data = await response.json();
 
-    // }
-
-    const getData = (customDate?: number) => {
-        const dateToUse = customDate || dateState;
-
-        if (!dateToUse || isNaN(dateToUse)) {
-            console.error("Invalid dateState:", dateToUse);
-            return;
-        }
-
-        const formattedDate = new Date(dateToUse).toISOString().split("T")[0]; // 'YYYY-MM-DD'
-
-        const payload = {
-            master: selectMaster,
-            date: String(dateState), // timestamp в виде строки
-        };
-
-
-        console.log("Sending request with:", payload);
-
-        fetch('https://chicchoc.top/public/service', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload),
+      tgFormWeb(
+        allBooks[0]?.date,
+        allBooks[0]?.timeState,
+        allBooks[0]?.name,
+        allBooks[0]?.phoneNumber,
+        allBooks[0]?.master,
+        allBooks[0]?.services,
+        allBooks[0]?.totalPrice
+      );
+      fetch("https://chicchoc.top/public/notifications/data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          clientName: allBooks[0]?.name,
+          phone: allBooks[0]?.phoneNumber,
+          service: allBooks[0]?.services[0],
+          masterName: allBooks[0]?.master,
+          dateTimestamp: allBooks[0]?.date,
+          registrationTime: allBooks[0]?.timeState,
+          price: allBooks[0]?.totalPrice
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                const filteredTimes = data.map((el: any) => el.booked_hours);
-                setReceiveData(data);
-                setBusyTimes(filteredTimes.flat());
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-            });
-    };
+      });
 
-    function isPastTimeSlot(time: string): boolean {
-        const today = new Date();
-        const selectedDate = new Date(dateState);
 
-        // Если не сегодня — ничего не блокируем
-        if (
-            today.getFullYear() !== selectedDate.getFullYear() ||
-            today.getMonth() !== selectedDate.getMonth() ||
-            today.getDate() !== selectedDate.getDate()
-        ) {
-            return false;
-        }
 
-        // Текущее время
-        const [hours, minutes] = time.split(":").map(Number);
-        const timeSlotDate = new Date(dateState);
-        timeSlotDate.setHours(hours, minutes, 0, 0);
-
-        return timeSlotDate.getTime() < today.getTime();
+      setConfirmStatus('Registration Successfully Completed');
+      setModalOpen(true);
+    } catch (error) {
+      console.error('Fetch error:', error);
+      setConfirmStatus("Fill in all fields");
+      setModalOpen(true);
     }
+  };
 
+  const changeDate = (e: any) => {
+    const d = new Date(e);
+    d.setHours(0, 0, 0, 0);
+    const ts = d.getTime();
+    setDateState(ts);
+    getData(ts);
+  };
 
-    const handleBook = async () => {
-        const errors = [];
-
-        if (!userName || userName.trim() === "") errors.push(t("Please enter your name"));
-        if (!phoneNumber || phoneNumber.trim().length < 8) errors.push(t("Please enter a valid phone number"));
-        if (!selectMaster) errors.push(t("Please select a master"));
-        if (!selectedItems || selectedItems.length === 0) errors.push(t("Please select at least one service"));
-        if (!dateState) errors.push(t("Please select a date"));
-        if (!timeState) errors.push(t("Please select a time"));
-
-        if (errors.length > 0) {
-            setConfirmStatus(errors.join("\n"));
-            setModalOpen(true);
-            return;
-        }
-
-        const allBooks: any = [
-            {
-                master: selectMaster,
-                name: userName,
-                date: dateState.toString(),
-                timeState: timeState,
-                services: [...selectedItems],
-                phoneNumber: phoneNumber,
-                totalPrice: totalPrice,
-                totalTime: totalTime,
-            },
-        ];
-
-        try {
-            const response = await fetch('https://chicchoc.top/public/service/data', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    master: allBooks[0]?.master,
-                    name: allBooks[0]?.name,
-                    date: String(allBooks[0]?.date),
-                    timeState: allBooks[0]?.timeState,
-                    services: allBooks[0]?.services,
-                    phoneNumber: allBooks[0]?.phoneNumber,
-                    totalPrice: allBooks[0]?.totalPrice,
-                    totalTime: allBooks[0]?.totalTime,
-                }),
-            });
-
-            if (!response.ok) {
-                setConfirmStatus(`HTTP error! Status: ${response.status}`);
-                setModalOpen(true);
-                return;
-            }
-
-            // Предположим, что response.json() возвращает что-то, если нужно
-            const data = await response.json();
-
-            tgFormWeb(
-                allBooks[0]?.date,
-                allBooks[0]?.timeState,
-                allBooks[0]?.name,
-                allBooks[0]?.phoneNumber,
-                allBooks[0]?.master,
-                allBooks[0]?.services,
-                allBooks[0]?.totalPrice
-            );
-
-            setConfirmStatus('Registration Successfully Completed');
-            setModalOpen(true);
-        } catch (error) {
-            console.error('Fetch error:', error);
-            setConfirmStatus("Fill in all fields");
-            setModalOpen(true);
-        }
-    };
-
-
-    const changeDate = (e: any) => {
-        const dateObj = new Date(e);
-        dateObj.setHours(0, 0, 0, 0);
-        const timestamp = dateObj.getTime();
-
-        setDateState(timestamp);
-
-        const dayOfWeek = dateObj.getDay();
-        setNewDayOfWeek(dayOfWeek);
-
-        getData(); // используем актуальный dateState
-    };
-
-
-    const handleSelectedServices = (e: any) => {
-        setSelectedItems(e);
-    };
-
-    const handleSetTime = (time: any, index: number) => {
-        if (!busyTimes?.includes(time) && !isPastTimeSlot(time)) {
-            setTimeState(time);
-            setTimeIndex(index);
-        }
-    };
-
-    const handleInputPhoneNumber = (event: any) => {
-        setPhoneNumber('+374 ' + event.target.value)
+  function isPastTimeSlot(time: string): boolean {
+    const today = new Date();
+    const selected = new Date(dateState);
+    if (
+      today.getFullYear() !== selected.getFullYear() ||
+      today.getMonth() !== selected.getMonth() ||
+      today.getDate() !== selected.getDate()
+    ) {
+      return false;
     }
+    const [h, m] = time.split(":").map(Number);
+    const slot = new Date(dateState);
+    slot.setHours(h, m, 0, 0);
+    return slot.getTime() < today.getTime();
+  }
 
-    const handleSelectedMaster = (master: any) => {
-        setSelectMaster(master)
-    }
+  const translatedServices = allServiceGroup.map((service) => ({
+    value: service.value,
+    label: `${t(service.value)} - ${service.startPrice} ${t("AMD")}`,
+  }));
 
-    const translatedServices = allServiceGroup.map((service) => ({
-        value: service.value,
-        label: t(`${service.value}`) + ' - ' + `${service.startPrice}` + ' ' + `${t('AMD')}`
-    }));
-    return (
-        <div className="book-layout">
-            <div className="book-baby-left-side">
-                <div className="book-left-side_content">
-                    <div className="book-left-side_content_top">
-                        {t("Simply fill in the necessary information to secure your appointment with us. From preferred service to date and time, Your little ones' care is in safe hands.")}
-                    </div>
-                    <div className="book-left-side_content_bottom">
-                        {t('Book Now')}
-                    </div>
-                </div>
+  return (
+    <div className="book-layout">
+      <div className="hair-left-side">
+        <div className="book-left-side_content_bottom">{t("Book Now")}</div>
+      </div>
+
+      <div className="book-right-side book-right-side-margin">
+        <div className="form">
+          <div className="book-right-side-title">{t("Book a Visit")}</div>
+          <div className="input-grid">
+            <div className="input_item">
+              <div className="input_item-title">{t("Name Surname")}</div>
+              <input
+                type="text"
+                className="input"
+                placeholder={t("Name Surname")}
+                onChange={(e) => setUserName(e.target.value)}
+              />
             </div>
 
-            <div className="book-right-side book-right-side-margin">
-                <div className="form">
-                    <div className="book-right-side-title">
-                        {t('Book a Visit')}
-                    </div>
-                    <div className="input-group">
-                        <div className="input_item">
-                            <div className="input_item-title">{t('Name Surname')}</div>
-                            <input
-                                type="text"
-                                className="input"
-                                placeholder={t("Name Surname")}
-                                onChange={(event) => setUserName(event.target.value)}
-                            />
-                        </div>
-
-                        <div className="input_item">
-                            <div className="input_item-title">{t('Select the Service Type')}</div>
-                            <Select
-                                mode="multiple"
-                                placeholder={t("Services")}
-                                value={selectedItems}
-                                onChange={handleSelectedServices}
-                                options={translatedServices}
-                            />
-                        </div>
-
-                        <div className="input_item">
-                            <div className="input_item-title">{t('Choose Master')}</div>
-                            <Select
-                                placeholder={t("Choose Master")}
-                                value={selectMaster || undefined}
-                                onChange={handleSelectedMaster}
-                                options={newMaster}
-                            />
-                        </div>
-
-                    </div>
-                    <div className="input-group">
-                        <div className="input_item">
-                            <div className="input_item-title">{t('Phone Number')}</div>
-                            <Input
-                                placeholder="92309128"
-                                prefix="+374"
-                                onChange={handleInputPhoneNumber}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className="book-now-datetime">
-                    <Calendar
-                        value={dateState}
-                        onChange={changeDate}
-                        minDate={new Date()} // 🚫 запрещает выбор прошедших дат
-                    />
-
-                    <div className="book-time">
-                        <div className="book-time-title">{t('Time')}</div>
-                        <div className="time-group">
-                            {allTimes.map((time: any, index: number) => {
-                                return (
-                                    <div
-                                        key={index}
-                                        className={
-                                            !busyTimes?.includes(time) && !isPastTimeSlot(time)
-                                                ? (timeIndex !== index ? "book-time-local" : "book-time-local is-selected")
-                                                : "is-time-busy"
-                                        }
-                                        onClick={() => handleSetTime(time, index)}
-                                    >
-                                        {time}
-                                    </div>)
-                            })}
-                        </div>
-                    </div>
-                </div>
-                <div className="book-footer">
-                    <div className="book-price">
-                        {t('The service will cost')} <span>{totalPrice} {t('AMD')}</span>
-                    </div>
-                    <MainButton
-                        text="Book"
-                        func={handleBook}
-                    />
-                </div>
+            <div className="input_item">
+              <div className="input_item-title">{t("Phone Number")}</div>
+              <Input
+                placeholder="92309128"
+                prefix="+374"
+                onChange={(e) => setPhoneNumber("+374 " + e.target.value)}
+              />
             </div>
-            <Modal
-                open={modalOpen}
-                footer={null}
-                onCancel={() => setModalOpen(false)}
-                className="share-modal"
-                title={"CHIC - CHOC"}
-            >
-                <p>{t(confirmStatus)}</p>
-            </Modal>
+
+            <div className="input_item">
+              <div className="input_item-title">{t("Select the Service Type")}</div>
+              <Select
+                mode="multiple"
+                placeholder={t("Services")}
+                value={selectedItems}
+                onChange={setSelectedItems}
+                options={translatedServices}
+              />
+            </div>
+
+            <div className="input_item">
+              <div className="input_item-title">{t("Choose Master")}</div>
+              <Select
+                value={master}
+                options={[{ value: master, label: t(master) }]}
+                disabled
+              />
+            </div>
+          </div>
         </div>
-    )
+
+        <div className="book-now-datetime">
+          <Calendar value={dateState} onChange={changeDate} minDate={new Date()} />
+          <div className="book-time">
+            <div className="book-time-title">{t("Time")}</div>
+            <div className="time-group">
+              {allTimes.map((time: any, index: number) => (
+                <div
+                  key={index}
+                  className={
+                    !busyTimes?.includes(time) && !isPastTimeSlot(time)
+                      ? timeIndex !== index
+                        ? "book-time-local"
+                        : "book-time-local is-selected"
+                      : "is-time-busy"
+                  }
+                  onClick={() => {
+                    if (!busyTimes?.includes(time) && !isPastTimeSlot(time)) {
+                      setTimeState(time);
+                      setTimeIndex(index);
+                    }
+                  }}
+                >
+                  {time}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="book-footer">
+          <div className="book-price">
+            {t("The service will cost")} <span>{totalPrice} {t("AMD")}</span>
+          </div>
+          <MainButton text="Book" func={handleBook} />
+        </div>
+      </div>
+
+      <Modal
+        open={modalOpen}
+        footer={null}
+        onCancel={() => setModalOpen(false)}
+        className="share-modal"
+        title="CHIC - CHOC"
+      >
+        <div className="modal-content">
+
+          <h3 style={{
+            textAlign: "center",
+            fontSize: "18px",
+            marginBottom: "12px"
+          }}>
+            Շնորհակալություն։
+            Ձեր գրանցումը հաջողությամբ կատարվել է։
+          </h3>
+
+          <div
+            style={{
+              background: "#FFF5F0",
+              border: "1px solid #FFD2C4",
+              padding: "16px",
+              borderRadius: "10px",
+              marginBottom: "18px",
+              fontSize: "15px",
+              lineHeight: "22px",
+              color: "#444"
+            }}
+          >
+            <div><b>Ամսաթիվ․</b>   {new Date(Number(dateState)).toLocaleDateString("hy-AM")}</div>
+            <div><b>Ժամ․</b> {timeState}</div>
+            <div><b>Մասնագետ․</b> {master}</div>
+            <div><b>Հեռախոսահամար․</b> {phoneNumber}</div>
+            <div><b>Ծառայություն․</b> {selectedItems[0]}</div>
+            <div><b>Արժեք․</b> {totalPrice} AMD</div>
+          </div>
+
+          <p style={{ textAlign: "center", marginBottom: "10px" }}>
+            Սեղմեք ստորև՝ Telegram ծանուցումները ակտիվացնելու համար
+          </p>
+
+          <a
+            href={`https://t.me/chicchocregistration_bot?start=${phoneNumber.replace(/\D/g, "")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="telegram-button"
+            style={{
+              display: "block",
+              background: "#E75F36",
+              color: "white",
+              padding: "14px",
+              borderRadius: "8px",
+              fontSize: "16px",
+              textAlign: "center",
+              textDecoration: "none",
+              fontWeight: "600"
+            }}
+          >
+            📩 Ստանալ Telegram ծանուցումներ
+          </a>
+        </div>
+      </Modal>
+
+    </div>
+  );
 }
 
-export default HairBook
+export default Book;

@@ -30,13 +30,13 @@ function Home () {
                    {t('Dare to dream differently with us!')}
                </div>
            </div>
-            <div className="content-footer">
+            {/* <div className="content-footer">
                 {t("Got a quirky wish? We've got you covered! Let us sprinkle some magic and make it real, reflecting your awesome personality. And hey, while we're at it, let's pamper those nails with some luxe treatment too!")}
-            </div>
+            </div> */}
             <div className="our-service">
-                {t('Our Services')}
+                {/* {t('Our Services')} */}
             </div>
-            <div className="service-items">
+            {/* <div className="service-items">
                 <div className="service-item_1">
                     <div className="service-text">{t('Manicure')}<span>.</span></div>
                 </div>
@@ -46,15 +46,15 @@ function Home () {
                 <div className="service-item_3">
                     <div className="service-text">{t('For Kids')}<span>.</span></div>
                 </div>
-            </div>
+            </div> */}
             <div className="content-footer">
-                {t("Get ready to witness perfection in action! Our awesome team is all about making your nails look and feel amazing. Whether you're after a fancy manicure or just chilling with a pedicure, we promise a super comfy vibe every step of the way.")}
+                {t("By discovering perfection, you will witness the invaluable work of our dedicated team.They will ensure your beautiful and well-groomed look.Whether you desire a luxurious manicure or a chic hairstyle,we guarantee a feeling of comfort throughout the entire experience.")}
             </div>
-            <MainButton
+            {/* <MainButton
                 text="Go to Services"
                 suffix={true}
                 func={() => {navigate('./services')}}
-            />
+            /> */}
             <div className="home_page_2">
                 <img src={Text} alt="text" className="home_page_2_content"/>
                 <MainButton

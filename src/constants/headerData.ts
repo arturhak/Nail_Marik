@@ -1,14 +1,17 @@
 export const headerData = [
     {
-        title: "About Us"
+        title: "Manicure"
     },
     {
-        title: "For Adults"
+        title: "Lashes & Brows"
+    },
+    {
+        title: "Hairstyling"
     },
     {
         title: "For Kids"
     },
-     {
+    {
         title: "Contact Us"
     },
 ]
