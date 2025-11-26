@@ -34,22 +34,28 @@ function MobileHeader({ headerData, navigate }: any) {
     const handleNavigate = (index: number) => {
         switch (index) {
             case 0:
+                setOpen(false);
                 navigate("./book")
                 break;
             case 1:
+                setOpen(false);
                 navigate("./lashbrows")
                 break;
             case 2:
+                setOpen(false);
                 navigate("./hair")
                 break;
             case 3:
+                setOpen(false);
                 navigate("./chaild")
                 break;
             case 4:
+                setOpen(false);
                 navigate("./contact")
                 break;
 
             default:
+                setOpen(false);
                 navigate("./error")
         }
     };
@@ -60,30 +66,53 @@ function MobileHeader({ headerData, navigate }: any) {
 
     const handleNavigateChild = () => {
         setOpen(false);
-        navigate("./hair")
+        navigate("./chaild")
     };
     const handleNavigateManicure = () => {
         setOpen(false);
         navigate("./book")
+    };
+    const handleNavigateHair = () => {
+        setOpen(false);
+        navigate("./hair")
     };
 
     const items: MenuProps['items'] = [
         {
             key: '1',
             label: (
-                <a className="book-now-dropdown-items" rel="noopener noreferrer" onClick={handleNavigateChild}>
-                    {t('For Kids')}
+                <a className="book-now-dropdown-items" rel="noopener noreferrer" onClick={handleNavigateHair}>
+                    {t('Lashes & Brows')}
                 </a>
             ),
         },
         {
             key: '2',
             label: (
-                <a className="book-now-dropdown-items" rel="noopener noreferrer" onClick={handleNavigateManicure}>
-                    {t('For Adults')}
+                <a className="book-now-dropdown-items" rel="noopener noreferrer" onClick={handleNavigateHair}>
+                    {t('Hairstyling')}
                 </a>
             ),
         },
+        {
+            key: '3',
+            label: (
+                <a className="book-now-dropdown-items" rel="noopener noreferrer" onClick={handleNavigateManicure}>
+                    {t('Manicure')}
+                </a>
+            ),
+        },
+        {
+            key: '4',
+            label: (
+                <a className="book-now-dropdown-items" rel="noopener noreferrer" onClick={handleNavigateChild}>
+                    {t('For Kids')}
+                </a>
+            ),
+        },
+
+
+
     ];
 
 
