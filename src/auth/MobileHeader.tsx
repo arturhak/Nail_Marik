@@ -76,12 +76,16 @@ function MobileHeader({ headerData, navigate }: any) {
         setOpen(false);
         navigate("./hair")
     };
+    const handleNavigateLashes = () => {
+        setOpen(false);
+        navigate("./lashbrows")
+    };
 
     const items: MenuProps['items'] = [
         {
             key: '1',
             label: (
-                <a className="book-now-dropdown-items" rel="noopener noreferrer" onClick={handleNavigateHair}>
+                <a className="book-now-dropdown-items" rel="noopener noreferrer" onClick={handleNavigateLashes}>
                     {t('Lashes & Brows')}
                 </a>
             ),
