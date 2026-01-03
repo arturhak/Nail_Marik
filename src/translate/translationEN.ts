@@ -97,6 +97,7 @@ export const translationEN = {
     "Stamping": "Stamping",
     "French": "French",
     "Ombre": "Ombre",
+    "Select Master": "Select Master",
     "The Rub": "The Rub",
     "Feet Acupressure": "Feet Acupressure",
     "Registration Successfully Completed": "Registration Successfully Completed",

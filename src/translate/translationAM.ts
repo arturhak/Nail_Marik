@@ -1,6 +1,7 @@
 export const translationAM = {
     "About Us": "Մեր մասին",
     "For Adults": "Մեծերի",
+    "Select Master": "Ընտրեք մասնագետ",
     "Contact Us": "Կապ",
     "Chic-Choc kids": "Chic-Choc kids",
     "For Kids": "Մանկական",

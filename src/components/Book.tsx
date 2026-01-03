@@ -138,7 +138,10 @@ function Book() {
 
 
 
-    const allServiceGroup = Object.values(allServices).flat();
+    const allServiceGroup = [
+        ...(allServices["manicure"] || []),
+        ...(allServices["pedicure"] || []),
+    ];
     // const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
 
     async function tgFormWeb(_date: any, _time: any, _name: any, _phone: any, _master: any, _service: any, _price: any) {
