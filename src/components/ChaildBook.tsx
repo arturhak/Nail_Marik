@@ -32,6 +32,8 @@ function ChildBook() {
     const [newMaster, setNewMaster] = useState<any>();
     const [newDayOfWeek, setNewDayOfWeek] = useState<any>(new Date().getDay());
     const { t } = useTranslation();
+    type ModalType = "success" | "error";
+    const [modalType, setModalType] = useState<ModalType>("success");
 
 
     useEffect(() => {
@@ -73,10 +75,6 @@ function ChildBook() {
             setSelectMaster("Gayane Khudoyan");
         }
     }, [t, dateState]);
-
-
-
-
 
     useEffect(() => {
         getData();
@@ -133,35 +131,6 @@ function ChildBook() {
     }, [lastTimes]);
 
     const allServiceGroup = Object.values(babyServices).flat();
-    // const filteredOptions = allServiceGroup.filter((o) => !selectedItems.includes(o.value));
-
-    // async function tgFormWeb(_date: any, _time: any, _name: any, _phone: any, _master: any, _service: any, _price: any) {
-    //     const date = typeof _date === 'number' || typeof _date === 'string' ? new Date(Number(_date)) : new Date(_date);
-    //     const formattedDate = `${String(date.getDate()).padStart(2, '0')}.${String(date.getMonth() + 1).padStart(2, '0')}.${date.getFullYear()}`;
-    //     let message = ` Կատարվել է Գրանցում \n\n`;
-    //     message += `Անուն:\n ${_name} \n\n`;
-    //     message += `Ամսաթիվ:\n ${formattedDate} \n\n`;
-    //     message += `Ժամ:\n${_time} \n\n`;
-    //     message += `Հեռախոս:\n${_phone} \n\n`;
-    //     message += `Մասնագետ:\n${_master} \n\n`;
-    //     message += `Ծառայություն:\n${_service} \n\n`;
-    //     message += `Արժեք:\n${_price} AMD\n\n`;
-
-    //     const token = "7999100182:AAHx_AkoTDBLJG9hkvI4eb5IisxsL7_J3V8"
-    //     const chat_id = "-4875084189";
-    //     const URI_API = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`;
-
-    //     try {
-    //         let response = await fetch(URI_API, { method: 'GET' });
-    //         if (!response.ok) {
-    //             throw new Error(`HTTP error! Status: ${response.status}`);
-    //         }
-    //         // You can handle the response if needed
-    //     } catch (error) {
-    //         console.error('Error sending message:', error);
-    //     }
-    // }
-
 
     async function tgFormWeb(_date: any, _time: any, _name: any, _phone: any, _master: any, _service: any, _price: any) {
         const date = typeof _date === 'number' || typeof _date === 'string' ? new Date(Number(_date)) : new Date(_date);
@@ -170,7 +139,6 @@ function ChildBook() {
         message += `Անուն:\n ${_name} \n\n`;
         message += `Ամսաթիվ:\n ${formattedDate} \n\n`;
         message += `Ժամ:\n${_time} \n\n`;
-        message += `Հեռախոս:\n${_phone} \n\n`;
         message += `Մասնագետ:\n${_master} \n\n`;
         message += `Ծառայություն:\n${_service} \n\n`;
         message += `Արժեք:\n${_price} AMD\n\n`;
@@ -189,8 +157,6 @@ function ChildBook() {
             console.error('Error sending message:', error);
         }
     }
-
-
 
     const getData = (customDate?: number) => {
         const dateToUse = customDate || dateState;
@@ -253,78 +219,71 @@ function ChildBook() {
 
         return timeSlotDate.getTime() < today.getTime();
     }
-
-
     const handleBook = async () => {
         const errors = [];
 
-        if (!userName || userName.trim() === "") errors.push(t("Please enter your name"));
-        if (!phoneNumber || phoneNumber.trim().length < 8) errors.push(t("Please enter a valid phone number"));
+        if (!userName?.trim()) errors.push(t("Please enter your name"));
+        if (!phoneNumber || phoneNumber.trim().length < 8)
+            errors.push(t("Please enter a valid phone number"));
         if (!selectMaster) errors.push(t("Please select a master"));
-        if (!selectedItems || selectedItems.length === 0) errors.push(t("Please select at least one service"));
+        if (!selectedItems.length)
+            errors.push(t("Please select at least one service"));
         if (!dateState) errors.push(t("Please select a date"));
         if (!timeState) errors.push(t("Please select a time"));
 
         if (errors.length > 0) {
             setConfirmStatus(errors.join("\n"));
+            setModalType("error");
             setModalOpen(true);
             return;
         }
 
-        const allBooks: any = [
-            {
-                master: selectMaster,
-                name: userName,
-                date: dateState.toString(),
-                timeState: timeState,
-                services: [...selectedItems],
-                phoneNumber: phoneNumber,
-                totalPrice: totalPrice,
-                totalTime: totalTime,
-            },
-        ];
-
         try {
-            const response = await fetch('https://chicchoc.top/public/service/data', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    master: allBooks[0]?.master,
-                    name: allBooks[0]?.name,
-                    date: String(allBooks[0]?.date),
-                    timeState: allBooks[0]?.timeState,
-                    services: allBooks[0]?.services,
-                    phoneNumber: allBooks[0]?.phoneNumber,
-                    totalPrice: allBooks[0]?.totalPrice,
-                    totalTime: allBooks[0]?.totalTime,
-                }),
-            });
+            const response = await fetch(
+                "https://chicchoc.top/public/service/data",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        master: selectMaster,
+                        name: userName,
+                        date: String(dateState),
+                        timeState,
+                        services: selectedItems,
+                        phoneNumber,
+                        totalPrice,
+                        totalTime,
+                    }),
+                }
+            );
 
             if (!response.ok) {
-                setConfirmStatus(`HTTP error! Status: ${response.status}`);
+                setConfirmStatus(t("Booking failed. Please try again."));
+                setModalType("error");
                 setModalOpen(true);
                 return;
             }
 
-            // Предположим, что response.json() возвращает что-то, если нужно
-            const data = await response.json();
-
-            tgFormWeb(
-                allBooks[0]?.date,
-                allBooks[0]?.timeState,
-                allBooks[0]?.name,
-                allBooks[0]?.phoneNumber,
-                allBooks[0]?.master,
-                allBooks[0]?.services,
-                allBooks[0]?.totalPrice
+            // ✅ TELEGRAM — ТОЛЬКО ПОСЛЕ УСПЕХА
+            await tgFormWeb(
+                dateState,
+                timeState,
+                userName,
+                phoneNumber,
+                selectMaster,
+                selectedItems,
+                totalPrice
             );
-            setConfirmStatus('Registration Successfully Completed');
+
+            // ✅ SUCCESS MODAL
+            setConfirmStatus(t("Registration Successfully Completed"));
+            setModalType("success");
             setModalOpen(true);
-        } catch (error) {
-            console.error('Fetch error:', error);
-            setConfirmStatus("Fill in all fields");
+
+        } catch (err) {
+            console.error(err);
+            setConfirmStatus(t("Network error. Please try again."));
+            setModalType("error");
             setModalOpen(true);
         }
     };
@@ -343,21 +302,12 @@ function ChildBook() {
         getData(); // используем актуальный dateState
     };
 
-
-    const handleSelectedServices = (e: any) => {
-        setSelectedItems(e);
-    };
-
     const handleSetTime = (time: any, index: number) => {
         if (!busyTimes?.includes(time) && !isPastTimeSlot(time)) {
             setTimeState(time);
             setTimeIndex(index);
         }
     };
-
-    const handleInputPhoneNumber = (event: any) => {
-        setPhoneNumber('+374 ' + event.target.value)
-    }
 
     const handleSelectedMaster = (master: any) => {
         setSelectMaster(master)
@@ -367,15 +317,13 @@ function ChildBook() {
         value: service.value,
         label: t(`${service.value}`) + ' - ' + `${service.startPrice}` + ' ' + `${t('AMD')}`
     }));
+
     return (
         <div className="book-layout">
             <div className="book-baby-left-side">
                 <div className="book-left-side_content">
-                    {/* <div className="book-left-side_content_top">
-                        {t("Simply fill in the necessary information to secure your appointment with us. From preferred service to date and time, Your little ones' care is in safe hands.")}
-                    </div> */}
                     <div className="book-left-side_content_bottom">
-                        {t('Book Now')}
+                        {t('Book Kids Hairstyle Now')}
                     </div>
                 </div>
             </div>
@@ -383,7 +331,7 @@ function ChildBook() {
             <div className="book-right-side book-right-side-margin">
                 <div className="form">
                     <div className="book-right-side-title">
-                        {t('Book a Visit')}
+                        {/* {t('Book a Visit')} */}
                     </div>
                     <div className="input-grid">
                         <div className="input_item">
@@ -469,65 +417,107 @@ function ChildBook() {
                 open={modalOpen}
                 footer={null}
                 onCancel={() => setModalOpen(false)}
+                centered
                 className="share-modal"
-                title="CHIC - CHOC"
+                title="CHIC · CHOC"
             >
                 <div className="modal-content">
 
-                    <h3 style={{
-                        textAlign: "center",
-                        fontSize: "18px",
-                        marginBottom: "12px"
-                    }}>
-                        Շնորհակալություն։
-                        Ձեր գրանցումը հաջողությամբ կատարվել է։
+                    <h3
+                        style={{
+                            textAlign: "center",
+                            fontSize: "20px",
+                            marginBottom: "16px",
+                            fontWeight: 600,
+                            color: modalType === "success" ? "#2E7D32" : "#C62828",
+                        }}
+                    >
+                        {modalType === "success"
+                            ? t("Your booking was successful")
+                            : t("Booking failed")}
                     </h3>
 
                     <div
                         style={{
-                            background: "#FFF5F0",
-                            border: "1px solid #FFD2C4",
+                            background: modalType === "success" ? "#F1FFF5" : "#FFF5F5",
+                            border: modalType === "success"
+                                ? "1px solid #C8E6C9"
+                                : "1px solid #FFCDD2",
                             padding: "16px",
                             borderRadius: "10px",
-                            marginBottom: "18px",
+                            marginBottom: "16px",
                             fontSize: "15px",
                             lineHeight: "22px",
-                            color: "#444"
                         }}
                     >
-                        <div><b>Ամսաթիվ․</b>   {new Date(Number(dateState)).toLocaleDateString("hy-AM")}</div>
-                        <div><b>Ժամ․</b> {timeState}</div>
-                        <div><b>Մասնագետ․</b> {selectMaster}</div>
-                        <div><b>Հեռախոսահամար․</b> {phoneNumber}</div>
-                        <div><b>Ծառայություն․</b> {selectedItems[0]}</div>
-                        <div><b>Արժեք․</b> {totalPrice} AMD</div>
+                        {modalType === "success" ? (
+                            <>
+                                <div><b>Ամսաթիվ․</b> {new Date(Number(dateState)).toLocaleDateString("hy-AM")}</div>
+                                <div><b>Ժամ․</b> {timeState}</div>
+                                <div><b>Մասնագետ․</b> {selectMaster}</div>
+                                <div><b>Հեռախոսահամար․</b> {phoneNumber}</div>
+                                <div><b>Ծառայություն․</b> {selectedItems.join(", ")}</div>
+                                <div><b>Արժեք․</b> {totalPrice} AMD</div>
+                            </>
+                        ) : (
+                            <>
+                                <p style={{ marginBottom: 8 }}>
+                                    {t("Please fix the following issues:")}
+                                </p>
+                                <ul style={{ paddingLeft: 18 }}>
+                                    {confirmStatus.split("\n").map((err, i) => (
+                                        <li key={i}>{err}</li>
+                                    ))}
+                                </ul>
+                            </>
+                        )}
                     </div>
 
-                    <p style={{ textAlign: "center", marginBottom: "10px" }}>
-                        Սեղմեք ստորև՝ Telegram ծանուցումները ակտիվացնելու համար
-                    </p>
+                    {modalType === "success" ? (
+                        <>
+                            <p style={{ textAlign: "center", marginBottom: 12 }}>
+                                {t("Activate Telegram notifications")}
+                            </p>
 
-                    <a
-                        href={`https://t.me/chicchocregistration_bot?start=${phoneNumber.replace(/\D/g, "")}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="telegram-button"
-                        style={{
-                            display: "block",
-                            background: "#E75F36",
-                            color: "white",
-                            padding: "14px",
-                            borderRadius: "8px",
-                            fontSize: "16px",
-                            textAlign: "center",
-                            textDecoration: "none",
-                            fontWeight: "600"
-                        }}
-                    >
-                        📩 Ստանալ Telegram ծանուցումներ
-                    </a>
+                            <a
+                                href={`https://t.me/chicchocregistration_bot?start=${phoneNumber.replace(/\D/g, "")}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                    display: "block",
+                                    background: "#E75F36",
+                                    color: "#fff",
+                                    padding: "14px",
+                                    borderRadius: "8px",
+                                    fontSize: "16px",
+                                    textAlign: "center",
+                                    fontWeight: 600,
+                                    textDecoration: "none",
+                                }}
+                            >
+                                📩 Telegram
+                            </a>
+                        </>
+                    ) : (
+                        <button
+                            onClick={() => setModalOpen(false)}
+                            style={{
+                                width: "100%",
+                                padding: "12px",
+                                background: "#E75F36",
+                                color: "#fff",
+                                border: "none",
+                                borderRadius: "8px",
+                                fontSize: "16px",
+                                cursor: "pointer",
+                            }}
+                        >
+                            {t("Edit information")}
+                        </button>
+                    )}
                 </div>
             </Modal>
+
         </div>
     )
 }

@@ -138,5 +138,13 @@ export const translationEN = {
     "Brow Shaping": "Brow Shaping",
     "Brow Tinting": "Brow Tinting",
     "Brow Lamination": "Brow Lamination",
-    "Eyelash Lamination": "Eyelash Lamination"
+    "Eyelash Lamination": "Eyelash Lamination",
+    'Book Manicure Now': 'Book Manicure Now',
+    "Book Lashes And Browes Now": "Book Lashes And Browes Now",
+    "Book Kids Hairstyle Now": "Book Kids Hairstyle Now",
+    "Book Hairstyling Now": "Book Hairstyling Now",
+    "Please fix the following issues:": "Please fix the following issues:",
+    "Booking failed": "Booking failed",
+    "Edit information": "Edit information",
+    "Booking failed. Please try again.": "Booking failed. Please try again."
 }

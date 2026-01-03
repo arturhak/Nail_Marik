@@ -23,6 +23,8 @@ function Book() {
     const [modalOpen, setModalOpen] = useState(false);
     const [confirmStatus, setConfirmStatus] = useState("");
     const { t } = useTranslation();
+    type ModalType = "success" | "error";
+    const [modalType, setModalType] = useState<ModalType>("success");
 
     // 💇‍♀️ Hairstyling services only
     const allServiceGroup = allServices["lashesAndBrows"] || [];
@@ -64,8 +66,6 @@ function Book() {
     function isSaturday(date: Date) {
         return date.getDay() === 6; // Saturday
     }
-
-
 
     // 🔹 Get booked times for this master/date
     const getData = async (customDate?: number) => {
@@ -138,9 +138,11 @@ function Book() {
 
         if (errors.length > 0) {
             setConfirmStatus(errors.join("\n"));
+            setModalType("error");
             setModalOpen(true);
             return;
         }
+
 
         const allBooks: any = [
             {
@@ -192,13 +194,16 @@ function Book() {
                 allBooks[0]?.totalPrice
             );
 
-            setConfirmStatus('Registration Successfully Completed');
+            setConfirmStatus("success");
+            setModalType("success");
             setModalOpen(true);
         } catch (error) {
             console.error('Fetch error:', error);
-            setConfirmStatus("Fill in all fields");
+            setConfirmStatus(t("Something went wrong. Please try again."));
+            setModalType("error");
             setModalOpen(true);
         }
+
     };
 
     const changeDate = (e: any) => {
@@ -233,12 +238,12 @@ function Book() {
     return (
         <div className="book-layout">
             <div className="lash-left-side">
-                <div className="book-left-side_content_bottom">{t("Book Now")}</div>
+                <div className="book-left-side_content_bottom">{t("Book Lashes And Browes Now")}</div>
             </div>
 
             <div className="book-right-side book-right-side-margin">
                 <div className="form">
-                    <div className="book-right-side-title">{t("Book a Visit")}</div>
+                    {/* <div className="book-right-side-title">{t("Book a Visit")}</div> */}
                     <div className="input-grid">
                         <div className="input_item">
                             <div className="input_item-title">{t("Name Surname")}</div>
@@ -327,65 +332,107 @@ function Book() {
                 open={modalOpen}
                 footer={null}
                 onCancel={() => setModalOpen(false)}
+                centered
                 className="share-modal"
-                title="CHIC - CHOC"
+                title="CHIC · CHOC"
             >
                 <div className="modal-content">
 
-                    <h3 style={{
-                        textAlign: "center",
-                        fontSize: "18px",
-                        marginBottom: "12px"
-                    }}>
-                        Շնորհակալություն։
-                        Ձեր գրանցումը հաջողությամբ կատարվել է։
+                    <h3
+                        style={{
+                            textAlign: "center",
+                            fontSize: "20px",
+                            marginBottom: "16px",
+                            fontWeight: 600,
+                            color: modalType === "success" ? "#2E7D32" : "#C62828",
+                        }}
+                    >
+                        {modalType === "success"
+                            ? t("Your booking was successful")
+                            : t("Booking failed")}
                     </h3>
 
                     <div
                         style={{
-                            background: "#FFF5F0",
-                            border: "1px solid #FFD2C4",
+                            background: modalType === "success" ? "#F1FFF5" : "#FFF5F5",
+                            border: modalType === "success"
+                                ? "1px solid #C8E6C9"
+                                : "1px solid #FFCDD2",
                             padding: "16px",
                             borderRadius: "10px",
-                            marginBottom: "18px",
+                            marginBottom: "16px",
                             fontSize: "15px",
                             lineHeight: "22px",
-                            color: "#444"
                         }}
                     >
-                        <div><b>Ամսաթիվ․</b>   {new Date(Number(dateState)).toLocaleDateString("hy-AM")}</div>
-                        <div><b>Ժամ․</b> {timeState}</div>
-                        <div><b>Մասնագետ․</b> {master}</div>
-                        <div><b>Հեռախոսահամար․</b> {phoneNumber}</div>
-                        <div><b>Ծառայություն․</b> {selectedItems[0]}</div>
-                        <div><b>Արժեք․</b> {totalPrice} AMD</div>
+                        {modalType === "success" ? (
+                            <>
+                                <div><b>Ամսաթիվ․</b> {new Date(Number(dateState)).toLocaleDateString("hy-AM")}</div>
+                                <div><b>Ժամ․</b> {timeState}</div>
+                                <div><b>Մասնագետ․</b> {master}</div>
+                                <div><b>Հեռախոսահամար․</b> {phoneNumber}</div>
+                                <div><b>Ծառայություն․</b> {selectedItems.join(", ")}</div>
+                                <div><b>Արժեք․</b> {totalPrice} AMD</div>
+                            </>
+                        ) : (
+                            <>
+                                <p style={{ marginBottom: 8 }}>
+                                    {t("Please fix the following issues:")}:
+                                </p>
+                                <ul style={{ paddingLeft: 18 }}>
+                                    {confirmStatus.split("\n").map((err, i) => (
+                                        <li key={i}>{err}</li>
+                                    ))}
+                                </ul>
+                            </>
+                        )}
                     </div>
 
-                    <p style={{ textAlign: "center", marginBottom: "10px" }}>
-                        Սեղմեք ստորև՝ Telegram ծանուցումները ակտիվացնելու համար
-                    </p>
+                    {modalType === "success" ? (
+                        <>
+                            <p style={{ textAlign: "center", marginBottom: 12 }}>
+                                {t("Activate Telegram notifications")}
+                            </p>
 
-                    <a
-                        href={`https://t.me/chicchocregistration_bot?start=${phoneNumber.replace(/\D/g, "")}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="telegram-button"
-                        style={{
-                            display: "block",
-                            background: "#E75F36",
-                            color: "white",
-                            padding: "14px",
-                            borderRadius: "8px",
-                            fontSize: "16px",
-                            textAlign: "center",
-                            textDecoration: "none",
-                            fontWeight: "600"
-                        }}
-                    >
-                        📩 Ստանալ Telegram ծանուցումներ
-                    </a>
+                            <a
+                                href={`https://t.me/chicchocregistration_bot?start=${phoneNumber.replace(/\D/g, "")}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                    display: "block",
+                                    background: "#E75F36",
+                                    color: "#fff",
+                                    padding: "14px",
+                                    borderRadius: "8px",
+                                    fontSize: "16px",
+                                    textAlign: "center",
+                                    fontWeight: 600,
+                                    textDecoration: "none",
+                                }}
+                            >
+                                📩 Telegram
+                            </a>
+                        </>
+                    ) : (
+                        <button
+                            onClick={() => setModalOpen(false)}
+                            style={{
+                                width: "100%",
+                                padding: "12px",
+                                background: "#E75F36",
+                                color: "#fff",
+                                border: "none",
+                                borderRadius: "8px",
+                                fontSize: "16px",
+                                cursor: "pointer",
+                            }}
+                        >
+                            {t("Edit information")}
+                        </button>
+                    )}
                 </div>
             </Modal>
+
 
         </div>
     );

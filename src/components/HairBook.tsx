@@ -22,53 +22,35 @@ function Book() {
   const [busyTimes, setBusyTimes] = useState<any>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmStatus, setConfirmStatus] = useState("");
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const { t } = useTranslation();
+  type ModalType = "success" | "error";
+  const [modalType, setModalType] = useState<ModalType>("success");
 
   // 💇‍♀️ Hairstyling services only
   const allServiceGroup = allServices["hairstyling"] || [];
 
-  // Мастера
-  const masters = [
-    { value: "Gayane Khudoyan", label: t("Gayane Khudoyan") },
-    { value: "Vaghinak Ohanyan", label: t("Vaghinak Ohanyan") },
-  ];
-  // Выходные дни
-  const daysOff: any = {
-    "Gayane Khudoyan": [1, 5],   // Пн, Пт
-    "Vaghinak Ohanyan": [2, 4],  // Вт, Чт
-  };
 
-  // Выбранный мастер
-  const [master, setMaster] = useState<string>("");
+  // 💇‍♀️ Единственный мастер
+  const master = "Gayane Khudoyan";
 
-  useEffect(() => {
-    if (!dateState) return;
-
-    const day = new Date(dateState).getDay();
-
-    const gayaneWorks = !daysOff["Gayane Khudoyan"].includes(day);
-    const vaghinakWorks = !daysOff["Vaghinak Ohanyan"].includes(day);
-
-    if (gayaneWorks && !vaghinakWorks) {
-      setMaster("Gayane Khudoyan");
-    } else if (!gayaneWorks && vaghinakWorks) {
-      setMaster("Vaghinak Ohanyan");
-    } else if (gayaneWorks && vaghinakWorks) {
-      // если раньше выбрал — оставить
-      if (master === "Vaghinak Ohanyan") setMaster("Vaghinak Ohanyan");
-      else setMaster("Gayane Khudoyan");
-    } else {
-      setMaster("");  // никто не работает
-    }
-  }, [dateState]);
+  // 📅 Выходные: Понедельник (1) и Пятница (5)
+  const daysOff = [1, 5];
 
 
   // init times
   useEffect(() => {
     setAllTimes(getBookTime(10, 30));
   }, []);
+
+  useEffect(() => {
+    if (!dateState) {
+      setBusyTimes([]);
+      return;
+    }
+
+    getData(dateState);
+  }, [dateState]);
 
   // calculate price and duration
   useEffect(() => {
@@ -131,7 +113,6 @@ function Book() {
     message += `Անուն:\n ${_name} \n\n`;
     message += `Ամսաթիվ:\n ${formattedDate} \n\n`;
     message += `Ժամ:\n${_time} \n\n`;
-    message += `Հեռախոս:\n${_phone} \n\n`;
     message += `Մասնագետ:\n${_master} \n\n`;
     message += `Ծառայություն:\n${_service} \n\n`;
     message += `Արժեք:\n${_price} AMD\n\n`;
@@ -153,49 +134,52 @@ function Book() {
   }
 
   const handleBook = async () => {
-    console.log("📤 CALL tgFormWeb() FROM FRONT");
-
     const errors = [];
 
-    if (!userName || userName.trim() === "") errors.push(t("Please enter your name"));
-    if (!phoneNumber || phoneNumber.trim().length < 8) errors.push(t("Please enter a valid phone number"));
-    if (!master) errors.push(t("Please select a master"));
-    if (!selectedItems || selectedItems.length === 0) errors.push(t("Please select at least one service"));
+    if (!userName?.trim()) errors.push(t("Please enter your name"));
+    if (!phoneNumber || phoneNumber.trim().length < 8)
+      errors.push(t("Please enter a valid phone number"));
+    if (!selectedItems.length)
+      errors.push(t("Please select at least one service"));
     if (!dateState) errors.push(t("Please select a date"));
     if (!timeState) errors.push(t("Please select a time"));
+    if (isDayOff) errors.push(t("Selected day is unavailable"));
 
     if (errors.length > 0) {
-      setIsSuccess(false);                 // ❌ ошибки
       setConfirmStatus(errors.join("\n"));
+      setModalType("error");
       setModalOpen(true);
       return;
     }
 
     try {
-
-      const response = await fetch('https://chicchoc.top/public/service/data', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          master,
-          name: userName,
-          date: String(dateState),
-          timeState,
-          services: selectedItems,
-          phoneNumber,
-          totalPrice,
-          totalTime,
-        })
-      });
+      const response = await fetch(
+        "https://chicchoc.top/public/service/data",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            master,
+            name: userName,
+            date: String(dateState),
+            timeState,
+            services: selectedItems,
+            phoneNumber,
+            totalPrice,
+            totalTime,
+          }),
+        }
+      );
 
       if (!response.ok) {
-        setIsSuccess(false);               // ❌ ошибка сервера
-        setConfirmStatus(`Server error: ${response.status}`);
+        setConfirmStatus(t("Booking failed. Please try again."));
+        setModalType("error");
         setModalOpen(true);
         return;
       }
 
-      tgFormWeb(
+      // ✅ TELEGRAM
+      await tgFormWeb(
         dateState,
         timeState,
         userName,
@@ -205,17 +189,19 @@ function Book() {
         totalPrice
       );
 
-      // 🎉 Успешно
-      setIsSuccess(true);
-      setConfirmStatus("Registration Successfully Completed");
+      // ✅ SUCCESS MODAL
+      setConfirmStatus(t("Registration Successfully Completed"));
+      setModalType("success");
       setModalOpen(true);
 
     } catch (err) {
-      setIsSuccess(false);                 // ❌ ошибка сети
-      setConfirmStatus("Something went wrong");
+      console.error(err);
+      setConfirmStatus(t("Network error. Please try again."));
+      setModalType("error");
       setModalOpen(true);
     }
   };
+
 
 
   const changeDate = (e: any) => {
@@ -247,22 +233,19 @@ function Book() {
     label: `${t(service.value)} - ${service.startPrice} ${t("AMD")}`,
   }));
 
-  const masterOptions = masters.map((m) => ({
-    value: m.value,
-    label: m.label,
-    disabled: dateState ? daysOff[m.value]?.includes(new Date(dateState).getDay()) : false
-  }));
+  const isDayOff =
+    dateState && daysOff.includes(new Date(dateState).getDay());
 
 
   return (
     <div className="book-layout">
       <div className="hair-left-side">
-        <div className="book-left-side_content_bottom">{t("Book Now")}</div>
+        <div className="book-left-side_content_bottom">{t("Book Hairstyling Now")}</div>
       </div>
 
       <div className="book-right-side book-right-side-margin">
         <div className="form">
-          <div className="book-right-side-title">{t("Book a Visit")}</div>
+          {/* <div className="book-right-side-title">{t("Book a Visit")}</div> */}
           <div className="input-grid">
             <div className="input_item">
               <div className="input_item-title">{t("Name Surname")}</div>
@@ -297,22 +280,24 @@ function Book() {
             <div className="input_item">
               <div className="input_item-title">{t("Choose Master")}</div>
               <Select
-                value={master || undefined}
-                placeholder={t("Choose Master")}
-                options={masterOptions}
-                onChange={(v) => {
-                  setMaster(v);
-                  if (dateState) getData(dateState);
-                }}
-                disabled={masterOptions.filter((m) => !m.disabled).length === 1}
+                value={master}
+                options={[{ value: master, label: t(master) }]}
+                disabled
               />
+
 
             </div>
           </div>
         </div>
 
         <div className="book-now-datetime">
-          <Calendar value={dateState} onChange={changeDate} minDate={new Date()} />
+          <Calendar
+            value={dateState}
+            onChange={changeDate}
+            minDate={new Date()}
+            tileDisabled={({ date }) => daysOff.includes(date.getDay())}
+          />
+
           <div className="book-time">
             <div className="book-time-title">{t("Time")}</div>
             <div className="time-group">
@@ -320,18 +305,24 @@ function Book() {
                 <div
                   key={index}
                   className={
-                    !busyTimes?.includes(time) && !isPastTimeSlot(time)
-                      ? timeIndex !== index
-                        ? "book-time-local"
-                        : "book-time-local is-selected"
-                      : "is-time-busy"
+                    isDayOff
+                      ? "is-time-busy"
+                      : !busyTimes.includes(time) && !isPastTimeSlot(time)
+                        ? timeIndex !== index
+                          ? "book-time-local"
+                          : "book-time-local is-selected"
+                        : "is-time-busy"
                   }
+
                   onClick={() => {
-                    if (!busyTimes?.includes(time) && !isPastTimeSlot(time)) {
+                    if (isDayOff) return;
+
+                    if (!busyTimes.includes(time) && !isPastTimeSlot(time)) {
                       setTimeState(time);
                       setTimeIndex(index);
                     }
                   }}
+
                 >
                   {time}
                 </div>
@@ -352,66 +343,107 @@ function Book() {
         open={modalOpen}
         footer={null}
         onCancel={() => setModalOpen(false)}
+        centered
         className="share-modal"
-        title="CHIC - CHOC"
+        title="CHIC · CHOC"
       >
-        {isSuccess ? (
-          // 🎉 SUCCESS
-          <div>
-            <h3 style={{ textAlign: "center", fontSize: "18px", marginBottom: "12px" }}>
-              Շնորհակալություն։ Ձեր գրանցումը հաջողությամբ կատարվել է։
-            </h3>
+        <div className="modal-content">
 
-            <div style={{
-              background: "#FFF5F0",
-              border: "1px solid #FFD2C4",
+          <h3
+            style={{
+              textAlign: "center",
+              fontSize: "20px",
+              marginBottom: "16px",
+              fontWeight: 600,
+              color: modalType === "success" ? "#2E7D32" : "#C62828",
+            }}
+          >
+            {modalType === "success"
+              ? t("Your booking was successful")
+              : t("Booking failed")}
+          </h3>
+
+          <div
+            style={{
+              background: modalType === "success" ? "#F1FFF5" : "#FFF5F5",
+              border: modalType === "success"
+                ? "1px solid #C8E6C9"
+                : "1px solid #FFCDD2",
               padding: "16px",
               borderRadius: "10px",
-              marginBottom: "18px",
+              marginBottom: "16px",
               fontSize: "15px",
               lineHeight: "22px",
-              color: "#444"
-            }}>
-              <div><b>Ամսաթիվ․</b> {new Date(Number(dateState)).toLocaleDateString("hy-AM")}</div>
-              <div><b>Ժամ․</b> {timeState}</div>
-              <div><b>Մասնագետ․</b> {master}</div>
-              <div><b>Հեռախոսահամար․</b> {phoneNumber}</div>
-              <div><b>Ծառայություն․</b> {selectedItems.join(", ")}</div>
-              <div><b>Արժեք․</b> {totalPrice} AMD</div>
-            </div>
+            }}
+          >
+            {modalType === "success" ? (
+              <>
+                <div><b>Ամսաթիվ․</b> {new Date(Number(dateState)).toLocaleDateString("hy-AM")}</div>
+                <div><b>Ժամ․</b> {timeState}</div>
+                <div><b>Մասնագետ․</b> {master}</div>
+                <div><b>Հեռախոսահամար․</b> {phoneNumber}</div>
+                <div><b>Ծառայություն․</b> {selectedItems.join(", ")}</div>
+                <div><b>Արժեք․</b> {totalPrice} AMD</div>
+              </>
+            ) : (
+              <>
+                <p style={{ marginBottom: 8 }}>
+                  {t("Please fix the following issues:")}
+                </p>
+                <ul style={{ paddingLeft: 18 }}>
+                  {confirmStatus.split("\n").map((err, i) => (
+                    <li key={i}>{err}</li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
 
-            <a
-              href={`https://t.me/chicchocregistration_bot?start=${phoneNumber.replace(/\D/g, "")}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="telegram-button"
+          {modalType === "success" ? (
+            <>
+              <p style={{ textAlign: "center", marginBottom: 12 }}>
+                {t("Activate Telegram notifications")}
+              </p>
+
+              <a
+                href={`https://t.me/chicchocregistration_bot?start=${phoneNumber.replace(/\D/g, "")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "block",
+                  background: "#E75F36",
+                  color: "#fff",
+                  padding: "14px",
+                  borderRadius: "8px",
+                  fontSize: "16px",
+                  textAlign: "center",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                }}
+              >
+                📩 Telegram
+              </a>
+            </>
+          ) : (
+            <button
+              onClick={() => setModalOpen(false)}
               style={{
-                display: "block",
+                width: "100%",
+                padding: "12px",
                 background: "#E75F36",
-                color: "white",
-                padding: "14px",
+                color: "#fff",
+                border: "none",
                 borderRadius: "8px",
                 fontSize: "16px",
-                textAlign: "center",
-                textDecoration: "none",
-                fontWeight: "600"
+                cursor: "pointer",
               }}
             >
-              📩 Ստանալ Telegram ծանուցումներ
-            </a>
-          </div>
-        ) : (
-          // ❌ ERROR
-          <div style={{
-            textAlign: "center",
-            color: "red",
-            fontSize: "16px",
-            whiteSpace: "pre-line"
-          }}>
-            {confirmStatus}
-          </div>
-        )}
+              {t("Edit information")}
+            </button>
+          )}
+        </div>
       </Modal>
+
 
 
     </div>

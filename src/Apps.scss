@@ -914,7 +914,7 @@ a:-webkit-any-link {
     color: #FFF;
     text-align: center;
     font-family: "NotoSans REG";
-    font-size: 80px;
+    font-size: 50px;
     font-style: normal;
     font-weight: 450;
     line-height: normal;
@@ -926,13 +926,12 @@ a:-webkit-any-link {
     align-items: flex-start;
     padding-top: 60px;
     padding-bottom: 60px;
-    gap: 72px;
+    gap: 0px;
 }
 
 .form {
     display: flex;
-    flex-direction: column;
-    gap: 28px;
+    flex-direction: column
 }
 
 
@@ -976,7 +975,7 @@ a:-webkit-any-link {
     border-radius: 4px;
     border: 1px solid #AA763C;
     background: #FFF;
-    width: 365px;
+    width: 100%;
     color: #848484;
     font-family: "NotoSans REG";
     font-size: 14px;
@@ -998,7 +997,7 @@ a:-webkit-any-link {
     border-radius: 4px;
     border: 1px solid #AA763C;
     background: #FFF;
-    width: 365px;
+    width: 100%;
     color: #848484;
     font-family: "NotoSans REG";
     font-size: 14px;
@@ -1020,7 +1019,7 @@ a:-webkit-any-link {
     border-radius: 4px;
     border: 1px solid #AA763C;
     background: #FFF;
-    width: 365px;
+    width: 100%;
     color: #848484;
     font-family: "NotoSans REG";
     font-size: 14px;
@@ -1466,7 +1465,7 @@ button {
     }
 
     .book-layout {
-        gap: 62px !important;
+        gap: 0px !important;
     }
 
     .input-item {
@@ -1663,7 +1662,10 @@ button {
     }
 
     .book-left-side_content_bottom {
-        font-size: 44px !important;
+        font-size: 35px !important;
+    }
+    .form{
+        margin-top: 20px;
     }
 
     .book-left-side_content_top {
@@ -1738,30 +1740,6 @@ button {
     .search-container {
         margin-top: 15px;
         margin-bottom: 25px;
-    }
-}
-
-@media screen and (max-width: 1220px) {
-    .book-layout {
-        width: 100%;
-        display: flex;
-        padding: 7px 16px;
-        margin-bottom: 100px;
-        gap: 16px;
-    }
-
-    .book-left-side {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-
-    .book-baby-left-side {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-
-    .book-left-side_content_bottom {
-        font-size: 78px;
     }
 }
 
@@ -2223,4 +2201,106 @@ video {
 
 .services-menu-item:hover {
     color: #E75F36;
+}
+
+/* ================= TABLET FIX ================= */
+@media screen and (min-width: 768px) and (max-width: 1220px) {
+
+    /* Общий layout */
+    .book-layout {
+        flex-direction: column;
+        gap: 40px;
+        padding: 0 24px;
+    }
+
+    /* Левая картинка */
+    .book-left-side,
+    .lash-left-side,
+    .hair-left-side,
+    .book-baby-left-side {
+        width: 100%;
+        height: auto;
+        background-image: none;
+        // padding-top: 40px;
+    }
+
+    .book-left-side_content_bottom {
+        color: #FF7029;
+    }
+
+    .book-right-side-title {
+        display: none;
+    }
+
+    // .book-left-side{
+    //     display: none;
+    // }
+
+    .book-left-side_content_bottom {
+        font-size: 60px;
+    }
+
+    .lash-left-side, .hair-left-side, .book-baby-left-side {
+        padding-top: 20px;
+    }
+
+    .form {
+        margin-top: 30px;
+        width: 100%;
+    }
+
+    .input_item-title {
+        font-size: 16px;
+    }
+
+    .book-left-side {
+        padding-top: 10px;
+    }
+
+    .ant-select-outlined:not(.ant-select-customize-input) .ant-select-selector {
+        width: 100% !important;
+    }
+
+    .book-time-local {
+        font-size: 18px;
+    }
+
+    /* Правая часть */
+    .book-right-side {
+        width: 100%;
+        padding-top: 0;
+    }
+
+    /* Форма */
+    .input-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px 20px;
+    }
+
+    /* Все инпуты — резиновые */
+    .input,
+    .ant-input-affix-wrapper,
+    .ant-select-single .ant-select-selector {
+        width: 100% !important;
+    }
+
+    /* Календарь + время */
+    .book-now-datetime {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .react-calendar {
+        width: 100% !important;
+        padding: 16px;
+    }
+
+    .book-time {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .time-group {
+        justify-content: flex-start;
+    }
 }

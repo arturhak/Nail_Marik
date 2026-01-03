@@ -149,6 +149,13 @@ export const translationAM = {
     "Brow Lamination": "Հոնքերի լամինացիա",
     "Eyelash Lamination": "Թարթիչների լամինացիա",
     "Subscribe to our Telegram channel to receive updates and special offers.": "Բաժանորդագրվեք մեր Telegram ալիքին՝ թարմացումներ և հատուկ առաջարկներ ստանալու համար։",
-
+    'Book Manicure Now': 'Ամրագրել Մատնահարդարում',
+    "Book Lashes And Browes Now": "Ամրագրել Թարթիչների և Հոնքերի խնամք",
+    "Book Kids Hairstyle Now": "Ամրագրել Մանկական Ծառայություն",
+    "Book Hairstyling Now": "Ամրագրել Վարսահարդարում",
+    "Please fix the following issues:": "Խնդրում ենք շտկել հետևյալ խնդիրները:",
+    "Booking failed": "Ամրագրումը ձախողվեց",
+    "Edit information": "Խմբագրել տեղեկությունները",
+    "Booking failed. Please try again.": "Ամրագրումը ձախողվեց։ Խնդրում ենք փորձել կրկին։"
 
 }   
