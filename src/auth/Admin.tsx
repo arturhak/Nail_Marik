@@ -113,8 +113,14 @@ function Admin() {
                 <DatePicker
                     placeholder="Search by Date"
                     onChange={handleDateChange}
-                    style={{ width: "200px" }}
+                    inputReadOnly
+                    style={{
+                        width: "100%",
+                        maxWidth: "200px"
+                    }}
                 />
+
+
             </div>
 
             <table id="customers">
