@@ -119,8 +119,6 @@ function Admin() {
                         maxWidth: "200px"
                     }}
                 />
-
-
             </div>
 
             <table id="customers">
